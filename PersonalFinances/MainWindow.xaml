@@ -5,8 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalFinances"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="720" Background="#176C0D" ResizeMode="NoResize">
     <Grid>
+        <TabControl>
+            <TabItem Width="150" Height="72" FontSize="24" >
+                <TabItem.Header>
+                    <TextBlock>Кошельки</TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid Background="#FFE5E5E5">
+                        <ListView Width="675" Margin="20,10,19,194">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn Header="Имя" Width="255"></GridViewColumn>
+                                        <GridViewColumn Header="Баланс" Width="250"></GridViewColumn>
+                                        <GridViewColumn Header="Валюта" Width="165"></GridViewColumn>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Button Content="Добавить"  Width="135" Height="45" Margin="404,0,0,20" FontSize="24" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                        <Button Content="Удалить" Width="135" Height="45" Margin="0,0,19,20" FontSize="24" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                        <TextBox Width="380" Margin="10,0,0,20" TextAlignment="Left" HorizontalAlignment="Left" Height="45" VerticalAlignment="Bottom" VerticalContentAlignment="Center"/>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Width="150" Height="72" FontSize="24" >
+                <TabItem.Header>
+                    <TextBlock>Доходы</TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Width="150" Height="72" FontSize="24" >
+                <TabItem.Header>
+                    <TextBlock>Расходы</TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Width="150" Height="72" FontSize="24" >
+                <TabItem.Header>
+                    <TextBlock>График</TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+        <Button HorizontalAlignment="Left" Margin="620,10,15,0" VerticalAlignment="Top" Height="55" Width="85" Background="Black"/>
 
     </Grid>
 </Window>
