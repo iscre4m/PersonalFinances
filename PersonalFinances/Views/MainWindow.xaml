@@ -27,11 +27,28 @@
                         </ListView>
                         <Button Content="Добавить"
                                 Width="135" Height="45"
-                                Margin="404,0,0,20" FontSize="24"
+                                Margin="560,0,0,60" FontSize="24"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Left"/>
-                        <Button Content="Удалить" Width="135" Height="45" Margin="0,0,19,20" FontSize="24" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                        <TextBox Width="380" Margin="10,0,0,20" TextAlignment="Left" HorizontalAlignment="Left" Height="45" VerticalAlignment="Bottom" VerticalContentAlignment="Center"/>
+                        <Button Content="Удалить" Width="135" 
+                                Height="45" Margin="0,0,19,10" 
+                                FontSize="24" VerticalAlignment="Bottom" 
+                                HorizontalAlignment="Right"/>
+                        <TextBox Width="526" Margin="20,0,0,60" 
+                                 TextAlignment="Left" HorizontalAlignment="Left" 
+                                 Height="45" VerticalAlignment="Bottom" 
+                                 VerticalContentAlignment="Center"/>
+                        <TextBox Width="411" Margin="20,0,0,10" 
+                                 TextAlignment="Left" HorizontalAlignment="Left" 
+                                 Height="45" VerticalAlignment="Bottom" 
+                                 VerticalContentAlignment="Center"/>
+                        <ComboBox Margin="436,0,168,10" 
+                                 Height="45" VerticalAlignment="Bottom" 
+                                 VerticalContentAlignment="Center">
+                            <TextBlock>UAH</TextBlock>
+                            <TextBlock>USD</TextBlock>
+                            <TextBlock>EUR</TextBlock>
+                        </ComboBox>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
