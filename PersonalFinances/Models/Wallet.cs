@@ -1,15 +1,15 @@
 ﻿namespace PersonalFinances
 {
-    abstract class Wallet : Notifier, IWallet
+    class Wallet : Notifier, IWallet
     {
-        public string Name { get; }
-        public string Currency { get; protected set; }
+        public string Title { get; }
+        public string Currency { get; private set; }
 
-        public double Balance { get; protected set; }
+        public double Balance { get; private set; }
 
-        protected Wallet(string name, string currency, double balance)
+        public Wallet(string name, string currency, double balance)
         {
-            Name = name;
+            Title = name;
             Currency = currency;
             Balance = balance;
         }
@@ -25,6 +25,11 @@
         public void Replenish(double sum)
         {
             Balance += sum;
+        }
+
+        public override string ToString()
+        {
+            return Title + ' ' + Balance.ToString() + ' ' + Currency;
         }
     }
 }

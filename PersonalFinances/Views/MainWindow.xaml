@@ -6,43 +6,45 @@
         xmlns:local="clr-namespace:PersonalFinances"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="720" Background="#176C0D" ResizeMode="NoResize">
+    <Window.Resources>
+        <local:WalletViewModel x:Key="walletViewModel"/>
+    </Window.Resources>
     <Grid>
         <TabControl>
-            <TabItem Width="150" Height="72" FontSize="24" >
+            <TabItem DataContext="{StaticResource walletViewModel}" Width="150" Height="72" FontSize="24" >
                 <TabItem.Header>
                     <TextBlock>Кошельки</TextBlock>
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
-                        <ListView Width="675" Margin="20,10,19,194">
-                            <ListView.View>
-                                <GridView>
-                                    <GridView.Columns>
-                                        <GridViewColumn Header="Имя" Width="255"></GridViewColumn>
-                                        <GridViewColumn Header="Баланс" Width="250"></GridViewColumn>
-                                        <GridViewColumn Header="Валюта" Width="165"></GridViewColumn>
-                                    </GridView.Columns>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                        <Button Content="Добавить"
+                        <ListBox ItemsSource="{Binding Path=Wallets}"
+                                 SelectedIndex="{Binding Path=SelectedWalletIndex}"
+                                 Width="675" Margin="20,10,19,194"/>
+                        <Button Command="{Binding Path=AddCommand}"
+                                Content="Добавить"
                                 Width="135" Height="45"
                                 Margin="560,0,0,60" FontSize="24"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Left"/>
-                        <Button Content="Удалить" Width="135" 
+                        <Button Command="{Binding Path=RemoveCommand}"
+                                Content="Удалить" Width="135" 
                                 Height="45" Margin="0,0,19,10" 
                                 FontSize="24" VerticalAlignment="Bottom" 
                                 HorizontalAlignment="Right"/>
-                        <TextBox Width="526" Margin="20,0,0,60" 
+                        <TextBox Text="{Binding Path=Title,
+                            UpdateSourceTrigger=PropertyChanged}"
+                                 Width="526" Margin="20,0,0,60" 
                                  TextAlignment="Left" HorizontalAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
-                        <TextBox Width="411" Margin="20,0,0,10" 
+                        <TextBox Text="{Binding Path=Balance,
+                            UpdateSourceTrigger=PropertyChanged}"
+                                 Width="411" Margin="20,0,0,10" 
                                  TextAlignment="Left" HorizontalAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
-                        <ComboBox Margin="436,0,168,10" 
+                        <ComboBox Text="{Binding Path=Currency,
+                            UpdateSourceTrigger=PropertyChanged}" Margin="436,0,168,10" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center">
                             <TextBlock>UAH</TextBlock>
