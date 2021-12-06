@@ -5,13 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalFinances"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="720" Background="#176C0D" ResizeMode="NoResize">
+        Title="Personal Finances"
+        Height="600" Width="720"
+        Background="#176C0D"
+        ResizeMode="NoResize">
     <Window.Resources>
         <local:WalletViewModel x:Key="walletViewModel"/>
     </Window.Resources>
     <Grid>
         <TabControl>
-            <TabItem DataContext="{StaticResource walletViewModel}" Width="150" Height="72" FontSize="24" >
+            <TabItem DataContext="{StaticResource walletViewModel}"
+                     Width="150" Height="72" FontSize="24">
                 <TabItem.Header>
                     <TextBlock>Кошельки</TextBlock>
                 </TabItem.Header>
@@ -54,7 +58,8 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Width="150" Height="72" FontSize="24" >
+            <TabItem Width="150" Height="72"
+                     FontSize="24">
                 <TabItem.Header>
                     <TextBlock>Доходы</TextBlock>
                 </TabItem.Header>
@@ -62,7 +67,8 @@
                     <Grid Background="#FFE5E5E5"/>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Width="150" Height="72" FontSize="24" >
+            <TabItem Width="150" Height="72"
+                     FontSize="24">
                 <TabItem.Header>
                     <TextBlock>Расходы</TextBlock>
                 </TabItem.Header>
@@ -70,7 +76,8 @@
                     <Grid Background="#FFE5E5E5"/>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Width="150" Height="72" FontSize="24" >
+            <TabItem Width="150" Height="72"
+                     FontSize="24">
                 <TabItem.Header>
                     <TextBlock>График</TextBlock>
                 </TabItem.Header>
@@ -79,7 +86,11 @@
                 </TabItem.Content>
             </TabItem>
         </TabControl>
-        <Button HorizontalAlignment="Left" Margin="620,10,15,0" VerticalAlignment="Top" Height="55" Width="85" Background="Black"/>
+        <Button HorizontalAlignment="Left"
+                Margin="620,10,15,0"
+                VerticalAlignment="Top"
+                Height="55" Width="85"
+                Background="Black"/>
 
     </Grid>
 </Window>
