@@ -12,20 +12,14 @@
         <local:WalletsViewModel x:Key="walletsViewModel"/>
     </Window.Resources>
     <Grid>
-<<<<<<< HEAD
-        <TabControl>
-            <TabItem DataContext="{StaticResource walletsViewModel}"
-                     Width="150" Height="72" FontSize="24">
-=======
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="223*"/>
             <ColumnDefinition Width="497*"/>
         </Grid.ColumnDefinitions>
         <TabControl Grid.ColumnSpan="2">
-            <TabItem DataContext="{StaticResource walletViewModel}" FontSize="24" Margin="-2,-3,0,-1">
->>>>>>> 12e02fbead1118126a6825cb88d08ab7e63b7f25
+            <TabItem DataContext="{StaticResource walletsViewModel}" FontSize="24" Margin="-2,-3,0,-1">
                 <TabItem.Header>
-                    <TextBlock>Кошельки</TextBlock>
+                    <TextBlock Text="Кошельки"/>
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
@@ -40,11 +34,7 @@
                                 HorizontalAlignment="Left"/>
                         <Button Command="{Binding Path=RemoveCommand}"
                                 Content="Удалить" Width="135" 
-<<<<<<< HEAD
-                                Height="45" Margin="0,0,19,10"
-=======
                                 Height="45" Margin="560,0,0,10" 
->>>>>>> 12e02fbead1118126a6825cb88d08ab7e63b7f25
                                 FontSize="24" VerticalAlignment="Bottom" 
                                 HorizontalAlignment="Left"/>
                         <TextBox Text="{Binding Path=Title,
@@ -60,16 +50,9 @@
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
                         <ComboBox Text="{Binding Path=Currency,
-<<<<<<< HEAD
-                            UpdateSourceTrigger=PropertyChanged}"
-                                  Margin="436,0,168,10"
-                                  Height="45" VerticalAlignment="Bottom" 
-                                  VerticalContentAlignment="Center">
-=======
                             UpdateSourceTrigger=PropertyChanged}" Margin="436,0,0,10" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="110">
->>>>>>> 12e02fbead1118126a6825cb88d08ab7e63b7f25
                             <TextBlock>UAH</TextBlock>
                             <TextBlock>USD</TextBlock>
                             <TextBlock>EUR</TextBlock>
@@ -135,7 +118,7 @@
             <TabItem Width="150"
                      FontSize="24" Margin="0,-3,0,-2">
                 <TabItem.Header>
-                    <TextBlock>Расходы</TextBlock>
+                    <TextBlock Text="Прочее"/>
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5"/>
@@ -144,7 +127,7 @@
             <TabItem Width="150"
                      FontSize="24" Margin="0,-4,0,-1">
                 <TabItem.Header>
-                    <TextBlock>График</TextBlock>
+                    <TextBlock Text="График"/>
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5"/>
