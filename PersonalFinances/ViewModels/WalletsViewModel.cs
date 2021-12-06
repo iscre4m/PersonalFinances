@@ -4,14 +4,14 @@ using System.Text.RegularExpressions;
 
 namespace PersonalFinances
 {
-    internal class WalletViewModel : Notifier
+    internal class WalletsViewModel : Notifier
     {
         ObservableCollection<IWallet> wallets = new ObservableCollection<IWallet>();
-        int selectedWalletIndex;
+        int selectedWalletIndex = -1;
         ICommand addCommand;
         ICommand removeCommand;
 
-        public WalletViewModel()
+        public WalletsViewModel()
         {
             Title = "";
             Currency = "";
@@ -44,7 +44,7 @@ namespace PersonalFinances
             }
         }
         Regex titleRegEx = new Regex(@"^[a-zA-Z]\w*$");
-        Regex balanceRegEx = new Regex(@"(^0|^[1-9][0-9]*)(\.[0-9]{1,2})?$");
+        Regex balanceRegEx = new Regex(@"(^0|^[1-9][0-9]*)(\.(0[1-9]|[1-9][0-9]?))?$");
         public ICommand AddCommand
         {
             get

@@ -10,11 +10,11 @@
         Background="#176C0D"
         ResizeMode="NoResize">
     <Window.Resources>
-        <local:WalletViewModel x:Key="walletViewModel"/>
+        <local:WalletsViewModel x:Key="walletsViewModel"/>
     </Window.Resources>
     <Grid>
         <TabControl>
-            <TabItem DataContext="{StaticResource walletViewModel}"
+            <TabItem DataContext="{StaticResource walletsViewModel}"
                      Width="150" Height="72" FontSize="24">
                 <TabItem.Header>
                     <TextBlock>Кошельки</TextBlock>
@@ -32,7 +32,7 @@
                                 HorizontalAlignment="Left"/>
                         <Button Command="{Binding Path=RemoveCommand}"
                                 Content="Удалить" Width="135" 
-                                Height="45" Margin="0,0,19,10" 
+                                Height="45" Margin="0,0,19,10"
                                 FontSize="24" VerticalAlignment="Bottom" 
                                 HorizontalAlignment="Right"/>
                         <TextBox Text="{Binding Path=Title,
@@ -48,9 +48,10 @@
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
                         <ComboBox Text="{Binding Path=Currency,
-                            UpdateSourceTrigger=PropertyChanged}" Margin="436,0,168,10" 
-                                 Height="45" VerticalAlignment="Bottom" 
-                                 VerticalContentAlignment="Center">
+                            UpdateSourceTrigger=PropertyChanged}"
+                                  Margin="436,0,168,10"
+                                  Height="45" VerticalAlignment="Bottom" 
+                                  VerticalContentAlignment="Center">
                             <TextBlock>UAH</TextBlock>
                             <TextBlock>USD</TextBlock>
                             <TextBlock>EUR</TextBlock>
