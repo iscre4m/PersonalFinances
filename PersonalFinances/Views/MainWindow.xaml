@@ -7,15 +7,23 @@
         mc:Ignorable="d"
         Title="Personal Finances"
         Height="600" Width="720"
-        Background="#176C0D"
         ResizeMode="NoResize">
     <Window.Resources>
         <local:WalletsViewModel x:Key="walletsViewModel"/>
     </Window.Resources>
     <Grid>
+<<<<<<< HEAD
         <TabControl>
             <TabItem DataContext="{StaticResource walletsViewModel}"
                      Width="150" Height="72" FontSize="24">
+=======
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="223*"/>
+            <ColumnDefinition Width="497*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.ColumnSpan="2">
+            <TabItem DataContext="{StaticResource walletViewModel}" FontSize="24" Margin="-2,-3,0,-1">
+>>>>>>> 12e02fbead1118126a6825cb88d08ab7e63b7f25
                 <TabItem.Header>
                     <TextBlock>Кошельки</TextBlock>
                 </TabItem.Header>
@@ -32,9 +40,13 @@
                                 HorizontalAlignment="Left"/>
                         <Button Command="{Binding Path=RemoveCommand}"
                                 Content="Удалить" Width="135" 
+<<<<<<< HEAD
                                 Height="45" Margin="0,0,19,10"
+=======
+                                Height="45" Margin="560,0,0,10" 
+>>>>>>> 12e02fbead1118126a6825cb88d08ab7e63b7f25
                                 FontSize="24" VerticalAlignment="Bottom" 
-                                HorizontalAlignment="Right"/>
+                                HorizontalAlignment="Left"/>
                         <TextBox Text="{Binding Path=Title,
                             UpdateSourceTrigger=PropertyChanged}"
                                  Width="526" Margin="20,0,0,60" 
@@ -48,10 +60,16 @@
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
                         <ComboBox Text="{Binding Path=Currency,
+<<<<<<< HEAD
                             UpdateSourceTrigger=PropertyChanged}"
                                   Margin="436,0,168,10"
                                   Height="45" VerticalAlignment="Bottom" 
                                   VerticalContentAlignment="Center">
+=======
+                            UpdateSourceTrigger=PropertyChanged}" Margin="436,0,0,10" 
+                                 Height="45" VerticalAlignment="Bottom" 
+                                 VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="110">
+>>>>>>> 12e02fbead1118126a6825cb88d08ab7e63b7f25
                             <TextBlock>UAH</TextBlock>
                             <TextBlock>USD</TextBlock>
                             <TextBlock>EUR</TextBlock>
@@ -59,17 +77,63 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Width="150" Height="72"
-                     FontSize="24">
+            <TabItem Width="150"
+                     FontSize="24" Margin="0,-3,0,-1">
                 <TabItem.Header>
-                    <TextBlock>Доходы</TextBlock>
+                    <TextBlock Text="Операции"/>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid Background="#FFE5E5E5">
+                        <Grid>
+                            <GroupBox Header="Пополнение" Margin="0,5,0,0" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center" Width="694"/>
+                            <TextBox Width="317" Height="46" Margin="20,72,0,0" 
+                                VerticalAlignment="Top" HorizontalAlignment="Left"
+                                VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                            <ComboBox Margin="342,72,19,0" VerticalAlignment="Top" Height="46"/>
+                            <TextBlock Height="32" VerticalAlignment="Top" 
+                                HorizontalAlignment="Left" Width="79" 
+                                Margin="21,40,0,0"><Run Text="С"/><Run Language="ru-ru" Text="умма"/><Run Text=":"/></TextBlock>
+                            <TextBlock Height="32" VerticalAlignment="Top" 
+                                HorizontalAlignment="Left" Width="105" 
+                                Margin="342,35,0,0"><Run Language="ru-ru" Text="Кошелёк"/><Run Text=":"/></TextBlock>
+                            <Button Height="45" Content="Подтвердить" VerticalAlignment="Top"
+                                Margin="20,123,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="180"/>
+                        </Grid>
+
+                        <Grid>
+
+                            <GroupBox Header="Снятие" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center" Width="694" Margin="0,188,0,0"/>
+                            <TextBox Width="194" Height="45" Margin="20,256,0,0" 
+                                  VerticalAlignment="Top" HorizontalAlignment="Left"
+                                  VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                            <Button Height="45" Content="Подтвердить" VerticalAlignment="Top"
+                                Margin="21,306,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="180"/>
+                            <ComboBox Margin="219,256,0,0" VerticalAlignment="Top" Height="45" HorizontalAlignment="Left" Width="246"/>
+                            <TextBlock Height="33" VerticalAlignment="Top" 
+                                HorizontalAlignment="Left" Width="79" 
+                                Margin="21,223,0,0"><Run Text="С"/><Run Language="ru-ru" Text="умма"/><Run Text=":"/></TextBlock>
+                            <TextBlock Height="33" VerticalAlignment="Top" 
+                                HorizontalAlignment="Left" Width="105" 
+                                Margin="219,223,0,0"><Run Language="ru-ru" Text="Кошелёк"/><Run Text=":"/></TextBlock>
+                            <TextBlock Height="33" VerticalAlignment="Top" 
+                                HorizontalAlignment="Left" Width="121" 
+                                Margin="470,223,0,0"><Run Language="ru-ru" Text="Категория:"/></TextBlock>
+                            <ComboBox Margin="470,256,19,0" VerticalAlignment="Top" Height="45"/>
+
+
+
+                        </Grid>
+                        <TextBlock HorizontalAlignment="Left" Margin="10,373,0,0" 
+                                   TextWrapping="Wrap" VerticalAlignment="Top" Text="Учёт:"/>
+                        <ListBox Margin="10,410,10,10"/>
+
+
+
+                    </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Width="150" Height="72"
-                     FontSize="24">
+            <TabItem Width="150"
+                     FontSize="24" Margin="0,-3,0,-2">
                 <TabItem.Header>
                     <TextBlock>Расходы</TextBlock>
                 </TabItem.Header>
@@ -77,8 +141,8 @@
                     <Grid Background="#FFE5E5E5"/>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Width="150" Height="72"
-                     FontSize="24">
+            <TabItem Width="150"
+                     FontSize="24" Margin="0,-4,0,-1">
                 <TabItem.Header>
                     <TextBlock>График</TextBlock>
                 </TabItem.Header>
@@ -87,11 +151,11 @@
                 </TabItem.Content>
             </TabItem>
         </TabControl>
-        <Button HorizontalAlignment="Left"
-                Margin="620,10,15,0"
+        <Button
+                Margin="363,6,10,0"
                 VerticalAlignment="Top"
-                Height="55" Width="85"
-                Background="Black"/>
+                Height="22"
+                Background="Black" Grid.Column="1"/>
 
     </Grid>
 </Window>
