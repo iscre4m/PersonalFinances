@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace PersonalFinances
 {
-    class ExpenceViewModel:Notifier
+    class OperationsViewModel:Notifier
     {
-        ObservableCollection<Expence> expences = new ObservableCollection<Expence>();
+        WalletsModel walletsModel;
         int selectedWalletIndex = -1;
         ICommand replenishCommand;
         ICommand withdrawCommand;
-        public ExpenceViewModel()
+        public OperationsViewModel()
         {
             Title = "";
             Currency = "";
@@ -24,11 +18,11 @@ namespace PersonalFinances
         public string Title { get; set; }
         public string Currency { get; set; }
         public string Balance { get; set; }
-        public ObservableCollection<IWallet> Wallets
+        public WalletsModel WalletsModel
         {
             get
             {
-                return wallets;
+                return walletsModel;
             }
         }
     }

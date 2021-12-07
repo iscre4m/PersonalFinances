@@ -9,7 +9,9 @@
         Height="600" Width="720"
         ResizeMode="NoResize">
     <Window.Resources>
-        <local:WalletsViewModel x:Key="walletsViewModel"/>
+        <local:WalletsModel x:Key="walletsModel"/>
+        <local:WalletsViewModel x:Key="walletsViewModel"
+                                WalletsModel="{StaticResource walletsModel}"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,13 +19,14 @@
             <ColumnDefinition Width="497*"/>
         </Grid.ColumnDefinitions>
         <TabControl Grid.ColumnSpan="2">
-            <TabItem DataContext="{StaticResource walletsViewModel}" FontSize="24" Margin="-2,-3,0,-1">
+            <TabItem DataContext="{StaticResource walletsViewModel}"
+                     FontSize="24" Margin="-2,-3,0,-1">
                 <TabItem.Header>
                     <TextBlock Text="Кошельки"/>
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
-                        <ListBox ItemsSource="{Binding Path=Wallets}"
+                        <ListBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                  SelectedIndex="{Binding Path=SelectedWalletIndex}"
                                  Width="675" Margin="20,10,19,194"/>
                         <Button Command="{Binding Path=AddCommand}"
@@ -73,7 +76,7 @@
                                 VerticalAlignment="Top" HorizontalAlignment="Left"
                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
                             <ComboBox
-                                 ItemsSource="{Binding Path=Wallets}"
+                                 ItemsSource="{Binding Path=WalletsModel}"
                                  SelectedIndex="{Binding Path=SelectedWalletIndex}"
                                 Margin="342,72,19,0" VerticalAlignment="Top" Height="46"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 

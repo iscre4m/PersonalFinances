@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
 
-namespace PersonalFinances.Models
+namespace PersonalFinances
 {
-    internal class WalletsModel:Notifier
+    internal class WalletsModel : Notifier
     {
         ObservableCollection<IWalletModel> wallets = new ObservableCollection<IWalletModel>();
+
+        public ObservableCollection<IWalletModel> Wallets
+        {
+            get
+            {
+                return wallets;
+            }
+        }
     }
 }

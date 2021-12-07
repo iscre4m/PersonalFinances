@@ -1,12 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Text.RegularExpressions;
 
 namespace PersonalFinances
 {
     internal class WalletsViewModel : Notifier
     {
-        ObservableCollection<IWalletModel> wallets = new ObservableCollection<IWalletModel>();
+        WalletsModel walletsModel;
         int selectedWalletIndex = -1;
         ICommand addCommand;
         ICommand removeCommand;
@@ -21,11 +20,15 @@ namespace PersonalFinances
         public string Title { get; set; }
         public string Currency { get; set; }
         public string Balance { get; set; }
-        public ObservableCollection<IWalletModel> Wallets
+        public WalletsModel WalletsModel
         {
+            set
+            {
+                walletsModel = value;
+            }
             get
             {
-                return wallets;
+                return walletsModel;
             }
         }
         public int SelectedWalletIndex
@@ -61,7 +64,7 @@ namespace PersonalFinances
         }
         void AddWallet()
         {
-            wallets.Add(new WalletModel(Title, Currency, double.Parse(Balance)));
+            walletsModel.Wallets.Add(new WalletModel(Title, Currency, double.Parse(Balance)));
         }
         public ICommand RemoveCommand
         {
@@ -78,7 +81,7 @@ namespace PersonalFinances
 
         void RemoveWallet()
         {
-            wallets.RemoveAt(selectedWalletIndex);
+            walletsModel.Wallets.RemoveAt(selectedWalletIndex);
         }
     }
 }
