@@ -1,45 +1,41 @@
 ﻿using System.Windows.Input;
-using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
-using System;
 
 namespace PersonalFinances
 {
-    class OperationsViewModel:Notifier
+    class OperationsViewModel : Notifier
     {
         WalletsModel walletsModel;
-        ObservableCollection<Operation> operations = new ObservableCollection<Operation>();
+        OperationsModel operationsModel;
         int selectedWalletIndex = -1;
         int selectedCategoryIndex = -1;
-        int selectedOperationIndex = -1;
-        string[] category = { "Продукты", "Кино", "Развлечения" };
+        string[] categories = { "Продукты", "Кино", "Развлечения" };
         ICommand replenishCommand;
         ICommand withdrawCommand;
-        ICommand addCommand;
         public OperationsViewModel()
         {
-            IncomeBalance = "0";
-            ExpenseBalance = "0";
+            IncomeSum = "0";
+            ExpenseSum = "0";
         }
-        public string IncomeBalance { get; set; }
-        public string ExpenseBalance { get; set; }
+        public string IncomeSum { get; set; }
+        public string ExpenseSum { get; set; }
         public WalletsModel WalletsModel
         {
-            set
-            {
-                walletsModel = value;
-            }
             get
             {
                 return walletsModel;
             }
+            set
+            {
+                walletsModel = value;
+            }
         }
 
-        public ObservableCollection<Operation> Operations
+        public OperationsModel OperationsModel
         {
             get
             {
-                return operations;
+                return operationsModel;
             }
         }
 
@@ -47,7 +43,7 @@ namespace PersonalFinances
         {
             get
             {
-                return category;
+                return categories;
             }
         }
         public int SelectedWalletIndex
@@ -61,22 +57,7 @@ namespace PersonalFinances
                 if (value != selectedWalletIndex)
                 {
                     selectedWalletIndex = value;
-                    OnPropertyChanged("SelectedWallet");
-                }
-            }
-        }
-        public int SelectedOperationIndex
-        {
-            get
-            {
-                return selectedOperationIndex;
-            }
-            set
-            {
-                if (value != selectedOperationIndex)
-                {
-                    selectedOperationIndex = value;
-                    OnPropertyChanged("SelectedOperation");
+                    OnPropertyChanged("SelectedWalletIndex");
                 }
             }
         }
@@ -92,11 +73,12 @@ namespace PersonalFinances
                 if (value != selectedCategoryIndex)
                 {
                     selectedCategoryIndex = value;
-                    OnPropertyChanged("SelectedCategory");
+                    OnPropertyChanged("SelectedCategoryIndex");
                 }
             }
         }
-        Regex balanceRegEx = new Regex(@"(^0|^[1-9][0-9]*)(\.(0[1-9]|[1-9][0-9]?))?$");
+
+        Regex sumRegEx = new Regex(@"(^0|^[1-9][0-9]*)(\.(0[1-9]|[1-9][0-9]?))?$");
         public ICommand ReplenishCommand
         {
             get
@@ -104,38 +86,38 @@ namespace PersonalFinances
                 if (replenishCommand == null)
                 {
                     replenishCommand = new DelegateCommand(param => Replenish(),
-                                                     param => (SelectedWalletIndex != -1
-                                                                 && balanceRegEx.IsMatch(IncomeBalance)));
+                                                     param => (SelectedWalletIndex > -1
+                                                            && sumRegEx.IsMatch(IncomeSum)));
                 }
                 return replenishCommand;
             }
         }
         void Replenish()
         {
-            walletsModel.Wallets[SelectedWalletIndex].Replenish(Double.Parse(IncomeBalance));
+            walletsModel.Wallets[SelectedWalletIndex].Replenish(double.Parse(IncomeSum));
+            IncomeSum = "0";
+            OnPropertyChanged("IncomeSum");
         }
 
-        void AddOperation()
-        {
-            //operations.Add(new Operation())
-        }
-        public ICommand ExpenseCommand
+        public ICommand WithdrawCommand
         {
             get
             {
                 if (withdrawCommand == null)
                 {
                     withdrawCommand = new DelegateCommand(param => Withdraw(),
-                                                        param => (SelectedWalletIndex != -1
-                                                                 && balanceRegEx.IsMatch(IncomeBalance)));
+                                                        param => (SelectedWalletIndex > -1
+                                                               && sumRegEx.IsMatch(ExpenseSum)
+                                                               && ((WalletModel)walletsModel.Wallets[selectedWalletIndex]).Balance - double.Parse(ExpenseSum) >= 0));
                 }
                 return withdrawCommand;
             }
         }
-
         void Withdraw()
         {
-            walletsModel.Wallets[selectedWalletIndex].Withdraw(Double.Parse(ExpenseBalance));
+            walletsModel.Wallets[selectedWalletIndex].Withdraw(double.Parse(ExpenseSum));
+            ExpenseSum = "0";
+            OnPropertyChanged("ExpenseSum");
         }
     }
 }

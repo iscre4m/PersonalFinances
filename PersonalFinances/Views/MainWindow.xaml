@@ -14,6 +14,12 @@
                                 WalletsModel="{StaticResource walletsModel}"/>
         <local:OperationsViewModel x:Key="operationsViewModel"
                                 WalletsModel="{StaticResource walletsModel}"/>
+        
+        <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
+        <local:CategoriesModel x:Key="categoriesModel"/>
+        <local:OtherViewModel x:Key="otherViewModel"
+                              IncomeSourcesModel="{StaticResource incomeSourcesModel}"
+                              CategoriesModel="{StaticResource categoriesModel}"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -39,23 +45,23 @@
                                 FontSize="24" VerticalAlignment="Bottom" 
                                 HorizontalAlignment="Right"/>
                         <TextBox Text="{Binding Path=Title,
-                            UpdateSourceTrigger=PropertyChanged}" Margin="20,0,168,60" 
+                                 UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="20,0,159,60" 
                                  TextAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
                         <TextBox Text="{Binding Path=Balance,
-                            UpdateSourceTrigger=PropertyChanged}" Margin="20,0,283,10" 
+                                 UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="20,0,274,10" 
                                  TextAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
-                        <ComboBox Text="{Binding Path=Currency,
-                            UpdateSourceTrigger=PropertyChanged}" Margin="0,0,168,10" 
-                                 Height="45" VerticalAlignment="Bottom" 
-                                 VerticalContentAlignment="Center" HorizontalAlignment="Right" Width="110">
-                            <TextBlock>UAH</TextBlock>
-                            <TextBlock>USD</TextBlock>
-                            <TextBlock>EUR</TextBlock>
-                        </ComboBox>
+                        <ComboBox ItemsSource="{Binding Currencies}"
+                                  SelectedIndex="{Binding SelectedCurrencyIndex}"
+                                  Margin="0,0,159,10" 
+                                  Height="45" VerticalAlignment="Bottom" 
+                                  VerticalContentAlignment="Center"
+                                  HorizontalAlignment="Right" Width="110"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
@@ -71,103 +77,136 @@
                             <GroupBox Header="Пополнение" Margin="0,5,0,0" 
                                       Height="180" VerticalAlignment="Top" 
                                       HorizontalAlignment="Center" Width="694"/>
-                            <TextBox
-                                Text="{Binding Path=IncomeBalance,
-                            UpdateSourceTrigger=PropertyChanged}"
-                                Width="317" Height="46" Margin="20,72,0,0" 
-                                VerticalAlignment="Top" HorizontalAlignment="Left"
-                                VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                            <ComboBox
-                                 ItemsSource="{Binding Path=WalletsModel.Wallets}"
-                                 SelectedIndex="{Binding Path=SelectedWalletIndex}"
-                                Margin="342,72,19,0" VerticalAlignment="Top" Height="46"/>
+                            <TextBox Text="{Binding Path=IncomeSum,
+                                     UpdateSourceTrigger=PropertyChanged}"
+                                     Width="317" Height="46"
+                                     Margin="20,72,0,0" 
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Left"/>
+                            <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
+                                      SelectedIndex="{Binding Path=SelectedWalletIndex}"
+                                      Margin="342,72,19,0"
+                                      VerticalAlignment="Top" Height="46"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
-                                HorizontalAlignment="Left" Width="79" 
-                                Margin="21,40,0,0" Text="Сумма"/>
+                                       HorizontalAlignment="Left" Width="79" 
+                                       Margin="21,40,0,0" Text="Сумма"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
-                                HorizontalAlignment="Left" Width="105" 
-                                Margin="342,35,0,0" Text="Кошелёк:"/>
-                            <Button 
-                                 Command="{Binding Path=ReplenishCommand}"
-                                Height="45" Content="Подтвердить" VerticalAlignment="Top"
-                                Margin="20,123,0,0" VerticalContentAlignment="Center" 
-                                HorizontalAlignment="Left" Width="180"/>
+                                       HorizontalAlignment="Left" Width="105" 
+                                       Margin="342,35,0,0" Text="Кошелёк:"/>
+                            <Button Command="{Binding Path=ReplenishCommand}"
+                                    Height="45" Content="Подтвердить"
+                                    VerticalAlignment="Top"
+                                    Margin="20,123,0,0"
+                                    VerticalContentAlignment="Center" 
+                                    HorizontalAlignment="Left" Width="180"/>
                         </Grid>
 
                         <Grid>
 
-                            <GroupBox Header="Снятие" Height="180" VerticalAlignment="Top" 
-                                      HorizontalAlignment="Center" Width="694" Margin="0,188,0,0"/>
-                            <TextBox 
-                                Text="{Binding Path=ExpenseBalance,
-                            UpdateSourceTrigger=PropertyChanged}"
-                                Width="194" Height="45" Margin="20,256,0,0" 
-                                  VerticalAlignment="Top" HorizontalAlignment="Left"
-                                  VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                            <Button 
-                                  Command="{Binding Path=ExpenseCommand}"
-                                Height="45" Content="Подтвердить" VerticalAlignment="Top"
-                                Margin="21,306,0,0" VerticalContentAlignment="Center" 
-                                HorizontalAlignment="Left" Width="180"/>
-                            <ComboBox 
-                                ItemsSource="{Binding Path=WalletsModel.Wallets}"
-                                SelectedIndex="{Binding Path=SelectedWalletIndex}"
-                                Margin="219,256,0,0" VerticalAlignment="Top" Height="45" 
-                                HorizontalAlignment="Left" Width="246"/>
+                            <GroupBox Header="Снятие" Height="180"
+                                      VerticalAlignment="Top" 
+                                      HorizontalAlignment="Center"
+                                      Width="694" Margin="0,188,0,0"/>
+                            <TextBox Text="{Binding Path=ExpenseSum,
+                                     UpdateSourceTrigger=PropertyChanged}"
+                                     Width="194" Height="45"
+                                     Margin="20,256,0,0" 
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Left"/>
+                            <Button Command="{Binding Path=WithdrawCommand}"
+                                    Height="45" Content="Подтвердить"
+                                    VerticalAlignment="Top"
+                                    Margin="21,306,0,0"
+                                    VerticalContentAlignment="Center" 
+                                    HorizontalAlignment="Left" Width="180"/>
+                            <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
+                                      SelectedIndex="{Binding Path=SelectedWalletIndex}"
+                                      Margin="219,256,0,0" Height="45" 
+                                      VerticalAlignment="Top"
+                                      HorizontalAlignment="Left" Width="246"/>
                             <TextBlock Height="33" VerticalAlignment="Top" 
-                                HorizontalAlignment="Left" Width="79" 
-                                Margin="21,223,0,0" Text="Сумма:"/>
+                                       HorizontalAlignment="Left" Width="79" 
+                                       Margin="21,223,0,0" Text="Сумма:"/>
                             <TextBlock Height="33" VerticalAlignment="Top" 
-                                HorizontalAlignment="Left" Width="105" 
-                                Margin="219,223,0,0" Text="Кошелёк:"/>
+                                       HorizontalAlignment="Left" Width="105" 
+                                       Margin="219,223,0,0" Text="Кошелёк:"/>
                             <TextBlock Height="33" VerticalAlignment="Top" 
-                                HorizontalAlignment="Left" Width="121" 
-                                Margin="470,223,0,0" Text="Категория:"/>
-                            <ComboBox 
-                                 ItemsSource="{Binding Path=Category}"
-                                 SelectedIndex="{Binding Path=SelectedCategoryIndex}"
-                                Margin="470,256,19,0" VerticalAlignment="Top" Height="45"/>
+                                       HorizontalAlignment="Left" Width="121" 
+                                       Margin="470,223,0,0" Text="Категория:"/>
+                            <ComboBox ItemsSource="{Binding Path=Category}"
+                                      SelectedIndex="{Binding Path=SelectedCategoryIndex}"
+                                      Margin="470,256,19,0"
+                                      VerticalAlignment="Top" Height="45"/>
                         </Grid>
                         <TextBlock HorizontalAlignment="Left" Margin="10,373,0,0" 
-                                   TextWrapping="Wrap" VerticalAlignment="Top" Text="Учёт:"/>
-                        <ListBox 
-                             ItemsSource="{Binding Path=Operations}"
-                                 SelectedIndex="{Binding Path=SelectedOperationIndex}"
-                            Margin="10,410,10,10"/>
+                                   VerticalAlignment="Top" Text="Учёт"/>
+                        <ListBox ItemsSource="{Binding Path=OperationsModel}"
+                                 Margin="10,410,10,10" IsEnabled="False"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
             <TabItem Width="150"
-                     FontSize="24" Margin="0,-3,0,-2">
+                     FontSize="24"
+                     Margin="0,-3,0,-2">
                 <TabItem.Header>
                     <TextBlock Text="Прочее"/>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Grid Background="#FFE5E5E5">
-                        <GroupBox Header="Источники доходов:" Margin="10,0,10,275"/>
-                        <ListBox Margin="30,38,30,335"/>
-                        <Button Content="Добавить" Height="45" 
-                                Margin="0,0,147,285" VerticalContentAlignment="Center" 
-                                HorizontalAlignment="Right" Width="126" VerticalAlignment="Bottom"/>
-                        <Button Content="Удалить" Height="45" Margin="0,0,30,285" 
-                                HorizontalAlignment="Right" Width="112" VerticalAlignment="Bottom"/>
-                        <TextBox Margin="30,0,278,285" Height="45" VerticalAlignment="Bottom"
+                    <Grid Background="#FFE5E5E5"
+                          DataContext="{StaticResource otherViewModel}">
+                        <GroupBox Header="Источники доходов"
+                                  Margin="10,0,10,275"/>
+                        <ListBox Margin="30,38,30,335"
+                                 ItemsSource="{Binding IncomeSourcesModel.IncomeSources}"/>
+                        <Button Content="Добавить" Height="45"
+                                Command="{Binding AddIncomeSourceCommand}"
+                                Margin="0,0,147,285"
+                                VerticalContentAlignment="Center" 
+                                HorizontalAlignment="Right"
+                                Width="126" VerticalAlignment="Bottom"/>
+                        <Button Content="Удалить" Height="45"
+                                Command="{Binding RemoveIncomeSourceCommand}"
+                                Margin="0,0,30,285" 
+                                HorizontalAlignment="Right" Width="112"
+                                VerticalAlignment="Bottom"/>
+                        <TextBox Margin="30,0,278,285" Height="45"
+                                 Text="{Binding Path=IncomeSourceTitle,
+                                 UpdateSourceTrigger=PropertyChanged}"
+                                 VerticalAlignment="Bottom"
                                  VerticalContentAlignment="Center"/>
 
-                        <GroupBox Header="Категории расходов:" Margin="10,0,10,10" Height="265" VerticalAlignment="Bottom"/>
-                        <ListBox Margin="30,0,30,70" Height="167" VerticalAlignment="Bottom"/>
-                        <Button Content="Добавить" Height="45" 
-                                Margin="0,0,147,20" VerticalContentAlignment="Center" 
-                                HorizontalAlignment="Right" Width="126" VerticalAlignment="Bottom"/>
-                        <Button Content="Удалить" Height="45" Margin="0,0,30,20" 
-                                HorizontalAlignment="Right" Width="112" VerticalAlignment="Bottom"/>
-                        <TextBox Margin="30,0,278,20" Height="45" VerticalAlignment="Bottom"
+                        <GroupBox Header="Категории расходов"
+                                  Margin="10,0,10,10" Height="265"
+                                  VerticalAlignment="Bottom"/>
+                        <ListBox Margin="30,0,30,70" Height="167"
+                                 VerticalAlignment="Bottom"
+                                 ItemsSource="{Binding CategoriesModel.Categories}"/>
+                        <Button Content="Добавить" Height="45"
+                                Command="{Binding AddCategoryCommand}"
+                                Margin="0,0,147,20"
+                                VerticalContentAlignment="Center" 
+                                HorizontalAlignment="Right" Width="126"
+                                VerticalAlignment="Bottom"/>
+                        <Button Content="Удалить" Height="45"
+                                Command="{Binding RemoveCategoryCommand}"
+                                Margin="0,0,30,20" 
+                                HorizontalAlignment="Right"
+                                Width="112" VerticalAlignment="Bottom"/>
+                        <TextBox Margin="30,0,278,20" Height="45"
+                                 Text="{Binding Path=CategoryTitle,
+                                 UpdateSourceTrigger=PropertyChanged}"
+                                 VerticalAlignment="Bottom"
                                  VerticalContentAlignment="Center"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
             <TabItem Width="150"
-                     FontSize="24" Margin="0,-4,0,-1">
+                     FontSize="24"
+                     Margin="0,-4,0,-1">
                 <TabItem.Header>
                     <TextBlock Text="Графики"/>
                 </TabItem.Header>
@@ -176,11 +215,5 @@
                 </TabItem.Content>
             </TabItem>
         </TabControl>
-        <Button
-                Margin="585,6,10,0"
-                VerticalAlignment="Top"
-                Height="22"
-                Background="Black"/>
-
     </Grid>
 </Window>

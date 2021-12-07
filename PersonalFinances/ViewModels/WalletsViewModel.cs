@@ -7,18 +7,19 @@ namespace PersonalFinances
     {
         WalletsModel walletsModel;
         int selectedWalletIndex = -1;
+        string[] currencies = { "UAH", "USD", "EUR" };
+        int selectedCurrencyIndex = -1;
+
         ICommand addCommand;
         ICommand removeCommand;
 
         public WalletsViewModel()
         {
             Title = "";
-            Currency = "";
             Balance = "0";
         }
 
         public string Title { get; set; }
-        public string Currency { get; set; }
         public string Balance { get; set; }
         public WalletsModel WalletsModel
         {
@@ -42,7 +43,29 @@ namespace PersonalFinances
                 if (value != selectedWalletIndex)
                 {
                     selectedWalletIndex = value;
-                    OnPropertyChanged("SelectedWallet");
+                    OnPropertyChanged("SelectedWalletIndex");
+                }
+            }
+        }
+        public string[] Currencies
+        {
+            get
+            {
+                return currencies;
+            }
+        }
+        public int SelectedCurrencyIndex
+        {
+            get
+            {
+                return selectedCurrencyIndex;
+            }
+            set
+            {
+                if (value != selectedCurrencyIndex)
+                {
+                    selectedCurrencyIndex = value;
+                    OnPropertyChanged("SelectedCurrencyIndex");
                 }
             }
         }
@@ -56,7 +79,7 @@ namespace PersonalFinances
                 {
                     addCommand = new DelegateCommand(param => AddWallet(),
                                                      param => (titleRegEx.IsMatch(Title)
-                                                            && Currency != ""
+                                                            && SelectedCurrencyIndex > -1
                                                             && balanceRegEx.IsMatch(Balance)));
                 }
                 return addCommand;
@@ -64,7 +87,13 @@ namespace PersonalFinances
         }
         void AddWallet()
         {
-            walletsModel.Wallets.Add(new WalletModel(Title, Currency, double.Parse(Balance)));
+            walletsModel.Wallets.Add(new WalletModel(Title, currencies[selectedCurrencyIndex], double.Parse(Balance)));
+            Title = "";
+            OnPropertyChanged("Title");
+            Balance = "0";
+            OnPropertyChanged("Balance");
+            SelectedCurrencyIndex = -1;
+            OnPropertyChanged("SelectedCurrencyIndex");
         }
         public ICommand RemoveCommand
         {
@@ -73,7 +102,7 @@ namespace PersonalFinances
                 if (removeCommand == null)
                 {
                     removeCommand = new DelegateCommand(param => RemoveWallet(),
-                                                        param => (SelectedWalletIndex != -1));
+                                                        param => (SelectedWalletIndex > -1));
                 }
                 return removeCommand;
             }

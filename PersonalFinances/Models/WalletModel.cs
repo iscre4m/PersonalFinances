@@ -16,10 +16,7 @@
 
         public void Withdraw(double sum)
         {
-            if (Balance - sum >= 0)
-            {
-                Balance -= sum;
-            }
+            Balance -= sum;
         }
 
         public void Replenish(double sum)
