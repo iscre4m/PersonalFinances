@@ -6,7 +6,7 @@ namespace PersonalFinances
 {
     internal class WalletsViewModel : Notifier
     {
-        ObservableCollection<IWallet> wallets = new ObservableCollection<IWallet>();
+        ObservableCollection<IWalletModel> wallets = new ObservableCollection<IWalletModel>();
         int selectedWalletIndex = -1;
         ICommand addCommand;
         ICommand removeCommand;
@@ -21,7 +21,7 @@ namespace PersonalFinances
         public string Title { get; set; }
         public string Currency { get; set; }
         public string Balance { get; set; }
-        public ObservableCollection<IWallet> Wallets
+        public ObservableCollection<IWalletModel> Wallets
         {
             get
             {
@@ -61,7 +61,7 @@ namespace PersonalFinances
         }
         void AddWallet()
         {
-            wallets.Add(new Wallet(Title, Currency, double.Parse(Balance)));
+            wallets.Add(new WalletModel(Title, Currency, double.Parse(Balance)));
         }
         public ICommand RemoveCommand
         {

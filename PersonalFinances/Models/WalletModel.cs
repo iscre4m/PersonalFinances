@@ -1,13 +1,13 @@
 ﻿namespace PersonalFinances
 {
-    class Wallet : Notifier, IWallet
+    class WalletModel : Notifier, IWalletModel
     {
         public string Title { get; }
         public string Currency { get; private set; }
 
         public double Balance { get; private set; }
 
-        public Wallet(string name, string currency, double balance)
+        public WalletModel(string name, string currency, double balance)
         {
             Title = name;
             Currency = currency;

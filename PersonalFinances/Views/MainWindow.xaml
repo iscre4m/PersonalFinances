@@ -72,7 +72,10 @@
                             <TextBox Width="317" Height="46" Margin="20,72,0,0" 
                                 VerticalAlignment="Top" HorizontalAlignment="Left"
                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                            <ComboBox Margin="342,72,19,0" VerticalAlignment="Top" Height="46"/>
+                            <ComboBox
+                                 ItemsSource="{Binding Path=Wallets}"
+                                 SelectedIndex="{Binding Path=SelectedWalletIndex}"
+                                Margin="342,72,19,0" VerticalAlignment="Top" Height="46"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
                                 HorizontalAlignment="Left" Width="79" 
                                 Margin="21,40,0,0"><Run Text="С"/><Run Language="ru-ru" Text="умма"/><Run Text=":"/></TextBlock>

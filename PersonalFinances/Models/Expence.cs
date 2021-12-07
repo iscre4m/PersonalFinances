@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PersonalFinances
 {
-    class Expence
+    class Expence:Notifier
     {
         public string Category { get; set; }
         public double Sum { get; set; }
