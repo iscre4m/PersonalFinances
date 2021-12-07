@@ -12,6 +12,8 @@
         <local:WalletsModel x:Key="walletsModel"/>
         <local:WalletsViewModel x:Key="walletsViewModel"
                                 WalletsModel="{StaticResource walletsModel}"/>
+        <local:OperationsViewModel x:Key="operationsViewModel"
+                                WalletsModel="{StaticResource walletsModel}"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,36 +28,40 @@
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="251*"/>
+                            <ColumnDefinition Width="463*"/>
+                        </Grid.ColumnDefinitions>
                         <ListBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                  SelectedIndex="{Binding Path=SelectedWalletIndex}"
-                                 Width="675" Margin="20,10,19,194"/>
+                                 Width="675" Margin="20,10,19,194" Grid.ColumnSpan="2"/>
                         <Button Command="{Binding Path=AddCommand}"
                                 Content="Добавить"
                                 Width="135" Height="45"
-                                Margin="560,0,0,60" FontSize="24"
+                                Margin="309,0,0,60" FontSize="24"
                                 VerticalAlignment="Bottom"
-                                HorizontalAlignment="Left"/>
+                                HorizontalAlignment="Left" Grid.Column="1"/>
                         <Button Command="{Binding Path=RemoveCommand}"
                                 Content="Удалить" Width="135" 
-                                Height="45" Margin="560,0,0,10" 
+                                Height="45" Margin="309,0,0,10" 
                                 FontSize="24" VerticalAlignment="Bottom" 
-                                HorizontalAlignment="Left"/>
+                                HorizontalAlignment="Left" Grid.Column="1"/>
                         <TextBox Text="{Binding Path=Title,
                             UpdateSourceTrigger=PropertyChanged}"
                                  Width="526" Margin="20,0,0,60" 
                                  TextAlignment="Left" HorizontalAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
-                                 VerticalContentAlignment="Center"/>
+                                 VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
                         <TextBox Text="{Binding Path=Balance,
                             UpdateSourceTrigger=PropertyChanged}"
                                  Width="411" Margin="20,0,0,10" 
                                  TextAlignment="Left" HorizontalAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
-                                 VerticalContentAlignment="Center"/>
+                                 VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
                         <ComboBox Text="{Binding Path=Currency,
-                            UpdateSourceTrigger=PropertyChanged}" Margin="436,0,0,10" 
+                            UpdateSourceTrigger=PropertyChanged}" Margin="185,0,0,10" 
                                  Height="45" VerticalAlignment="Bottom" 
-                                 VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="110">
+                                 VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="110" Grid.Column="1">
                             <TextBlock>UAH</TextBlock>
                             <TextBlock>USD</TextBlock>
                             <TextBlock>EUR</TextBlock>
@@ -64,7 +70,8 @@
                 </TabItem.Content>
             </TabItem>
             <TabItem Width="150"
-                     FontSize="24" Margin="0,-3,0,-1">
+                     FontSize="24" Margin="0,-3,0,-1"
+                     DataContext="{StaticResource operationsViewModel}">
                 <TabItem.Header>
                     <TextBlock Text="Операции"/>
                 </TabItem.Header>
@@ -72,11 +79,14 @@
                     <Grid Background="#FFE5E5E5">
                         <Grid>
                             <GroupBox Header="Пополнение" Margin="0,5,0,0" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center" Width="694"/>
-                            <TextBox Width="317" Height="46" Margin="20,72,0,0" 
+                            <TextBox
+                                Text="{Binding Path=IncomeBalance,
+                            UpdateSourceTrigger=PropertyChanged}"
+                                Width="317" Height="46" Margin="20,72,0,0" 
                                 VerticalAlignment="Top" HorizontalAlignment="Left"
                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
                             <ComboBox
-                                 ItemsSource="{Binding Path=WalletsModel}"
+                                 ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                  SelectedIndex="{Binding Path=SelectedWalletIndex}"
                                 Margin="342,72,19,0" VerticalAlignment="Top" Height="46"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
@@ -85,19 +95,29 @@
                             <TextBlock Height="32" VerticalAlignment="Top" 
                                 HorizontalAlignment="Left" Width="105" 
                                 Margin="342,35,0,0"><Run Language="ru-ru" Text="Кошелёк"/><Run Text=":"/></TextBlock>
-                            <Button Height="45" Content="Подтвердить" VerticalAlignment="Top"
+                            <Button 
+                                 Command="{Binding Path=ReplenishCommand}"
+                                Height="45" Content="Подтвердить" VerticalAlignment="Top"
                                 Margin="20,123,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="180"/>
                         </Grid>
 
                         <Grid>
 
                             <GroupBox Header="Снятие" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center" Width="694" Margin="0,188,0,0"/>
-                            <TextBox Width="194" Height="45" Margin="20,256,0,0" 
+                            <TextBox 
+                                Text="{Binding Path=ExpenseBalance,
+                            UpdateSourceTrigger=PropertyChanged}"
+                                Width="194" Height="45" Margin="20,256,0,0" 
                                   VerticalAlignment="Top" HorizontalAlignment="Left"
                                   VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                            <Button Height="45" Content="Подтвердить" VerticalAlignment="Top"
+                            <Button 
+                                  Command="{Binding Path=ExpenseCommand}"
+                                Height="45" Content="Подтвердить" VerticalAlignment="Top"
                                 Margin="21,306,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="180"/>
-                            <ComboBox Margin="219,256,0,0" VerticalAlignment="Top" Height="45" HorizontalAlignment="Left" Width="246"/>
+                            <ComboBox 
+                                ItemsSource="{Binding Path=WalletsModel.Wallets}"
+                                 SelectedIndex="{Binding Path=SelectedWalletIndex}"
+                                Margin="219,256,0,0" VerticalAlignment="Top" Height="45" HorizontalAlignment="Left" Width="246"/>
                             <TextBlock Height="33" VerticalAlignment="Top" 
                                 HorizontalAlignment="Left" Width="79" 
                                 Margin="21,223,0,0"><Run Text="С"/><Run Language="ru-ru" Text="умма"/><Run Text=":"/></TextBlock>
@@ -107,14 +127,20 @@
                             <TextBlock Height="33" VerticalAlignment="Top" 
                                 HorizontalAlignment="Left" Width="121" 
                                 Margin="470,223,0,0"><Run Language="ru-ru" Text="Категория:"/></TextBlock>
-                            <ComboBox Margin="470,256,19,0" VerticalAlignment="Top" Height="45"/>
+                            <ComboBox 
+                                 ItemsSource="{Binding Path=Category}"
+                                 SelectedIndex="{Binding Path=SelectedCategoryIndex}"
+                                Margin="470,256,19,0" VerticalAlignment="Top" Height="45"/>
 
 
 
                         </Grid>
                         <TextBlock HorizontalAlignment="Left" Margin="10,373,0,0" 
                                    TextWrapping="Wrap" VerticalAlignment="Top" Text="Учёт:"/>
-                        <ListBox Margin="10,410,10,10"/>
+                        <ListBox 
+                             ItemsSource="{Binding Path=Operations}"
+                                 SelectedIndex="{Binding Path=SelectedOperationIndex}"
+                            Margin="10,410,10,10"/>
 
 
 
