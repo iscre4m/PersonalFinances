@@ -14,7 +14,7 @@ namespace PersonalFinances
 
         public override string ToString()
         {
-            return "Снятие          " + base.ToString() + " - " + Category;
+            return base.ToString() + " - " + Category + " - Снятие";
         }
     }
 }

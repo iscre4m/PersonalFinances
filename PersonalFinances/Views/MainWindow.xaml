@@ -13,12 +13,13 @@
         <local:WalletsViewModel x:Key="walletsViewModel"
                                 WalletsModel="{StaticResource walletsModel}"/>
         <local:OperationsModel x:Key="operationsModel"/>
+        <local:CategoriesModel x:Key="categoriesModel"/>
         <local:OperationsViewModel x:Key="operationsViewModel"
-                                WalletsModel="{StaticResource walletsModel}"
-                                   OperationsModel="{StaticResource operationsModel}"/>
+                                   WalletsModel="{StaticResource walletsModel}"
+                                   OperationsModel="{StaticResource operationsModel}"
+                                   CategoriesModel="{StaticResource categoriesModel}"/>
         
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
-        <local:CategoriesModel x:Key="categoriesModel"/>
         <local:OtherViewModel x:Key="otherViewModel"
                               IncomeSourcesModel="{StaticResource incomeSourcesModel}"
                               CategoriesModel="{StaticResource categoriesModel}"/>
@@ -139,7 +140,7 @@
                             <TextBlock Height="33" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="121" 
                                        Margin="470,223,0,0" Text="Категория:"/>
-                            <ComboBox ItemsSource="{Binding Path=Category}"
+                            <ComboBox ItemsSource="{Binding Path=CategoriesModel.Categories}"
                                       SelectedIndex="{Binding Path=SelectedCategoryIndex}"
                                       Margin="470,256,19,0"
                                       VerticalAlignment="Top" Height="45"/>
@@ -147,7 +148,7 @@
                         <TextBlock HorizontalAlignment="Left" Margin="10,373,0,0" 
                                    VerticalAlignment="Top" Text="Учёт"/>
                         <ListBox ItemsSource="{Binding Path=OperationsModel.Operations}"
-                                 Margin="10,410,10,10" IsEnabled="False"/>
+                                 Margin="10,410,10,10"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
@@ -163,7 +164,8 @@
                         <GroupBox Header="Источники доходов"
                                   Margin="10,0,10,275"/>
                         <ListBox Margin="30,38,30,335"
-                                 ItemsSource="{Binding IncomeSourcesModel.IncomeSources}"/>
+                                 ItemsSource="{Binding IncomeSourcesModel.IncomeSources}"
+                                 SelectedIndex="{Binding SelectedIncomeSourceIndex}"/>
                         <Button Content="Добавить" Height="45"
                                 Command="{Binding AddIncomeSourceCommand}"
                                 Margin="0,0,147,285"
@@ -186,7 +188,8 @@
                                   VerticalAlignment="Bottom"/>
                         <ListBox Margin="30,0,30,70" Height="167"
                                  VerticalAlignment="Bottom"
-                                 ItemsSource="{Binding CategoriesModel.Categories}"/>
+                                 ItemsSource="{Binding CategoriesModel.Categories}"
+                                 SelectedIndex="{Binding SelectedCategoryIndex}"/>
                         <Button Content="Добавить" Height="45"
                                 Command="{Binding AddCategoryCommand}"
                                 Margin="0,0,147,20"

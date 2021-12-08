@@ -12,5 +12,12 @@ namespace PersonalFinances
                 return categories;
             }
         }
+
+        public CategoriesModel()
+        {
+            categories.Add("Кино");
+            categories.Add("Продукты");
+            categories.Add("Развлечения");
+        }
     }
 }

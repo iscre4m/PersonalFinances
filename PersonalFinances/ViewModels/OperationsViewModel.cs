@@ -8,6 +8,7 @@ namespace PersonalFinances
     {
         WalletsModel walletsModel;
         OperationsModel operationsModel;
+        CategoriesModel categoriesModel;
         int selectedReplenishWalletIndex = -1;
         int selectedWithdrawWalletIndex = -1;
         int selectedCategoryIndex = -1;
@@ -43,7 +44,17 @@ namespace PersonalFinances
             {
                 operationsModel = value;            }
         }
-
+        public CategoriesModel CategoriesModel
+        {
+            get
+            {
+                return categoriesModel;
+            }
+            set
+            {
+                categoriesModel = value;
+            }
+        }
         public string[] Category
         {
             get
