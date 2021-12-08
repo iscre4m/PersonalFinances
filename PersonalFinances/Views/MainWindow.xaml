@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
         xmlns:local="clr-namespace:PersonalFinances"
         mc:Ignorable="d"
         Title="Personal Finances"
@@ -18,12 +19,16 @@
                                    WalletsModel="{StaticResource walletsModel}"
                                    OperationsModel="{StaticResource operationsModel}"
                                    CategoriesModel="{StaticResource categoriesModel}"/>
-        
+
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
         <local:OtherViewModel x:Key="otherViewModel"
                               IncomeSourcesModel="{StaticResource incomeSourcesModel}"
                               CategoriesModel="{StaticResource categoriesModel}"/>
+        
     </Window.Resources>
+    <Window.DataContext>
+        <local:ChartViewModel/>
+    </Window.DataContext>
     <Grid>
         <TabControl>
             <TabItem DataContext="{StaticResource walletsViewModel}"
@@ -216,7 +221,19 @@
                     <TextBlock Text="Графики"/>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid Background="#FFE5E5E5">
+                        <chart:SfChart Header="Расходы" FontSize="26">
+                            <chart:SfChart.PrimaryAxis>
+                                <chart:CategoryAxis/>
+                            </chart:SfChart.PrimaryAxis>
+                            <chart:SfChart.SecondaryAxis>
+                                <chart:NumericalAxis/>
+                            </chart:SfChart.SecondaryAxis>
+                            <chart:ColumnSeries ItemsSource="{Binding strs}" XBindingPath="X" YBindingPath="Y">
+                                
+                            </chart:ColumnSeries>
+                        </chart:SfChart>
+                    </Grid>
                 </TabItem.Content>
             </TabItem>
         </TabControl>
