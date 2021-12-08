@@ -4,8 +4,8 @@ namespace PersonalFinances
 {
     class IncomeModel : OperationModel
     {
-        public IncomeModel(DateTime date, string walletModel, double sum)
-            : base(date, walletModel, sum)
+        public IncomeModel(DateTime date, string walletModel, double sum, string walletCurrency)
+            : base(date, walletModel, sum, walletCurrency)
         {
         }
 

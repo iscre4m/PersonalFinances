@@ -63,7 +63,10 @@ namespace PersonalFinances
         void Replenish()
         {
             walletsModel.Wallets[SelectedReplenishWalletIndex].Replenish(double.Parse(IncomeSum));
-            operationsModel.Operations.Add(new IncomeModel(DateTime.Now, ((WalletModel)walletsModel.Wallets[selectedReplenishWalletIndex]).Title, double.Parse(IncomeSum)));
+            operationsModel.Operations.Add(new IncomeModel(DateTime.Now,
+                ((WalletModel)walletsModel.Wallets[selectedReplenishWalletIndex]).Title,
+                double.Parse(IncomeSum),
+                ((WalletModel)WalletsModel.Wallets[selectedReplenishWalletIndex]).Currency));
             IncomeSum = "0";
             SelectedReplenishWalletIndex = -1;
         }
@@ -124,6 +127,7 @@ namespace PersonalFinances
             operationsModel.Operations.Add(new ExpenseModel(DateTime.Now,
                                            ((WalletModel)walletsModel.Wallets[selectedWithdrawWalletIndex]).Title,
                                            double.Parse(ExpenseSum),
+                                           ((WalletModel)WalletsModel.Wallets[selectedWithdrawWalletIndex]).Currency,
                                            categoriesModel.Categories[selectedCategoryIndex]));
             ExpenseSum = "0";
             SelectedWithdrawWalletIndex = -1;

@@ -6,8 +6,8 @@ namespace PersonalFinances
     { 
         public string Category { get; set; }
 
-        public ExpenseModel(DateTime date, string walletModel, double sum, string category)
-             : base(date, walletModel, sum)
+        public ExpenseModel(DateTime date, string walletModel, double sum, string walletCurrency, string category)
+             : base(date, walletModel, sum, walletCurrency)
         {
             Category = category;
         }
