@@ -12,8 +12,10 @@
         <local:WalletsModel x:Key="walletsModel"/>
         <local:WalletsViewModel x:Key="walletsViewModel"
                                 WalletsModel="{StaticResource walletsModel}"/>
+        <local:OperationsModel x:Key="operationsModel"/>
         <local:OperationsViewModel x:Key="operationsViewModel"
-                                WalletsModel="{StaticResource walletsModel}"/>
+                                WalletsModel="{StaticResource walletsModel}"
+                                   OperationsModel="{StaticResource operationsModel}"/>
         
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
         <local:CategoriesModel x:Key="categoriesModel"/>
@@ -86,7 +88,7 @@
                                      VerticalContentAlignment="Center"
                                      HorizontalContentAlignment="Left"/>
                             <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
-                                      SelectedIndex="{Binding Path=SelectedWalletIndex}"
+                                      SelectedIndex="{Binding Path=SelectedReplenishWalletIndex}"
                                       Margin="342,72,19,0"
                                       VerticalAlignment="Top" Height="46"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
@@ -124,7 +126,7 @@
                                     VerticalContentAlignment="Center" 
                                     HorizontalAlignment="Left" Width="180"/>
                             <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
-                                      SelectedIndex="{Binding Path=SelectedWalletIndex}"
+                                      SelectedIndex="{Binding Path=SelectedWithdrawWalletIndex}"
                                       Margin="219,256,0,0" Height="45" 
                                       VerticalAlignment="Top"
                                       HorizontalAlignment="Left" Width="246"/>
@@ -144,7 +146,7 @@
                         </Grid>
                         <TextBlock HorizontalAlignment="Left" Margin="10,373,0,0" 
                                    VerticalAlignment="Top" Text="Учёт"/>
-                        <ListBox ItemsSource="{Binding Path=OperationsModel}"
+                        <ListBox ItemsSource="{Binding Path=OperationsModel.Operations}"
                                  Margin="10,410,10,10" IsEnabled="False"/>
                     </Grid>
                 </TabItem.Content>

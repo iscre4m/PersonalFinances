@@ -17,7 +17,7 @@ namespace PersonalFinances
 
         public override string ToString()
         {
-            return Date.ToShortDateString() + " - " + WalletName + " - " + Sum.ToString();
+            return Date.ToShortDateString() + ' ' + Date.ToLongTimeString() + " - " + WalletName + " - " + Sum.ToString();
         }
     }
 }

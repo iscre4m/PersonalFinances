@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using System.Text.RegularExpressions;
+using System;
 
 namespace PersonalFinances
 {
@@ -7,7 +8,8 @@ namespace PersonalFinances
     {
         WalletsModel walletsModel;
         OperationsModel operationsModel;
-        int selectedWalletIndex = -1;
+        int selectedReplenishWalletIndex = -1;
+        int selectedWithdrawWalletIndex = -1;
         int selectedCategoryIndex = -1;
         string[] categories = { "Продукты", "Кино", "Развлечения" };
         ICommand replenishCommand;
@@ -37,6 +39,9 @@ namespace PersonalFinances
             {
                 return operationsModel;
             }
+            set
+            {
+                operationsModel = value;            }
         }
 
         public string[] Category
@@ -46,18 +51,34 @@ namespace PersonalFinances
                 return categories;
             }
         }
-        public int SelectedWalletIndex
+        public int SelectedReplenishWalletIndex
         {
             get
             {
-                return selectedWalletIndex;
+                return selectedReplenishWalletIndex;
             }
             set
             {
-                if (value != selectedWalletIndex)
+                if (value != selectedReplenishWalletIndex)
                 {
-                    selectedWalletIndex = value;
-                    OnPropertyChanged("SelectedWalletIndex");
+                    selectedReplenishWalletIndex = value;
+                    OnPropertyChanged("SelectedReplenishWalletIndex");
+                }
+            }
+        }
+
+        public int SelectedWithdrawWalletIndex
+        {
+            get
+            {
+                return selectedWithdrawWalletIndex;
+            }
+            set
+            {
+                if (value != selectedWithdrawWalletIndex)
+                {
+                    selectedWithdrawWalletIndex = value;
+                    OnPropertyChanged("SelectedWithdrawWalletIndex");
                 }
             }
         }
@@ -86,7 +107,7 @@ namespace PersonalFinances
                 if (replenishCommand == null)
                 {
                     replenishCommand = new DelegateCommand(param => Replenish(),
-                                                     param => (SelectedWalletIndex > -1
+                                                     param => (SelectedReplenishWalletIndex > -1
                                                             && sumRegEx.IsMatch(IncomeSum)));
                 }
                 return replenishCommand;
@@ -94,7 +115,8 @@ namespace PersonalFinances
         }
         void Replenish()
         {
-            walletsModel.Wallets[SelectedWalletIndex].Replenish(double.Parse(IncomeSum));
+            walletsModel.Wallets[SelectedReplenishWalletIndex].Replenish(double.Parse(IncomeSum));
+            operationsModel.Operations.Add(new IncomeModel(DateTime.Now, ((WalletModel)walletsModel.Wallets[selectedReplenishWalletIndex]).Title, double.Parse(IncomeSum)));
             IncomeSum = "0";
             OnPropertyChanged("IncomeSum");
         }
@@ -106,16 +128,17 @@ namespace PersonalFinances
                 if (withdrawCommand == null)
                 {
                     withdrawCommand = new DelegateCommand(param => Withdraw(),
-                                                        param => (SelectedWalletIndex > -1
+                                                        param => (SelectedWithdrawWalletIndex > -1
                                                                && sumRegEx.IsMatch(ExpenseSum)
-                                                               && ((WalletModel)walletsModel.Wallets[selectedWalletIndex]).Balance - double.Parse(ExpenseSum) >= 0));
+                                                               && ((WalletModel)walletsModel.Wallets[selectedWithdrawWalletIndex]).Balance - double.Parse(ExpenseSum) >= 0));
                 }
                 return withdrawCommand;
             }
         }
         void Withdraw()
         {
-            walletsModel.Wallets[selectedWalletIndex].Withdraw(double.Parse(ExpenseSum));
+            walletsModel.Wallets[selectedWithdrawWalletIndex].Withdraw(double.Parse(ExpenseSum));
+            operationsModel.Operations.Add(new ExpenseModel(DateTime.Now, ((WalletModel)walletsModel.Wallets[selectedWithdrawWalletIndex]).Title, double.Parse(ExpenseSum), categories[selectedCategoryIndex]));
             ExpenseSum = "0";
             OnPropertyChanged("ExpenseSum");
         }
