@@ -17,23 +17,6 @@ namespace PersonalFinances
             }
         }
 
-        int selectedIncomeSourceIndex = -1;
-        public int SelectedIncomeSourceIndex
-        {
-            get
-            {
-                return selectedIncomeSourceIndex;
-            }
-            set
-            {
-                if (value != selectedIncomeSourceIndex)
-                {
-                    selectedIncomeSourceIndex = value;
-                    OnPropertyChanged("SelectedIncomeSourceIndex");
-                }
-            }
-        }
-
         ICommand addIncomeSourceCommand;
         public ICommand AddIncomeSourceCommand
         {
@@ -51,7 +34,6 @@ namespace PersonalFinances
         {
             IncomeSourcesModel.IncomeSources.Add(IncomeSourceTitle);
             IncomeSourceTitle = "";
-            OnPropertyChanged("IncomeSourceTitle");
         }
 
         ICommand removeIncomeSourceCommand;
@@ -72,7 +54,39 @@ namespace PersonalFinances
             IncomeSourcesModel.IncomeSources.RemoveAt(selectedIncomeSourceIndex);
         }
 
-        public string IncomeSourceTitle { get; set; }
+        string incomeSourceTitle = "";
+        public string IncomeSourceTitle
+        {
+            get
+            {
+                return incomeSourceTitle;
+            }
+            set
+            {
+                if (value != incomeSourceTitle)
+                {
+                    incomeSourceTitle = value;
+                    OnPropertyChanged("IncomeSourceTitle");
+                }
+            }
+        }
+
+        int selectedIncomeSourceIndex = -1;
+        public int SelectedIncomeSourceIndex
+        {
+            get
+            {
+                return selectedIncomeSourceIndex;
+            }
+            set
+            {
+                if (value != selectedIncomeSourceIndex)
+                {
+                    selectedIncomeSourceIndex = value;
+                    OnPropertyChanged("SelectedIncomeSourceIndex");
+                }
+            }
+        }
 
         CategoriesModel categoriesModel;
         public CategoriesModel CategoriesModel
@@ -84,23 +98,6 @@ namespace PersonalFinances
             set
             {
                 categoriesModel = value;
-            }
-        }
-
-        int selectedCategoryIndex = -1;
-        public int SelectedCategoryIndex
-        {
-            get
-            {
-                return selectedCategoryIndex;
-            }
-            set
-            {
-                if (value != selectedCategoryIndex)
-                {
-                    selectedCategoryIndex = value;
-                    OnPropertyChanged("SelectedCategoryIndex");
-                }
             }
         }
 
@@ -142,12 +139,38 @@ namespace PersonalFinances
             CategoriesModel.Categories.RemoveAt(selectedCategoryIndex);
         }
 
-        public string CategoryTitle { get; set; }
-
-        public OtherViewModel()
+        string categoryTitle = "";
+        public string CategoryTitle
         {
-            IncomeSourceTitle = "";
-            CategoryTitle = "";
+            get
+            {
+                return categoryTitle;
+            }
+            set
+            {
+                if (value != categoryTitle)
+                {
+                    categoryTitle = value;
+                    OnPropertyChanged("CategoryTitle");
+                }
+            }
+        }
+
+        int selectedCategoryIndex = -1;
+        public int SelectedCategoryIndex
+        {
+            get
+            {
+                return selectedCategoryIndex;
+            }
+            set
+            {
+                if (value != selectedCategoryIndex)
+                {
+                    selectedCategoryIndex = value;
+                    OnPropertyChanged("SelectedCategoryIndex");
+                }
+            }
         }
     }
 }

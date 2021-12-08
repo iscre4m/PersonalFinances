@@ -6,21 +6,6 @@ namespace PersonalFinances
     internal class WalletsViewModel : Notifier
     {
         WalletsModel walletsModel;
-        int selectedWalletIndex = -1;
-        string[] currencies = { "UAH", "USD", "EUR" };
-        int selectedCurrencyIndex = -1;
-
-        ICommand addCommand;
-        ICommand removeCommand;
-
-        public WalletsViewModel()
-        {
-            Title = "";
-            Balance = "0";
-        }
-
-        public string Title { get; set; }
-        public string Balance { get; set; }
         public WalletsModel WalletsModel
         {
             set
@@ -32,6 +17,8 @@ namespace PersonalFinances
                 return walletsModel;
             }
         }
+
+        int selectedWalletIndex = -1;
         public int SelectedWalletIndex
         {
             get
@@ -44,33 +31,31 @@ namespace PersonalFinances
                 {
                     selectedWalletIndex = value;
                     OnPropertyChanged("SelectedWalletIndex");
+                    selectedWalletTitle = ((WalletModel)walletsModel.Wallets[selectedWalletIndex]).Title;
+                    OnPropertyChanged("SelectedWalletTitle");
                 }
             }
         }
-        public string[] Currencies
+
+        string selectedWalletTitle = "";
+        public string SelectedWalletTitle
         {
             get
             {
-                return currencies;
-            }
-        }
-        public int SelectedCurrencyIndex
-        {
-            get
-            {
-                return selectedCurrencyIndex;
+                return selectedWalletTitle;
             }
             set
             {
-                if (value != selectedCurrencyIndex)
+                if (value != selectedWalletTitle)
                 {
-                    selectedCurrencyIndex = value;
-                    OnPropertyChanged("SelectedCurrencyIndex");
+                    selectedWalletTitle = value;
+                    OnPropertyChanged("SelectedWalletTitle");
                 }
             }
         }
         Regex titleRegEx = new Regex(@"^[a-zA-Z]\w*$");
         Regex balanceRegEx = new Regex(@"(^0|^[1-9][0-9]*)(\.(0[1-9]|[1-9][0-9]?))?$");
+        ICommand addCommand;
         public ICommand AddCommand
         {
             get
@@ -89,12 +74,11 @@ namespace PersonalFinances
         {
             walletsModel.Wallets.Add(new WalletModel(Title, currencies[selectedCurrencyIndex], double.Parse(Balance)));
             Title = "";
-            OnPropertyChanged("Title");
             Balance = "0";
-            OnPropertyChanged("Balance");
             SelectedCurrencyIndex = -1;
-            OnPropertyChanged("SelectedCurrencyIndex");
         }
+
+        ICommand removeCommand;
         public ICommand RemoveCommand
         {
             get
@@ -107,10 +91,69 @@ namespace PersonalFinances
                 return removeCommand;
             }
         }
-
         void RemoveWallet()
         {
             walletsModel.Wallets.RemoveAt(selectedWalletIndex);
+        }
+
+        string title = "";
+        public string Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                if (value != title)
+                {
+                    title = value;
+                    OnPropertyChanged("Title");
+                }
+            }
+        }
+
+        string balance = "0";
+        public string Balance
+        {
+            get
+            {
+                return balance;
+            }
+            set
+            {
+                if (value != balance)
+                {
+                    balance = value;
+                    OnPropertyChanged("Balance");
+                }
+            }
+        }
+
+        string[] currencies = { "UAH", "USD", "EUR" };
+        public string[] Currencies
+        {
+            get
+            {
+                return currencies;
+            }
+        }
+
+        int selectedCurrencyIndex = -1;
+        public int SelectedCurrencyIndex
+        {
+            get
+            {
+                return selectedCurrencyIndex;
+            }
+            set
+            {
+                if (value != selectedCurrencyIndex)
+                {
+                    selectedCurrencyIndex = value;
+                    OnPropertyChanged("SelectedCurrencyIndex");
+                }
+            }
         }
     }
 }

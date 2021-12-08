@@ -26,7 +26,7 @@
 
         public override string ToString()
         {
-            return Title + ' ' + Balance.ToString() + ' ' + Currency;
+            return Title + ' ' + Currency;
         }
     }
 }
