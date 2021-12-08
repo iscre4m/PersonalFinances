@@ -64,9 +64,9 @@ namespace PersonalFinances
         {
             walletsModel.Wallets[SelectedReplenishWalletIndex].Replenish(double.Parse(IncomeSum));
             operationsModel.Operations.Add(new IncomeModel(DateTime.Now,
-                ((WalletModel)walletsModel.Wallets[selectedReplenishWalletIndex]).Title,
+                walletsModel.Wallets[selectedReplenishWalletIndex].Title,
                 double.Parse(IncomeSum),
-                ((WalletModel)WalletsModel.Wallets[selectedReplenishWalletIndex]).Currency));
+                WalletsModel.Wallets[selectedReplenishWalletIndex].Currency));
             IncomeSum = "0";
             SelectedReplenishWalletIndex = -1;
         }
@@ -115,7 +115,7 @@ namespace PersonalFinances
                     withdrawCommand = new DelegateCommand(param => Withdraw(),
                                                         param => (SelectedWithdrawWalletIndex > -1
                                                                && sumRegEx.IsMatch(ExpenseSum)
-                                                               && ((WalletModel)walletsModel.Wallets[selectedWithdrawWalletIndex]).Balance - double.Parse(ExpenseSum) >= 0)
+                                                               && walletsModel.Wallets[selectedWithdrawWalletIndex].Balance - double.Parse(ExpenseSum) >= 0)
                                                                && SelectedCategoryIndex > -1);
                 }
                 return withdrawCommand;
@@ -125,9 +125,9 @@ namespace PersonalFinances
         {
             walletsModel.Wallets[selectedWithdrawWalletIndex].Withdraw(double.Parse(ExpenseSum));
             operationsModel.Operations.Add(new ExpenseModel(DateTime.Now,
-                                           ((WalletModel)walletsModel.Wallets[selectedWithdrawWalletIndex]).Title,
+                                           walletsModel.Wallets[selectedWithdrawWalletIndex].Title,
                                            double.Parse(ExpenseSum),
-                                           ((WalletModel)WalletsModel.Wallets[selectedWithdrawWalletIndex]).Currency,
+                                           WalletsModel.Wallets[selectedWithdrawWalletIndex].Currency,
                                            categoriesModel.Categories[selectedCategoryIndex]));
             ExpenseSum = "0";
             SelectedWithdrawWalletIndex = -1;

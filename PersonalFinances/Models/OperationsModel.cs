@@ -4,7 +4,7 @@ namespace PersonalFinances
 {
     internal class OperationsModel
     {
-        ObservableCollection<OperationModel> operations = new ObservableCollection<OperationModel>();
+        readonly ObservableCollection<OperationModel> operations = new();
         public ObservableCollection<OperationModel> Operations
         {
             get

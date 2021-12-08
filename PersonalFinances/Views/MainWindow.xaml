@@ -24,11 +24,9 @@
         <local:OtherViewModel x:Key="otherViewModel"
                               IncomeSourcesModel="{StaticResource incomeSourcesModel}"
                               CategoriesModel="{StaticResource categoriesModel}"/>
-        
+
+        <local:ChartsViewModel x:Key="chartsViewModel"/>
     </Window.Resources>
-    <Window.DataContext>
-        <local:ChartViewModel/>
-    </Window.DataContext>
     <Grid>
         <TabControl>
             <TabItem DataContext="{StaticResource walletsViewModel}"
@@ -221,7 +219,7 @@
                     <TextBlock Text="Графики"/>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Grid Background="#FFE5E5E5">
+                    <Grid Background="#FFE5E5E5" DataContext="{StaticResource chartsViewModel}">
                         <chart:SfChart Header="Расходы" FontSize="26">
                             <chart:SfChart.PrimaryAxis>
                                 <chart:CategoryAxis/>
@@ -229,8 +227,9 @@
                             <chart:SfChart.SecondaryAxis>
                                 <chart:NumericalAxis/>
                             </chart:SfChart.SecondaryAxis>
-                            <chart:ColumnSeries ItemsSource="{Binding strs}" XBindingPath="X" YBindingPath="Y">
-                                
+                            <chart:ColumnSeries ItemsSource="{Binding strs}"
+                                                XBindingPath="X"
+                                                YBindingPath="Y">
                             </chart:ColumnSeries>
                         </chart:SfChart>
                     </Grid>

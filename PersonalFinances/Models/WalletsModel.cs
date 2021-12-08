@@ -4,9 +4,9 @@ namespace PersonalFinances
 {
     internal class WalletsModel : Notifier
     {
-        ObservableCollection<IWalletModel> wallets = new ObservableCollection<IWalletModel>();
+        readonly ObservableCollection<WalletModel> wallets = new();
 
-        public ObservableCollection<IWalletModel> Wallets
+        public ObservableCollection<WalletModel> Wallets
         {
             get
             {

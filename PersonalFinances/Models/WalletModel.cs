@@ -1,6 +1,6 @@
 ﻿namespace PersonalFinances
 {
-    class WalletModel : Notifier, IWalletModel
+    class WalletModel : Notifier
     {
         public string Title { get; }
         public string Currency { get; private set; }

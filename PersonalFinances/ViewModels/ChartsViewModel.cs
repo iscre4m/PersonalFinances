@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PersonalFinances
 {
-    internal class ChartViewModel : Notifier
+    internal class ChartsViewModel : Notifier
     {
         public List<Str> strs { get; set; }
-        public ChartViewModel()
+        public ChartsViewModel()
         {
             strs = new List<Str>()
             {

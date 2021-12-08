@@ -18,6 +18,15 @@ namespace PersonalFinances
             }
         }
 
+        WalletModel selectedWallet;
+        public WalletModel SelectedWallet
+        {
+            get
+            {
+                return selectedWallet;
+            }
+        }
+
         int selectedWalletIndex = -1;
         public int SelectedWalletIndex
         {
@@ -31,28 +40,12 @@ namespace PersonalFinances
                 {
                     selectedWalletIndex = value;
                     OnPropertyChanged("SelectedWalletIndex");
-                    selectedWalletTitle = ((WalletModel)walletsModel.Wallets[selectedWalletIndex]).Title;
-                    OnPropertyChanged("SelectedWalletTitle");
+                    selectedWallet = walletsModel.Wallets[selectedWalletIndex];
+                    OnPropertyChanged("SelectedWallet");
                 }
             }
         }
 
-        string selectedWalletTitle = "";
-        public string SelectedWalletTitle
-        {
-            get
-            {
-                return selectedWalletTitle;
-            }
-            set
-            {
-                if (value != selectedWalletTitle)
-                {
-                    selectedWalletTitle = value;
-                    OnPropertyChanged("SelectedWalletTitle");
-                }
-            }
-        }
         Regex titleRegEx = new Regex(@"^[a-zA-Z]\w*$");
         Regex balanceRegEx = new Regex(@"(^0|^[1-9][0-9]*)(\.(0[1-9]|[1-9][0-9]?))?$");
         ICommand addCommand;
@@ -72,7 +65,9 @@ namespace PersonalFinances
         }
         void AddWallet()
         {
-            walletsModel.Wallets.Add(new WalletModel(Title, currencies[selectedCurrencyIndex], double.Parse(Balance)));
+            walletsModel.Wallets.Add(new WalletModel(Title,
+                                                     currencies[selectedCurrencyIndex],
+                                                     double.Parse(Balance)));
             Title = "";
             Balance = "0";
             SelectedCurrencyIndex = -1;

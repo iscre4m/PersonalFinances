@@ -4,7 +4,7 @@ namespace PersonalFinances
 {
     internal class IncomeSourcesModel
     {
-        ObservableCollection<string> incomeSources = new ObservableCollection<string>();
+        readonly ObservableCollection<string> incomeSources = new();
         public ObservableCollection<string> IncomeSources
         {
             get
