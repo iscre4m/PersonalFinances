@@ -15,10 +15,12 @@
                                 WalletsModel="{StaticResource walletsModel}"/>
         <local:OperationsModel x:Key="operationsModel"/>
         <local:CategoriesModel x:Key="categoriesModel"/>
+        <local:ChartsModel x:Key="chartsModel"/>
         <local:OperationsViewModel x:Key="operationsViewModel"
                                    WalletsModel="{StaticResource walletsModel}"
                                    OperationsModel="{StaticResource operationsModel}"
-                                   CategoriesModel="{StaticResource categoriesModel}"/>
+                                   CategoriesModel="{StaticResource categoriesModel}"
+                                   ChartsModel="{StaticResource chartsModel}"/>
 
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
         <local:OtherViewModel x:Key="otherViewModel"
@@ -26,8 +28,7 @@
                               CategoriesModel="{StaticResource categoriesModel}"/>
 
         <local:ChartsViewModel x:Key="chartsViewModel"
-                               OperationsModel="{StaticResource operationsModel}"
-                               CategoriesModel="{StaticResource categoriesModel}"/>
+                               ChartsModel="{StaticResource chartsModel}"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -229,7 +230,7 @@
                             <chart:SfChart.SecondaryAxis>
                                 <chart:NumericalAxis/>
                             </chart:SfChart.SecondaryAxis>
-                            <chart:ColumnSeries ItemsSource="{Binding OperationsModel.Operations}"
+                            <chart:ColumnSeries ItemsSource="{Binding ChartsModel.Capacitor}"
                                                 XBindingPath="Category"
                                                 YBindingPath="Sum">
                             </chart:ColumnSeries>
