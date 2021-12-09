@@ -25,7 +25,9 @@
                               IncomeSourcesModel="{StaticResource incomeSourcesModel}"
                               CategoriesModel="{StaticResource categoriesModel}"/>
 
-        <local:ChartsViewModel x:Key="chartsViewModel"/>
+        <local:ChartsViewModel x:Key="chartsViewModel"
+                               OperationsModel="{StaticResource operationsModel}"
+                               CategoriesModel="{StaticResource categoriesModel}"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -227,9 +229,9 @@
                             <chart:SfChart.SecondaryAxis>
                                 <chart:NumericalAxis/>
                             </chart:SfChart.SecondaryAxis>
-                            <chart:ColumnSeries ItemsSource="{Binding strs}"
-                                                XBindingPath="X"
-                                                YBindingPath="Y">
+                            <chart:ColumnSeries ItemsSource="{Binding OperationsModel.Operations}"
+                                                XBindingPath="Category"
+                                                YBindingPath="Sum">
                             </chart:ColumnSeries>
                         </chart:SfChart>
                     </Grid>

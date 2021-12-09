@@ -5,6 +5,7 @@ namespace PersonalFinances
     internal class ChartsViewModel : Notifier
     {
         OperationsModel operationsModel;
+        CategoriesModel categoriesModel;
         public OperationsModel OperationsModel
         {
             get
@@ -14,6 +15,18 @@ namespace PersonalFinances
             set
             {
                 operationsModel = value;
+            }
+        }
+
+        public CategoriesModel CategoriesModel
+        {
+            get
+            {
+                return categoriesModel;
+            }
+            set
+            {
+                categoriesModel = value;
             }
         }
         public List<Str> strs { get; set; }
