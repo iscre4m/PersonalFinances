@@ -4,6 +4,18 @@ namespace PersonalFinances
 {
     internal class ChartsViewModel : Notifier
     {
+        OperationsModel operationsModel;
+        public OperationsModel OperationsModel
+        {
+            get
+            {
+                return operationsModel;
+            }
+            set
+            {
+                operationsModel = value;
+            }
+        }
         public List<Str> strs { get; set; }
         public ChartsViewModel()
         {
@@ -25,6 +37,5 @@ namespace PersonalFinances
         }
         public string X { get; set; }
         public string Y { get; set; }
-
     }
 }
