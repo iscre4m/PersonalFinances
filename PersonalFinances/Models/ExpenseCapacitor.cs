@@ -21,7 +21,6 @@ namespace PersonalFinances
                 if(value!=category)
                 {
                     category = value;
-                    //OnPropertyChanged("Category");
                 }
             }
         }
@@ -35,8 +34,7 @@ namespace PersonalFinances
             {
                 if (value != sum)
                 {
-                     sum = value;
-                     //OnPropertyChanged("Sum");
+                    sum = value;
                 }
                
             }

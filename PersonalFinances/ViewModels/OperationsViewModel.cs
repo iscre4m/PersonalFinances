@@ -179,7 +179,8 @@ namespace PersonalFinances
                 {
                     if(chartsModel.Capacitor[i].Category==categoriesModel.Categories[selectedCategoryIndex])
                     {
-                        chartsModel.Capacitor[i].Sum += double.Parse(ExpenseSum);
+                        chartsModel.Capacitor[i].AddSum(double.Parse(ExpenseSum));
+                        OnPropertyChanged("ChartsModel");
                         count++;
                     }
                 }
