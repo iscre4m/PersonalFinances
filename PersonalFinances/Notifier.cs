@@ -8,7 +8,7 @@ namespace PersonalFinances
 
         protected void OnPropertyChanged(string name)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(name));
+            //PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
     }
 }
