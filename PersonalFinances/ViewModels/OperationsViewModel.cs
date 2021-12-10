@@ -58,6 +58,7 @@ namespace PersonalFinances
                 chartsModel = value;
             }
         }
+
         Regex sumRegEx = new Regex(@"^[1-9][0-9]*(\.(0[1-9]|[1-9][0-9]?))?$");
         ICommand replenishCommand;
         public ICommand ReplenishCommand
@@ -84,6 +85,15 @@ namespace PersonalFinances
             SelectedReplenishWalletIndex = -1;
         }
 
+        string selectedReplenishWalletBalance = "0";
+        public string SelectedReplenishWalletBalance
+        {
+            get
+            {
+                return selectedReplenishWalletBalance;
+            }
+        }
+
         int selectedReplenishWalletIndex = -1;
         public int SelectedReplenishWalletIndex
         {
@@ -97,6 +107,14 @@ namespace PersonalFinances
                 {
                     selectedReplenishWalletIndex = value;
                     OnPropertyChanged("SelectedReplenishWalletIndex");
+                    if (selectedReplenishWalletIndex == -1)
+                    {
+                        selectedReplenishWalletBalance = "0";
+                        OnPropertyChanged("SelectedReplenishWalletBalance");
+                        return;
+                    }
+                    selectedReplenishWalletBalance = walletsModel.Wallets[selectedReplenishWalletIndex].Balance.ToString();
+                    OnPropertyChanged("SelectedReplenishWalletBalance");
                 }
             }
         }
@@ -172,6 +190,15 @@ namespace PersonalFinances
             }
         }
 
+        string selectedWithdrawWalletBalance = "0";
+        public string SelectedWithdrawWalletBalance
+        {
+            get
+            {
+                return selectedWithdrawWalletBalance;
+            }
+        }
+
         int selectedWithdrawWalletIndex = -1;
         public int SelectedWithdrawWalletIndex
         {
@@ -185,6 +212,14 @@ namespace PersonalFinances
                 {
                     selectedWithdrawWalletIndex = value;
                     OnPropertyChanged("SelectedWithdrawWalletIndex");
+                    if (selectedWithdrawWalletIndex == -1)
+                    {
+                        selectedWithdrawWalletBalance = "0";
+                        OnPropertyChanged("SelectedWithdrawWalletBalance");
+                        return;
+                    }
+                    selectedWithdrawWalletBalance = walletsModel.Wallets[selectedWithdrawWalletIndex].Balance.ToString();
+                    OnPropertyChanged("SelectedWithdrawWalletBalance");
                 }
             }
         }

@@ -15,12 +15,7 @@ namespace PersonalFinances
             set
             {
                 chartsModel = value;
-                OnPropertyChanged("ChartsModel");
             }
-        }
-        public ChartsViewModel()
-        {
-          
         }
     }
 }

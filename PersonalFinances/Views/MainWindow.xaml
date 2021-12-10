@@ -42,16 +42,33 @@
                         <ListBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                  SelectedIndex="{Binding Path=SelectedWalletIndex}"
                                  Width="675" Margin="20,10,19,194"/>
-                        <TextBlock Text="Кошелёк:" Margin="20,0,0,157" HorizontalAlignment="Left" Height="32" VerticalAlignment="Bottom"/>
-                        <TextBlock Text="1000-7" Margin="128,0,0,157" HorizontalAlignment="Left" Height="32" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="Кошелёк:" Margin="20,0,0,157"
+                                   HorizontalAlignment="Left" Height="32"
+                                   VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{Binding SelectedWallet.Title,
+                                          UpdateSourceTrigger=PropertyChanged}"
+                                   Margin="128,0,0,157"
+                                   HorizontalAlignment="Left"
+                                   Height="32" VerticalAlignment="Bottom"/>
                         <TextBlock Text="Баланс:"
-                                   Height="32" Margin="20,0,0,120" HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.733,0.602"/>
-                        <TextBlock Text="1000-7"
-                                   Height="32" Margin="109,0,0,120" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                   Height="32" Margin="20,0,0,120"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"
+                                   RenderTransformOrigin="0.733,0.602"/>
+                        <TextBlock Text="{Binding SelectedWallet.Balance,
+                                          UpdateSourceTrigger=PropertyChanged}"
+                                   Height="32" Margin="109,0,0,120"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"/>
                         <TextBlock Text="Валюта:"
-                                   Height="32" Margin="370,0,0,114" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                        <TextBlock Text="1000-7"
-                                   Height="32" Margin="456,0,0,114" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                   Height="32" Margin="299,0,0,120"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{Binding SelectedWallet.Currency,
+                                          UpdateSourceTrigger=PropertyChanged}"
+                                   Height="32" Margin="389,0,0,120"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"/>
 
                         <Button Command="{Binding Path=AddCommand}"
                                 Content="Добавить"
@@ -122,8 +139,15 @@
                                     VerticalContentAlignment="Center" 
                                     HorizontalAlignment="Left" Width="180"/>
                             <TextBlock Text="Баланс:"
-                                       Height="32" Margin="349,130,0,0" HorizontalAlignment="Left" Width="91" VerticalAlignment="Top" />
-                            <TextBlock Text="1000-7" Margin="445,130,0,0" HorizontalAlignment="Left" Width="257" Height="32" VerticalAlignment="Top"/>
+                                       Height="32" Margin="349,130,0,0"
+                                       HorizontalAlignment="Left"
+                                       Width="91" VerticalAlignment="Top" />
+                            <TextBlock Text="{Binding SelectedReplenishWalletBalance,
+                                              UpdateSourceTrigger=PropertyChanged}"
+                                       Margin="445,130,0,0"
+                                       HorizontalAlignment="Left"
+                                       Width="257" Height="32"
+                                       VerticalAlignment="Top"/>
                         </Grid>
 
                         <Grid>
@@ -147,8 +171,15 @@
                                     VerticalContentAlignment="Center" 
                                     HorizontalAlignment="Left" Width="180"/>
                             <TextBlock Text="Баланс:"
-                                       Height="32" Margin="349,313,0,0" HorizontalAlignment="Left" Width="91" VerticalAlignment="Top" />
-                            <TextBlock Text="1000-7" Margin="440,313,0,0" HorizontalAlignment="Left" Width="385" Height="32" VerticalAlignment="Top"/>
+                                       Height="32" Margin="349,313,0,0"
+                                       HorizontalAlignment="Left" Width="91"
+                                       VerticalAlignment="Top" />
+                            <TextBlock Text="{Binding SelectedWithdrawWalletBalance,
+                                              UpdateSourceTrigger=PropertyChanged}"
+                                       Margin="440,313,0,0"
+                                       HorizontalAlignment="Left"
+                                       Width="385" Height="32"
+                                       VerticalAlignment="Top"/>
 
                             <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                       SelectedIndex="{Binding Path=SelectedWithdrawWalletIndex}"
