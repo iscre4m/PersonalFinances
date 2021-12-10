@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
         xmlns:local="clr-namespace:PersonalFinances"
         mc:Ignorable="d"
         Title="Personal Finances"
@@ -15,20 +14,15 @@
                                 WalletsModel="{StaticResource walletsModel}"/>
         <local:OperationsModel x:Key="operationsModel"/>
         <local:CategoriesModel x:Key="categoriesModel"/>
-        <local:ChartsModel x:Key="chartsModel"/>
         <local:OperationsViewModel x:Key="operationsViewModel"
                                    WalletsModel="{StaticResource walletsModel}"
                                    OperationsModel="{StaticResource operationsModel}"
-                                   CategoriesModel="{StaticResource categoriesModel}"
-                                   ChartsModel="{StaticResource chartsModel}"/>
+                                   CategoriesModel="{StaticResource categoriesModel}"/>
 
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
         <local:OtherViewModel x:Key="otherViewModel"
                               IncomeSourcesModel="{StaticResource incomeSourcesModel}"
                               CategoriesModel="{StaticResource categoriesModel}"/>
-
-        <local:ChartsViewModel x:Key="chartsViewModel"
-                               ChartsModel="{StaticResource chartsModel}"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -270,22 +264,6 @@
                 <TabItem.Header>
                     <TextBlock Text="Графики"/>
                 </TabItem.Header>
-                <TabItem.Content>
-                    <Grid Background="#FFE5E5E5" DataContext="{StaticResource chartsViewModel}">
-                        <chart:SfChart Header="Расходы" FontSize="26">
-                            <chart:SfChart.PrimaryAxis>
-                                <chart:CategoryAxis/>
-                            </chart:SfChart.PrimaryAxis>
-                            <chart:SfChart.SecondaryAxis>
-                                <chart:NumericalAxis/>
-                            </chart:SfChart.SecondaryAxis>
-                            <chart:ColumnSeries ItemsSource="{Binding ChartsModel.Capacitor}"
-                                                XBindingPath="Category"
-                                                YBindingPath="Sum">
-                            </chart:ColumnSeries>
-                        </chart:SfChart>
-                    </Grid>
-                </TabItem.Content>
             </TabItem>
         </TabControl>
     </Grid>

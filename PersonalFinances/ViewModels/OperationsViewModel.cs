@@ -45,20 +45,6 @@ namespace PersonalFinances
             }
         }
 
-        ChartsModel chartsModel;
-
-        public ChartsModel ChartsModel
-        {
-            get
-            {
-                return chartsModel;
-            }
-            set
-            {
-                chartsModel = value;
-            }
-        }
-
         Regex sumRegEx = new Regex(@"^[1-9][0-9]*(\.(0[1-9]|[1-9][0-9]?))?$");
         ICommand replenishCommand;
         public ICommand ReplenishCommand
@@ -160,35 +146,9 @@ namespace PersonalFinances
                                            double.Parse(ExpenseSum),
                                            WalletsModel.Wallets[selectedWithdrawWalletIndex].Currency,
                                            categoriesModel.Categories[selectedCategoryIndex]));
-            AddToCapacitor();
             ExpenseSum = "0";
             SelectedWithdrawWalletIndex = -1;
             SelectedCategoryIndex = -1;
-        }
-
-        void AddToCapacitor()
-        {
-            if(chartsModel.Capacitor.Count==0)
-            {
-            chartsModel.Capacitor.Add(new ExpenseCapacitor(categoriesModel.Categories[selectedCategoryIndex], double.Parse(ExpenseSum)));
-            }
-            else
-            {
-                int count = 0;
-                for (int i = 0; i < chartsModel.Capacitor.Count; i++)
-                {
-                    if(chartsModel.Capacitor[i].Category==categoriesModel.Categories[selectedCategoryIndex])
-                    {
-                        chartsModel.Capacitor[i].AddSum(double.Parse(ExpenseSum));
-                        OnPropertyChanged("ChartsModel");
-                        count++;
-                    }
-                }
-                if(count==0)
-                {
-                    chartsModel.Capacitor.Add(new ExpenseCapacitor(categoriesModel.Categories[selectedCategoryIndex], double.Parse(ExpenseSum)));
-                }
-            }
         }
 
         string selectedWithdrawWalletBalance = "0";
