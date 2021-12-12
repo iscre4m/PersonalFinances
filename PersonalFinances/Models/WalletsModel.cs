@@ -2,16 +2,13 @@
 
 namespace PersonalFinances
 {
-    internal class WalletsModel : Notifier
+    internal class WalletsModel
     {
-        readonly ObservableCollection<WalletModel> wallets = new();
+        readonly ObservableCollection<Wallet> wallets = new();
 
-        public ObservableCollection<WalletModel> Wallets
+        public ObservableCollection<Wallet> Wallets
         {
-            get
-            {
-                return wallets;
-            }
+            get => wallets;
         }
     }
 }

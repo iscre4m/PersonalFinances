@@ -4,13 +4,10 @@ namespace PersonalFinances
 {
     internal class OperationsModel
     {
-        readonly ObservableCollection<OperationModel> operations = new();
-        public ObservableCollection<OperationModel> Operations
+        readonly ObservableCollection<Operation> operations = new();
+        public ObservableCollection<Operation> Operations
         {
-            get
-            {
-                return operations;
-            }
+            get => operations;
         }
     }
 }

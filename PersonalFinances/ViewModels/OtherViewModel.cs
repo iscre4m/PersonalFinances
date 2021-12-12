@@ -4,16 +4,25 @@ namespace PersonalFinances
 {
     internal class OtherViewModel : Notifier
     {
+        #region Источники дохода
         IncomeSourcesModel incomeSourcesModel;
         public IncomeSourcesModel IncomeSourcesModel
         {
-            get
-            {
-                return incomeSourcesModel;
-            }
+            get => incomeSourcesModel;
+            set => incomeSourcesModel = value;
+        }
+
+        string incomeSourceTitle = "";
+        public string IncomeSourceTitle
+        {
+            get => incomeSourceTitle;
             set
             {
-                incomeSourcesModel = value;
+                if (value != incomeSourceTitle)
+                {
+                    incomeSourceTitle = value;
+                    OnPropertyChanged("IncomeSourceTitle");
+                }
             }
         }
 
@@ -25,7 +34,7 @@ namespace PersonalFinances
                 if (addIncomeSourceCommand == null)
                 {
                     addIncomeSourceCommand = new DelegateCommand(param => AddIncomeSource(),
-                                                                 param => (IncomeSourceTitle != ""));
+                                                                 param => IncomeSourceTitle != "");
                 }
                 return addIncomeSourceCommand;
             }
@@ -36,48 +45,10 @@ namespace PersonalFinances
             IncomeSourceTitle = "";
         }
 
-        ICommand removeIncomeSourceCommand;
-        public ICommand RemoveIncomeSourceCommand
-        {
-            get
-            {
-                if (removeIncomeSourceCommand == null)
-                {
-                    removeIncomeSourceCommand = new DelegateCommand(param => RemoveIncomeSource(),
-                                                                    param => (selectedIncomeSourceIndex > -1));
-                }
-                return removeIncomeSourceCommand;
-            }
-        }
-        void RemoveIncomeSource()
-        {
-            IncomeSourcesModel.IncomeSources.RemoveAt(selectedIncomeSourceIndex);
-        }
-
-        string incomeSourceTitle = "";
-        public string IncomeSourceTitle
-        {
-            get
-            {
-                return incomeSourceTitle;
-            }
-            set
-            {
-                if (value != incomeSourceTitle)
-                {
-                    incomeSourceTitle = value;
-                    OnPropertyChanged("IncomeSourceTitle");
-                }
-            }
-        }
-
         int selectedIncomeSourceIndex = -1;
         public int SelectedIncomeSourceIndex
         {
-            get
-            {
-                return selectedIncomeSourceIndex;
-            }
+            get => selectedIncomeSourceIndex;
             set
             {
                 if (value != selectedIncomeSourceIndex)
@@ -88,16 +59,44 @@ namespace PersonalFinances
             }
         }
 
-        CategoriesModel categoriesModel;
-        public CategoriesModel CategoriesModel
+        ICommand removeIncomeSourceCommand;
+        public ICommand RemoveIncomeSourceCommand
         {
             get
             {
-                return categoriesModel;
+                if (removeIncomeSourceCommand == null)
+                {
+                    removeIncomeSourceCommand = new DelegateCommand(param => RemoveIncomeSource(),
+                                                                    param => selectedIncomeSourceIndex > -1);
+                }
+                return removeIncomeSourceCommand;
             }
+        }
+        void RemoveIncomeSource()
+        {
+            IncomeSourcesModel.IncomeSources.RemoveAt(selectedIncomeSourceIndex);
+        }
+        #endregion
+
+        #region Категории
+        CategoriesModel categoriesModel;
+        public CategoriesModel CategoriesModel
+        {
+            get => categoriesModel;
+            set => categoriesModel = value;
+        }
+
+        string categoryTitle = "";
+        public string CategoryTitle
+        {
+            get => categoryTitle;
             set
             {
-                categoriesModel = value;
+                if (value != categoryTitle)
+                {
+                    categoryTitle = value;
+                    OnPropertyChanged("CategoryTitle");
+                }
             }
         }
 
@@ -109,7 +108,7 @@ namespace PersonalFinances
                 if (addCategoryCommand == null)
                 {
                     addCategoryCommand = new DelegateCommand(param => AddCategory(),
-                                                             param => (CategoryTitle != ""));
+                                                             param => CategoryTitle != "");
                 }
                 return addCategoryCommand;
             }
@@ -118,7 +117,20 @@ namespace PersonalFinances
         {
             CategoriesModel.Categories.Add(CategoryTitle);
             CategoryTitle = "";
-            OnPropertyChanged("CategoryTitle");
+        }
+
+        int selectedCategoryIndex = -1;
+        public int SelectedCategoryIndex
+        {
+            get => selectedCategoryIndex;
+            set
+            {
+                if (value != selectedCategoryIndex)
+                {
+                    selectedCategoryIndex = value;
+                    OnPropertyChanged("SelectedCategoryIndex");
+                }
+            }
         }
 
         ICommand removeCategoryCommand;
@@ -129,7 +141,7 @@ namespace PersonalFinances
                 if (removeCategoryCommand == null)
                 {
                     removeCategoryCommand = new DelegateCommand(param => RemoveCategory(),
-                                                                param => (selectedCategoryIndex > -1));
+                                                                param => selectedCategoryIndex > -1);
                 }
                 return removeCategoryCommand;
             }
@@ -138,39 +150,6 @@ namespace PersonalFinances
         {
             CategoriesModel.Categories.RemoveAt(selectedCategoryIndex);
         }
-
-        string categoryTitle = "";
-        public string CategoryTitle
-        {
-            get
-            {
-                return categoryTitle;
-            }
-            set
-            {
-                if (value != categoryTitle)
-                {
-                    categoryTitle = value;
-                    OnPropertyChanged("CategoryTitle");
-                }
-            }
-        }
-
-        int selectedCategoryIndex = -1;
-        public int SelectedCategoryIndex
-        {
-            get
-            {
-                return selectedCategoryIndex;
-            }
-            set
-            {
-                if (value != selectedCategoryIndex)
-                {
-                    selectedCategoryIndex = value;
-                    OnPropertyChanged("SelectedCategoryIndex");
-                }
-            }
-        }
+        #endregion
     }
 }

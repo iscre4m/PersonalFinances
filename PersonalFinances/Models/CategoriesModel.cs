@@ -7,10 +7,7 @@ namespace PersonalFinances
         readonly ObservableCollection<string> categories = new();
         public ObservableCollection<string> Categories
         {
-            get
-            {
-                return categories;
-            }
+            get => categories;
         }
 
         public CategoriesModel()
@@ -18,6 +15,7 @@ namespace PersonalFinances
             categories.Add("Кино");
             categories.Add("Продукты");
             categories.Add("Развлечения");
+            categories.Add("Прочее");
         }
     }
 }

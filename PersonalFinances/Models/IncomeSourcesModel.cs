@@ -7,10 +7,7 @@ namespace PersonalFinances
         readonly ObservableCollection<string> incomeSources = new();
         public ObservableCollection<string> IncomeSources
         {
-            get
-            {
-                return incomeSources;
-            }
+            get => incomeSources;
         }
     }
 }

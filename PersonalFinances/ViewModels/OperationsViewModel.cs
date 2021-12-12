@@ -9,39 +9,28 @@ namespace PersonalFinances
         WalletsModel walletsModel;
         public WalletsModel WalletsModel
         {
-            get
-            {
-                return walletsModel;
-            }
-            set
-            {
-                walletsModel = value;
-            }
+            get => walletsModel;
+            set => walletsModel = value;
         }
-
         OperationsModel operationsModel;
         public OperationsModel OperationsModel
         {
-            get
-            {
-                return operationsModel;
-            }
-            set
-            {
-                operationsModel = value;
-            }
+            get => operationsModel;
+            set => operationsModel = value;
         }
 
-        CategoriesModel categoriesModel;
-        public CategoriesModel CategoriesModel
+        #region Пополнение
+        string replenishSum = "0";
+        public string ReplenishSum
         {
-            get
-            {
-                return categoriesModel;
-            }
+            get => replenishSum;
             set
             {
-                categoriesModel = value;
+                if (value != replenishSum)
+                {
+                    replenishSum = value;
+                    OnPropertyChanged("ReplenishSum");
+                }
             }
         }
 
@@ -54,39 +43,38 @@ namespace PersonalFinances
                 if (replenishCommand == null)
                 {
                     replenishCommand = new DelegateCommand(param => Replenish(),
-                                                     param => (SelectedReplenishWalletIndex > -1
-                                                            && sumRegEx.IsMatch(IncomeSum)));
+                                                           param => selectedReplenishWalletIndex > -1
+                                                                 && sumRegEx.IsMatch(ReplenishSum));
                 }
                 return replenishCommand;
             }
         }
         void Replenish()
         {
-            walletsModel.Wallets[SelectedReplenishWalletIndex].Replenish(double.Parse(IncomeSum));
-            operationsModel.Operations.Add(new IncomeModel(DateTime.Now,
-                walletsModel.Wallets[selectedReplenishWalletIndex].Title,
-                double.Parse(IncomeSum),
-                WalletsModel.Wallets[selectedReplenishWalletIndex].Currency));
-            IncomeSum = "0";
+            walletsModel.Wallets[selectedReplenishWalletIndex].Replenish(double.Parse(ReplenishSum));
+            operationsModel.Operations.Add(new Income(DateTime.Now,
+                                                      walletsModel.Wallets[selectedReplenishWalletIndex].Title,
+                                                      double.Parse(ReplenishSum),
+                                                      WalletsModel.Wallets[selectedReplenishWalletIndex].Currency));
+            ReplenishSum = "0";
             SelectedReplenishWalletIndex = -1;
         }
 
         string selectedReplenishWalletBalance = "0";
         public string SelectedReplenishWalletBalance
         {
-            get
+            get => selectedReplenishWalletBalance;
+            set
             {
-                return selectedReplenishWalletBalance;
+                selectedReplenishWalletBalance = value;
+                OnPropertyChanged("SelectedReplenishWalletBalance");
             }
         }
 
         int selectedReplenishWalletIndex = -1;
         public int SelectedReplenishWalletIndex
         {
-            get
-            {
-                return selectedReplenishWalletIndex;
-            }
+            get => selectedReplenishWalletIndex;
             set
             {
                 if (value != selectedReplenishWalletIndex)
@@ -95,111 +83,21 @@ namespace PersonalFinances
                     OnPropertyChanged("SelectedReplenishWalletIndex");
                     if (selectedReplenishWalletIndex == -1)
                     {
-                        selectedReplenishWalletBalance = "0";
-                        OnPropertyChanged("SelectedReplenishWalletBalance");
+                        SelectedReplenishWalletBalance = "0";
                         return;
                     }
-                    selectedReplenishWalletBalance = walletsModel.Wallets[selectedReplenishWalletIndex].Balance.ToString();
-                    OnPropertyChanged("SelectedReplenishWalletBalance");
+                    SelectedReplenishWalletBalance = walletsModel.Wallets[selectedReplenishWalletIndex].Balance.ToString();
                 }
             }
         }
+        #endregion
 
-        string incomeSum = "0";
-        public string IncomeSum
+        #region Снятие
+        CategoriesModel categoriesModel;
+        public CategoriesModel CategoriesModel
         {
-            get
-            {
-                return incomeSum;
-            }
-            set
-            {
-                if (value != incomeSum)
-                {
-                    incomeSum = value;
-                    OnPropertyChanged("IncomeSum");
-                }
-            }
-        }
-
-        ICommand withdrawCommand;
-        public ICommand WithdrawCommand
-        {
-            get
-            {
-                if (withdrawCommand == null)
-                {
-                    withdrawCommand = new DelegateCommand(param => Withdraw(),
-                                                        param => (SelectedWithdrawWalletIndex > -1
-                                                               && sumRegEx.IsMatch(ExpenseSum)
-                                                               && walletsModel.Wallets[selectedWithdrawWalletIndex].Balance - double.Parse(ExpenseSum) >= 0)
-                                                               && SelectedCategoryIndex > -1);
-                }
-                return withdrawCommand;
-            }
-        }
-        void Withdraw()
-        {
-            walletsModel.Wallets[selectedWithdrawWalletIndex].Withdraw(double.Parse(ExpenseSum));
-            operationsModel.Operations.Add(new ExpenseModel(DateTime.Now,
-                                           walletsModel.Wallets[selectedWithdrawWalletIndex].Title,
-                                           double.Parse(ExpenseSum),
-                                           WalletsModel.Wallets[selectedWithdrawWalletIndex].Currency,
-                                           categoriesModel.Categories[selectedCategoryIndex]));
-            ExpenseSum = "0";
-            SelectedWithdrawWalletIndex = -1;
-            SelectedCategoryIndex = -1;
-        }
-
-        string selectedWithdrawWalletBalance = "0";
-        public string SelectedWithdrawWalletBalance
-        {
-            get
-            {
-                return selectedWithdrawWalletBalance;
-            }
-        }
-
-        int selectedWithdrawWalletIndex = -1;
-        public int SelectedWithdrawWalletIndex
-        {
-            get
-            {
-                return selectedWithdrawWalletIndex;
-            }
-            set
-            {
-                if (value != selectedWithdrawWalletIndex)
-                {
-                    selectedWithdrawWalletIndex = value;
-                    OnPropertyChanged("SelectedWithdrawWalletIndex");
-                    if (selectedWithdrawWalletIndex == -1)
-                    {
-                        selectedWithdrawWalletBalance = "0";
-                        OnPropertyChanged("SelectedWithdrawWalletBalance");
-                        return;
-                    }
-                    selectedWithdrawWalletBalance = walletsModel.Wallets[selectedWithdrawWalletIndex].Balance.ToString();
-                    OnPropertyChanged("SelectedWithdrawWalletBalance");
-                }
-            }
-        }
-
-        string expenseSum = "0";
-        public string ExpenseSum
-        {
-            get
-            {
-                return expenseSum;
-            }
-            set
-            {
-                if (value != expenseSum)
-                {
-                    expenseSum = value;
-                    OnPropertyChanged("ExpenseSum");
-                }
-            }
+            get => categoriesModel;
+            set => categoriesModel = value;
         }
 
         int selectedCategoryIndex = -1;
@@ -218,5 +116,86 @@ namespace PersonalFinances
                 }
             }
         }
+
+        string withdrawSum = "0";
+        public string WithdrawSum
+        {
+            get
+            {
+                return withdrawSum;
+            }
+            set
+            {
+                if (value != withdrawSum)
+                {
+                    withdrawSum = value;
+                    OnPropertyChanged("WithdrawSum");
+                }
+            }
+        }
+
+        int selectedWithdrawWalletIndex = -1;
+        public int SelectedWithdrawWalletIndex
+        {
+            get
+            {
+                return selectedWithdrawWalletIndex;
+            }
+            set
+            {
+                if (value != selectedWithdrawWalletIndex)
+                {
+                    selectedWithdrawWalletIndex = value;
+                    OnPropertyChanged("SelectedWithdrawWalletIndex");
+                    if (selectedWithdrawWalletIndex == -1)
+                    {
+                        SelectedWithdrawWalletBalance = "0";
+                        return;
+                    }
+                    SelectedWithdrawWalletBalance = walletsModel.Wallets[selectedWithdrawWalletIndex].Balance.ToString();
+                }
+            }
+        }
+
+        string selectedWithdrawWalletBalance = "0";
+        public string SelectedWithdrawWalletBalance
+        {
+            get => selectedWithdrawWalletBalance;
+            set
+            {
+                selectedWithdrawWalletBalance = value;
+                OnPropertyChanged("SelectedWithdrawWalletBalance");
+            }
+        }
+
+        ICommand withdrawCommand;
+        public ICommand WithdrawCommand
+        {
+            get
+            {
+                if (withdrawCommand == null)
+                {
+                    withdrawCommand = new DelegateCommand(param => Withdraw(),
+                                                        param => (SelectedWithdrawWalletIndex > -1
+                                                               && sumRegEx.IsMatch(WithdrawSum)
+                                                               && walletsModel.Wallets[selectedWithdrawWalletIndex].Balance - double.Parse(WithdrawSum) >= 0)
+                                                               && SelectedCategoryIndex > -1);
+                }
+                return withdrawCommand;
+            }
+        }
+        void Withdraw()
+        {
+            walletsModel.Wallets[selectedWithdrawWalletIndex].Withdraw(double.Parse(WithdrawSum));
+            operationsModel.Operations.Add(new Expense(DateTime.Now,
+                                           walletsModel.Wallets[selectedWithdrawWalletIndex].Title,
+                                           double.Parse(WithdrawSum),
+                                           WalletsModel.Wallets[selectedWithdrawWalletIndex].Currency,
+                                           categoriesModel.Categories[selectedCategoryIndex]));
+            WithdrawSum = "0";
+            SelectedWithdrawWalletIndex = -1;
+            SelectedCategoryIndex = -1;
+        }
+        #endregion
     }
 }
