@@ -119,7 +119,7 @@
                             <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                       SelectedIndex="{Binding Path=SelectedReplenishWalletIndex}"
                                       Margin="342,72,19,0"
-                                      VerticalAlignment="Top" Height="46"/>
+                                      VerticalAlignment="Top" Height="45"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="79" 
                                        Margin="21,40,0,0" Text="Сумма"/>
@@ -264,6 +264,41 @@
                 <TabItem.Header>
                     <TextBlock Text="Графики"/>
                 </TabItem.Header>
+                <TabItem.Content>
+                    <Grid Background="#FFE5E5E5">
+
+                        <TextBlock Text="Кошелёк:"
+                                   Height="32" Margin="10,10,0,0" Width="111" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <ComboBox Height="45" Margin="10,47,0,0"  Width="342"
+                                  VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        <TextBlock Text="Расходы/Доходы:" 
+                                   Height="32" Margin="357,10,0,0" Width="194"
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <RadioButton Content="Расходы" 
+                                     Height="45" Margin="383,47,0,0" Width="140"
+                                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                                     VerticalContentAlignment="Center"/>
+                        <RadioButton Content="Доходы" 
+                                     Height="45" Margin="531,47,0,0" 
+                                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                                     VerticalContentAlignment="Center"/>
+                        <TextBlock Text="Начальная дата:"
+                                   Height="32" Margin="14,92,0,0" 
+                                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <DatePicker Height="45" Margin="10,129,0,0" Width="342"
+                                    HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <TextBlock Text="Конечная дата:"
+                                   Height="32" Margin="358,92,0,0" 
+                                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <DatePicker Height="45" Margin="358,129,10,0" 
+                                    VerticalAlignment="Top"/>
+
+
+
+
+                    </Grid>
+                </TabItem.Content>
             </TabItem>
         </TabControl>
     </Grid>
