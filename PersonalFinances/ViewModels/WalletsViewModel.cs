@@ -13,48 +13,20 @@ namespace PersonalFinances
         }
 
         #region Добавление кошелька
-        string inputTitle = "";
-        public string InputTitle
+        Wallet newWallet = new();
+        public Wallet NewWallet
         {
-            get => inputTitle;
+            get => newWallet;
             set
             {
-                if (value != inputTitle)
+                if (value != newWallet)
                 {
-                    inputTitle = value;
-                    OnPropertyChanged("Title");
+                    newWallet = value;
+                    OnPropertyChanged("NewWallet");
                 }
             }
         }
-
         public string[] Currencies { get; } = { "UAH", "USD", "EUR" };
-        int selectedCurrencyIndex = -1;
-        public int SelectedCurrencyIndex
-        {
-            get => selectedCurrencyIndex;
-            set
-            {
-                if (value != selectedCurrencyIndex)
-                {
-                    selectedCurrencyIndex = value;
-                    OnPropertyChanged("SelectedCurrencyIndex");
-                }
-            }
-        }
-
-        string inputBalance = "0";
-        public string InputBalance
-        {
-            get => inputBalance;
-            set
-            {
-                if (value != inputBalance)
-                {
-                    inputBalance = value;
-                    OnPropertyChanged("Balance");
-                }
-            }
-        }
 
         Regex titleRegEx = new Regex(@"^[a-zA-Z]\w*$");
         Regex balanceRegEx = new Regex(@"(^0|^[1-9][0-9]*)(\.(0[1-9]|[1-9][0-9]?))?$");
@@ -66,49 +38,35 @@ namespace PersonalFinances
                 if (addCommand == null)
                 {
                     addCommand = new DelegateCommand(param => AddWallet(),
-                                                     param => titleRegEx.IsMatch(inputTitle)
-                                                           && selectedCurrencyIndex > -1
-                                                           && balanceRegEx.IsMatch(inputBalance));
+                                                     param => titleRegEx.IsMatch(newWallet.Title)
+                                                           && newWallet.Currency != ""
+                                                           && balanceRegEx.IsMatch(newWallet.Balance.ToString()));
                 }
                 return addCommand;
             }
         }
         void AddWallet()
         {
-            walletsModel.Wallets.Add(new Wallet(inputTitle,
-                                                     Currencies[selectedCurrencyIndex],
-                                                     double.Parse(inputBalance)));
-            InputTitle = "";
-            SelectedCurrencyIndex = -1;
-            InputBalance = "0";
+            walletsModel.Wallets.Add(newWallet);
+            newWallet = new();
+            OnPropertyChanged("NewWallet");
         }
         #endregion
 
         #region Удаление кошелька
-        int selectedWalletIndex = -1;
-        public int SelectedWalletIndex
+        Wallet selectedWallet;
+        public Wallet SelectedWallet
         {
-            get => selectedWalletIndex;
+            get => selectedWallet;
             set
             {
-                if (value != selectedWalletIndex)
+                if (value != selectedWallet)
                 {
-                    selectedWalletIndex = value;
-                    OnPropertyChanged("SelectedWalletIndex");
-                    if (selectedWalletIndex == -1)
-                    {
-                        SelectedWalletTitle = "";
-                        SelectedWalletCurrency = "";
-                        SelectedWalletBalance = "";
-                        return;
-                    }
-                    SelectedWalletTitle = walletsModel.Wallets[selectedWalletIndex].Title;
-                    SelectedWalletCurrency = walletsModel.Wallets[selectedWalletIndex].Currency;
-                    SelectedWalletBalance = walletsModel.Wallets[selectedWalletIndex].Balance.ToString();
+                    selectedWallet = value;
+                    OnPropertyChanged("SelectedWallet");
                 }
             }
         }
-
         ICommand removeCommand;
         public ICommand RemoveCommand
         {
@@ -117,48 +75,14 @@ namespace PersonalFinances
                 if (removeCommand == null)
                 {
                     removeCommand = new DelegateCommand(param => RemoveWallet(),
-                                                        param => selectedWalletIndex > -1);
+                                                        param => selectedWallet != null);
                 }
                 return removeCommand;
             }
         }
         void RemoveWallet()
         {
-            walletsModel.Wallets.RemoveAt(selectedWalletIndex);
-        }
-        #endregion
-        #region Выбор кошелька
-        string selectedWalletTitle = "";
-        public string SelectedWalletTitle
-        {
-            get => selectedWalletTitle;
-            set
-            {
-                selectedWalletTitle = value;
-                OnPropertyChanged("SelectedWalletTitle");
-            }
-        }
-
-        string selectedWalletCurrency = "";
-        public string SelectedWalletCurrency
-        {
-            get => selectedWalletCurrency;
-            set
-            {
-                selectedWalletCurrency = value;
-                OnPropertyChanged("SelectedWalletCurrency");
-            }
-        }
-
-        string selectedWalletBalance = "";
-        public string SelectedWalletBalance
-        {
-            get => selectedWalletBalance;
-            set
-            {
-                selectedWalletBalance = value;
-                OnPropertyChanged("SelectedWalletBalance");
-            }
+            walletsModel.Wallets.Remove(selectedWallet);
         }
         #endregion
     }

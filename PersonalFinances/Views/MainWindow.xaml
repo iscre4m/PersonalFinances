@@ -4,25 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalFinances"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="Personal Finances"
-        Height="600" Width="720"
+        Height="600" Width="1000"
         ResizeMode="NoResize">
     <Window.Resources>
-        <local:WalletsModel x:Key="walletsModel"/>
-        <local:WalletsViewModel x:Key="walletsViewModel"
-                                WalletsModel="{StaticResource walletsModel}"/>
+               <local:WalletsModel x:Key="walletsModel"/>
+           <local:WalletsViewModel x:Key="walletsViewModel"
+                                   WalletsModel="{StaticResource walletsModel}"/>
         <local:OperationsModel x:Key="operationsModel"/>
         <local:CategoriesModel x:Key="categoriesModel"/>
+        <local:OperationsCapacitor x:Key="operationsCapacitor"
+                                   CategoriesModel="{StaticResource categoriesModel}"/>
         <local:OperationsViewModel x:Key="operationsViewModel"
                                    WalletsModel="{StaticResource walletsModel}"
                                    OperationsModel="{StaticResource operationsModel}"
+                                   OperationsCapacitor="{StaticResource operationsCapacitor}"
                                    CategoriesModel="{StaticResource categoriesModel}"/>
 
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
-        <local:OtherViewModel x:Key="otherViewModel"
-                              IncomeSourcesModel="{StaticResource incomeSourcesModel}"
-                              CategoriesModel="{StaticResource categoriesModel}"/>
+             <local:OtherViewModel x:Key="otherViewModel"
+                                   IncomeSourcesModel="{StaticResource incomeSourcesModel}"
+                                   CategoriesModel="{StaticResource categoriesModel}"
+                                   OperationsCapacitor="{StaticResource operationsCapacitor}"/>
+
+        <local:ChartsViewModel x:Key="chartsViewModel"
+                                   WalletsModel="{StaticResource walletsModel}"
+                                   CategoriesModel="{StaticResource categoriesModel}"
+                                   OperationsCapacitor="{StaticResource operationsCapacitor}"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -34,12 +44,12 @@
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
                         <ListBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
-                                 SelectedIndex="{Binding Path=SelectedWalletIndex}"
+                                 SelectedItem="{Binding Path=SelectedWallet}"
                                  Width="675" Margin="20,10,19,194"/>
                         <TextBlock Text="Кошелёк:" Margin="20,0,0,157"
                                    HorizontalAlignment="Left" Height="32"
                                    VerticalAlignment="Bottom"/>
-                        <TextBlock Text="{Binding SelectedWalletTitle,
+                        <TextBlock Text="{Binding SelectedWallet.Title,
                                           UpdateSourceTrigger=PropertyChanged}"
                                    Margin="128,0,0,157"
                                    HorizontalAlignment="Left"
@@ -48,7 +58,7 @@
                                    Height="32" Margin="299,0,0,120"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Bottom"/>
-                        <TextBlock Text="{Binding SelectedWalletCurrency,
+                        <TextBlock Text="{Binding SelectedWallet.Currency,
                                           UpdateSourceTrigger=PropertyChanged}"
                                    Height="32" Margin="389,0,0,120"
                                    HorizontalAlignment="Left"
@@ -58,7 +68,7 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Bottom"
                                    RenderTransformOrigin="0.733,0.602"/>
-                        <TextBlock Text="{Binding SelectedWalletBalance,
+                        <TextBlock Text="{Binding SelectedWallet.Balance,
                                           UpdateSourceTrigger=PropertyChanged}"
                                    Height="32" Margin="109,0,0,120"
                                    HorizontalAlignment="Left"
@@ -75,20 +85,20 @@
                                 Height="45" Margin="0,0,19,10" 
                                 FontSize="24" VerticalAlignment="Bottom" 
                                 HorizontalAlignment="Right"/>
-                        <TextBox Text="{Binding Path=InputTitle,
+                        <TextBox Text="{Binding Path=NewWallet.Title,
                                  UpdateSourceTrigger=PropertyChanged}"
                                  Margin="20,0,159,60" 
                                  TextAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
-                        <TextBox Text="{Binding Path=InputBalance,
+                        <TextBox Text="{Binding Path=NewWallet.Balance,
                                  UpdateSourceTrigger=PropertyChanged}"
                                  Margin="20,0,274,10" 
                                  TextAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
                         <ComboBox ItemsSource="{Binding Currencies}"
-                                  SelectedIndex="{Binding SelectedCurrencyIndex}"
+                                  SelectedItem="{Binding NewWallet.Currency}"
                                   Margin="0,0,159,10" 
                                   Height="45" VerticalAlignment="Bottom" 
                                   VerticalContentAlignment="Center"
@@ -117,7 +127,7 @@
                                      VerticalContentAlignment="Center"
                                      HorizontalContentAlignment="Left"/>
                             <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
-                                      SelectedIndex="{Binding Path=SelectedReplenishWalletIndex}"
+                                      SelectedItem="{Binding Path=SelectedReplenishWallet}"
                                       Margin="342,72,19,0"
                                       VerticalAlignment="Top" Height="45"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
@@ -136,7 +146,7 @@
                                        Height="32" Margin="349,130,0,0"
                                        HorizontalAlignment="Left"
                                        Width="91" VerticalAlignment="Top" />
-                            <TextBlock Text="{Binding SelectedReplenishWalletBalance,
+                            <TextBlock Text="{Binding SelectedReplenishWallet.Balance,
                                               UpdateSourceTrigger=PropertyChanged}"
                                        Margin="445,130,0,0"
                                        HorizontalAlignment="Left"
@@ -168,7 +178,7 @@
                                        Height="32" Margin="349,313,0,0"
                                        HorizontalAlignment="Left" Width="91"
                                        VerticalAlignment="Top" />
-                            <TextBlock Text="{Binding SelectedWithdrawWalletBalance,
+                            <TextBlock Text="{Binding SelectedWithdrawWallet.Balance,
                                               UpdateSourceTrigger=PropertyChanged}"
                                        Margin="440,313,0,0"
                                        HorizontalAlignment="Left"
@@ -176,7 +186,7 @@
                                        VerticalAlignment="Top"/>
 
                             <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
-                                      SelectedIndex="{Binding Path=SelectedWithdrawWalletIndex}"
+                                      SelectedItem="{Binding Path=SelectedWithdrawWallet}"
                                       Margin="219,256,0,0" Height="45" 
                                       VerticalAlignment="Top"
                                       HorizontalAlignment="Left" Width="246"/>
@@ -265,38 +275,70 @@
                     <TextBlock Text="Графики"/>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Grid Background="#FFE5E5E5">
+                    <Grid Background="#FFE5E5E5"
+                          DataContext="{StaticResource chartsViewModel}">
 
                         <TextBlock Text="Кошелёк:"
-                                   Height="32" Margin="10,10,0,0" Width="111" 
-                                   VerticalAlignment="Top" HorizontalAlignment="Left" />
-                        <ComboBox Height="45" Margin="10,47,0,0"  Width="342"
-                                  VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                   Height="32" Width="111"
+                                   Margin="10,10,0,0"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left" />
+                        <ComboBox ItemsSource="{Binding WalletsModel.Wallets}"
+                                  SelectedItem="{Binding SelectedWallet}"
+                                  Height="45" Width="342"
+                                  Margin="10,47,0,0"
+                                  VerticalAlignment="Top"
+                                  HorizontalAlignment="Left"/>
                         <TextBlock Text="Расходы/Доходы:" 
-                                   Height="32" Margin="357,10,0,0" Width="194"
-                                   VerticalAlignment="Top" HorizontalAlignment="Left" />
-                        <RadioButton Content="Расходы" 
-                                     Height="45" Margin="383,47,0,0" Width="140"
-                                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                                   Height="32" Width="194"
+                                   Margin="357,10,0,0"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left" />
+                        <RadioButton IsChecked="True"
+                                     Content="Расходы" 
+                                     Height="45" Width="140"
+                                     Margin="383,47,0,0"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
                                      VerticalContentAlignment="Center"/>
                         <RadioButton Content="Доходы" 
-                                     Height="45" Margin="531,47,0,0" 
-                                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                                     Height="45"
+                                     Margin="531,47,0,0"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
                                      VerticalContentAlignment="Center"/>
                         <TextBlock Text="Начальная дата:"
-                                   Height="32" Margin="14,92,0,0" 
-                                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <DatePicker Height="45" Margin="10,129,0,0" Width="342"
-                                    HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <TextBlock Text="Конечная дата:"
-                                   Height="32" Margin="358,92,0,0" 
-                                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <DatePicker Height="45" Margin="358,129,10,0" 
+                                   Height="32"
+                                   Margin="14,92,0,0" 
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"/>
+                        <DatePicker SelectedDate="{Binding FromDate}"
+                                    Height="45" Width="342"
+                                    Margin="10,129,0,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Top"/>
-
-
-
-
+                        <TextBlock Text="Конечная дата:"
+                                   Height="32"
+                                   Margin="358,92,0,0" 
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"/>
+                        <DatePicker SelectedDate="{Binding ToDate}"
+                                    Height="45"
+                                    Margin="358,129,10,0" 
+                                    VerticalAlignment="Top"/>
+                        <lvc:CartesianChart Margin="10,179,10,10">
+                            <lvc:CartesianChart.Series>
+                                <lvc:ColumnSeries Title="Расходы"
+                                                  Values="{Binding OperationsCapacitor.Sums}"/>
+                            </lvc:CartesianChart.Series>
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Title="Категории"
+                                          Labels="{Binding CategoriesModel.Categories}"/>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="Сумма"/>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
                     </Grid>
                 </TabItem.Content>
             </TabItem>

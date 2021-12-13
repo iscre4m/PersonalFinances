@@ -12,6 +12,7 @@ namespace PersonalFinances
             get => walletsModel;
             set => walletsModel = value;
         }
+
         OperationsModel operationsModel;
         public OperationsModel OperationsModel
         {
@@ -19,7 +20,28 @@ namespace PersonalFinances
             set => operationsModel = value;
         }
 
+        OperationsCapacitor operationsCapacitor;
+        public OperationsCapacitor OperationsCapacitor
+        {
+            get => operationsCapacitor;
+            set => operationsCapacitor = value;
+        }
+
         #region Пополнение
+        Wallet selectedReplenishWallet;
+        public Wallet SelectedReplenishWallet
+        {
+            get => selectedReplenishWallet;
+            set
+            {
+                if (value != selectedReplenishWallet)
+                {
+                    selectedReplenishWallet = value;
+                    OnPropertyChanged("SelectedReplenishWallet");
+                }
+            }
+        }
+
         string replenishSum = "0";
         public string ReplenishSum
         {
@@ -43,7 +65,7 @@ namespace PersonalFinances
                 if (replenishCommand == null)
                 {
                     replenishCommand = new DelegateCommand(param => Replenish(),
-                                                           param => selectedReplenishWalletIndex > -1
+                                                           param => selectedReplenishWallet != null
                                                                  && sumRegEx.IsMatch(ReplenishSum));
                 }
                 return replenishCommand;
@@ -51,44 +73,13 @@ namespace PersonalFinances
         }
         void Replenish()
         {
-            walletsModel.Wallets[selectedReplenishWalletIndex].Replenish(double.Parse(ReplenishSum));
+            selectedReplenishWallet.Replenish(double.Parse(ReplenishSum));
             operationsModel.Operations.Add(new Income(DateTime.Now,
-                                                      walletsModel.Wallets[selectedReplenishWalletIndex].Title,
+                                                      selectedReplenishWallet.Title,
                                                       double.Parse(ReplenishSum),
-                                                      WalletsModel.Wallets[selectedReplenishWalletIndex].Currency));
+                                                      selectedReplenishWallet.Currency));
             ReplenishSum = "0";
-            SelectedReplenishWalletIndex = -1;
-        }
-
-        string selectedReplenishWalletBalance = "0";
-        public string SelectedReplenishWalletBalance
-        {
-            get => selectedReplenishWalletBalance;
-            set
-            {
-                selectedReplenishWalletBalance = value;
-                OnPropertyChanged("SelectedReplenishWalletBalance");
-            }
-        }
-
-        int selectedReplenishWalletIndex = -1;
-        public int SelectedReplenishWalletIndex
-        {
-            get => selectedReplenishWalletIndex;
-            set
-            {
-                if (value != selectedReplenishWalletIndex)
-                {
-                    selectedReplenishWalletIndex = value;
-                    OnPropertyChanged("SelectedReplenishWalletIndex");
-                    if (selectedReplenishWalletIndex == -1)
-                    {
-                        SelectedReplenishWalletBalance = "0";
-                        return;
-                    }
-                    SelectedReplenishWalletBalance = walletsModel.Wallets[selectedReplenishWalletIndex].Balance.ToString();
-                }
-            }
+            SelectedReplenishWallet = null;
         }
         #endregion
 
@@ -134,37 +125,17 @@ namespace PersonalFinances
             }
         }
 
-        int selectedWithdrawWalletIndex = -1;
-        public int SelectedWithdrawWalletIndex
+        Wallet selectedWithdrawWallet;
+        public Wallet SelectedWithdrawWallet
         {
-            get
-            {
-                return selectedWithdrawWalletIndex;
-            }
+            get => selectedWithdrawWallet;
             set
             {
-                if (value != selectedWithdrawWalletIndex)
+                if (value != selectedWithdrawWallet)
                 {
-                    selectedWithdrawWalletIndex = value;
-                    OnPropertyChanged("SelectedWithdrawWalletIndex");
-                    if (selectedWithdrawWalletIndex == -1)
-                    {
-                        SelectedWithdrawWalletBalance = "0";
-                        return;
-                    }
-                    SelectedWithdrawWalletBalance = walletsModel.Wallets[selectedWithdrawWalletIndex].Balance.ToString();
+                    selectedWithdrawWallet = value;
+                    OnPropertyChanged("SelectedWithdrawWallet");
                 }
-            }
-        }
-
-        string selectedWithdrawWalletBalance = "0";
-        public string SelectedWithdrawWalletBalance
-        {
-            get => selectedWithdrawWalletBalance;
-            set
-            {
-                selectedWithdrawWalletBalance = value;
-                OnPropertyChanged("SelectedWithdrawWalletBalance");
             }
         }
 
@@ -176,9 +147,9 @@ namespace PersonalFinances
                 if (withdrawCommand == null)
                 {
                     withdrawCommand = new DelegateCommand(param => Withdraw(),
-                                                        param => (SelectedWithdrawWalletIndex > -1
+                                                        param => (SelectedWithdrawWallet != null
                                                                && sumRegEx.IsMatch(WithdrawSum)
-                                                               && walletsModel.Wallets[selectedWithdrawWalletIndex].Balance - double.Parse(WithdrawSum) >= 0)
+                                                               && double.Parse(selectedWithdrawWallet.Balance) - double.Parse(WithdrawSum) >= 0)
                                                                && SelectedCategoryIndex > -1);
                 }
                 return withdrawCommand;
@@ -186,15 +157,16 @@ namespace PersonalFinances
         }
         void Withdraw()
         {
-            walletsModel.Wallets[selectedWithdrawWalletIndex].Withdraw(double.Parse(WithdrawSum));
+            selectedWithdrawWallet.Withdraw(double.Parse(WithdrawSum));
             operationsModel.Operations.Add(new Expense(DateTime.Now,
-                                           walletsModel.Wallets[selectedWithdrawWalletIndex].Title,
-                                           double.Parse(WithdrawSum),
-                                           WalletsModel.Wallets[selectedWithdrawWalletIndex].Currency,
-                                           categoriesModel.Categories[selectedCategoryIndex]));
+                                                       selectedWithdrawWallet.Title,
+                                                       double.Parse(WithdrawSum),
+                                                       selectedWithdrawWallet.Currency,
+                                                       categoriesModel.Categories[selectedCategoryIndex]));
+            operationsCapacitor.AddOperation(categoriesModel.Categories[selectedCategoryIndex], double.Parse(WithdrawSum));
             WithdrawSum = "0";
-            SelectedWithdrawWalletIndex = -1;
             SelectedCategoryIndex = -1;
+            SelectedWithdrawWallet = null;
         }
         #endregion
     }

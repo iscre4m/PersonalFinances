@@ -2,22 +2,29 @@
 {
     class Wallet
     {
-        public string Title { get; }
-        public string Currency { get; private set; }
-        public double Balance { get; private set; }
+        public string Title { get; set; }
+        public string Currency { get; set; }
+        public string Balance { get; set; }
 
-        public Wallet(string name,
-                           string currency,
-                           double balance)
+        public Wallet()
         {
-            Title = name;
+            Title = "";
+            Currency = "UAH";
+            Balance = "0";
+        }
+
+        public Wallet(string title,
+                      string currency,
+                      string balance)
+        {
+            Title = title;
             Currency = currency;
             Balance = balance;
         }
 
-        public void Replenish(double sum) => Balance += sum;
+        public void Replenish(double sum) => Balance = (double.Parse(Balance) + sum).ToString();
 
-        public void Withdraw(double sum) => Balance -= sum;
+        public void Withdraw(double sum) => Balance = (double.Parse(Balance) - sum).ToString();
 
         public override string ToString() => Title + ' ' + Currency;
     }

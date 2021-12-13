@@ -86,6 +86,13 @@ namespace PersonalFinances
             set => categoriesModel = value;
         }
 
+        OperationsCapacitor operationsCapacitor;
+        public OperationsCapacitor OperationsCapacitor
+        {
+            get => operationsCapacitor;
+            set => operationsCapacitor = value;
+        }
+
         string categoryTitle = "";
         public string CategoryTitle
         {
@@ -116,6 +123,7 @@ namespace PersonalFinances
         void AddCategory()
         {
             CategoriesModel.Categories.Add(CategoryTitle);
+            operationsCapacitor.Sums.Add(0);
             CategoryTitle = "";
         }
 
