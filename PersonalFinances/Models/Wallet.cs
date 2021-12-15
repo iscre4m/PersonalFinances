@@ -6,16 +6,11 @@
         public string Currency { get; set; }
         public string Balance { get; set; }
 
-        public Wallet()
-        {
-            Title = "";
-            Currency = "UAH";
-            Balance = "0";
-        }
+        public OperationsCapacitor OperationsCapacitor { get; } = new();
 
-        public Wallet(string title,
-                      string currency,
-                      string balance)
+        public Wallet(string title = "",
+                      string currency = "UAH",
+                      string balance = "0")
         {
             Title = title;
             Currency = currency;

@@ -10,29 +10,21 @@
         Height="600" Width="1000"
         ResizeMode="NoResize">
     <Window.Resources>
-               <local:WalletsModel x:Key="walletsModel"/>
-           <local:WalletsViewModel x:Key="walletsViewModel"
+        <local:WalletsModel x:Key="walletsModel"/>
+        <local:WalletsViewModel x:Key="walletsViewModel"
                                    WalletsModel="{StaticResource walletsModel}"/>
         <local:OperationsModel x:Key="operationsModel"/>
-        <local:CategoriesModel x:Key="categoriesModel"/>
-        <local:OperationsCapacitor x:Key="operationsCapacitor"
-                                   CategoriesModel="{StaticResource categoriesModel}"/>
         <local:OperationsViewModel x:Key="operationsViewModel"
                                    WalletsModel="{StaticResource walletsModel}"
-                                   OperationsModel="{StaticResource operationsModel}"
-                                   OperationsCapacitor="{StaticResource operationsCapacitor}"
-                                   CategoriesModel="{StaticResource categoriesModel}"/>
+                                   OperationsModel="{StaticResource operationsModel}"/>
 
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
-             <local:OtherViewModel x:Key="otherViewModel"
-                                   IncomeSourcesModel="{StaticResource incomeSourcesModel}"
-                                   CategoriesModel="{StaticResource categoriesModel}"
-                                   OperationsCapacitor="{StaticResource operationsCapacitor}"/>
+        <local:OtherViewModel x:Key="otherViewModel"
+                              IncomeSourcesModel="{StaticResource incomeSourcesModel}"
+                              WalletsModel="{StaticResource walletsModel}"/>
 
         <local:ChartsViewModel x:Key="chartsViewModel"
-                                   WalletsModel="{StaticResource walletsModel}"
-                                   CategoriesModel="{StaticResource categoriesModel}"
-                                   OperationsCapacitor="{StaticResource operationsCapacitor}"/>
+                               WalletsModel="{StaticResource walletsModel}"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -280,33 +272,37 @@
 
                         <TextBlock Text="Кошелёк:"
                                    Height="32" Width="111"
-                                   Margin="10,10,0,0"
+                                   Margin="10,38,0,0"
                                    VerticalAlignment="Top"
                                    HorizontalAlignment="Left" />
                         <ComboBox ItemsSource="{Binding WalletsModel.Wallets}"
                                   SelectedItem="{Binding SelectedWallet}"
-                                  Height="45" Width="342"
-                                  Margin="10,47,0,0"
+                                  Height="44" Width="342"
+                                  Margin="126,32,0,0"
                                   VerticalAlignment="Top"
                                   HorizontalAlignment="Left"/>
-                        <TextBlock Text="Расходы/Доходы:" 
-                                   Height="32" Width="194"
-                                   Margin="357,10,0,0"
+                        <TextBlock Text="Сырой доход:"
+                                   Height="32" Width="154"
+                                   Margin="547,12,0,0"
                                    VerticalAlignment="Top"
                                    HorizontalAlignment="Left" />
-                        <RadioButton IsChecked="True"
-                                     Content="Расходы" 
-                                     Height="45" Width="140"
-                                     Margin="383,47,0,0"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"
-                                     VerticalContentAlignment="Center"/>
-                        <RadioButton Content="Доходы" 
-                                     Height="45"
-                                     Margin="531,47,0,0"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"
-                                     VerticalContentAlignment="Center"/>
+                        <TextBlock Text="Чистый доход:"
+                                   Height="32" Width="160"
+                                   Margin="541,50,0,0"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left" />
+                        <TextBlock Text="{Binding SelectedWallet.OperationsCapacitor.RawIncome,
+                                          UpdateSourceTrigger=PropertyChanged}"
+                                   Height="32" Width="154"
+                                   Margin="706,12,0,0"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left" />
+                        <TextBlock Text="{Binding SelectedWallet.OperationsCapacitor.RealIncome,
+                                          UpdateSourceTrigger=PropertyChanged}"
+                                   Height="32" Width="160"
+                                   Margin="706,50,0,0"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left" />
                         <TextBlock Text="Начальная дата:"
                                    Height="32"
                                    Margin="14,92,0,0" 
@@ -329,7 +325,7 @@
                         <lvc:CartesianChart Margin="10,179,10,10">
                             <lvc:CartesianChart.Series>
                                 <lvc:ColumnSeries Title="Расходы"
-                                                  Values="{Binding OperationsCapacitor.Sums}"/>
+                                                  Values="{Binding SelectedWallet.OperationsCapacitor.Expenses}"/>
                             </lvc:CartesianChart.Series>
                             <lvc:CartesianChart.AxisX>
                                 <lvc:Axis Title="Категории"

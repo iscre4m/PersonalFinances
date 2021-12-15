@@ -1,10 +1,14 @@
 ﻿using System;
-using LiveCharts;
 
 namespace PersonalFinances
 {
     internal class ChartsViewModel : Notifier
     {
+        public ChartsViewModel()
+        {
+            categoriesModel = CategoriesModel.GetInstance();
+        }
+
         WalletsModel walletsModel;
         public WalletsModel WalletsModel
         {
@@ -17,13 +21,6 @@ namespace PersonalFinances
         {
             get => categoriesModel;
             set => categoriesModel = value;
-        }
-
-        OperationsCapacitor operationsCapacitor;
-        public OperationsCapacitor OperationsCapacitor
-        {
-            get => operationsCapacitor;
-            set => operationsCapacitor = value;
         }
 
         Wallet selectedWallet;
@@ -65,6 +62,14 @@ namespace PersonalFinances
                     toDate = value;
                     OnPropertyChanged("ToDate");
                 }
+            }
+        }
+
+        void UpdateChart()
+        {
+            if (SelectedWallet == null)
+            {
+                return;
             }
         }
     }
