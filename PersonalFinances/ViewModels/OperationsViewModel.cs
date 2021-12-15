@@ -67,11 +67,12 @@ namespace PersonalFinances
         void Replenish()
         {
             selectedReplenishWallet.Replenish(double.Parse(ReplenishSum));
-            operationsModel.Operations.Add(new Income(DateTime.Now,
-                                                      selectedReplenishWallet.Title,
-                                                      double.Parse(ReplenishSum),
-                                                      selectedReplenishWallet.Currency));
-            selectedReplenishWallet.OperationsCapacitor.RawIncome += double.Parse(ReplenishSum);
+            Income income = new Income(DateTime.Now,
+                                       selectedReplenishWallet.Title,
+                                       double.Parse(ReplenishSum),
+                                       selectedReplenishWallet.Currency);
+            operationsModel.Operations.Add(income);
+            selectedReplenishWallet.WalletOperationsModel.Operations.Add(income);
             ReplenishSum = "0";
             SelectedReplenishWallet = null;
         }
@@ -147,13 +148,13 @@ namespace PersonalFinances
         void Withdraw()
         {
             selectedWithdrawWallet.Withdraw(double.Parse(WithdrawSum));
-            operationsModel.Operations.Add(new Expense(DateTime.Now,
-                                                       selectedWithdrawWallet.Title,
-                                                       double.Parse(WithdrawSum),
-                                                       selectedWithdrawWallet.Currency,
-                                                       CategoriesModel.Categories[selectedCategoryIndex]));
-            selectedWithdrawWallet.OperationsCapacitor.AddExpense(double.Parse(WithdrawSum),
-                                                                  CategoriesModel.Categories[selectedCategoryIndex]);
+            Expense expense = new(DateTime.Now,
+                                  selectedWithdrawWallet.Title,
+                                  double.Parse(WithdrawSum),
+                                  selectedWithdrawWallet.Currency,
+                                  CategoriesModel.Categories[selectedCategoryIndex]);
+            operationsModel.Operations.Add(expense);
+            selectedWithdrawWallet.WalletOperationsModel.Operations.Add(expense);
             WithdrawSum = "0";
             SelectedCategoryIndex = -1;
             SelectedWithdrawWallet = null;

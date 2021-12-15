@@ -7,6 +7,7 @@
         public string Balance { get; set; }
 
         public OperationsCapacitor OperationsCapacitor { get; } = new();
+        public WalletOperationsModel WalletOperationsModel { get; } = new();
 
         public Wallet(string title = "",
                       string currency = "UAH",

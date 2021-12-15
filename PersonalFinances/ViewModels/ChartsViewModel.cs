@@ -47,6 +47,7 @@ namespace PersonalFinances
                 {
                     fromDate = value;
                     OnPropertyChanged("FromDate");
+                    UpdateChart();
                 }
             }
         }
@@ -61,6 +62,7 @@ namespace PersonalFinances
                 {
                     toDate = value;
                     OnPropertyChanged("ToDate");
+                    UpdateChart();
                 }
             }
         }
@@ -70,6 +72,24 @@ namespace PersonalFinances
             if (SelectedWallet == null)
             {
                 return;
+            }
+            int length = selectedWallet.OperationsCapacitor.Expenses.Count;
+            for (int i = 0; i < length; i++)
+            {
+                selectedWallet.OperationsCapacitor.Expenses[i] = 0;
+            }
+            selectedWallet.OperationsCapacitor.ExpensesSum = 0;
+            foreach (Operation operation in selectedWallet.WalletOperationsModel.Operations)
+            {
+                if (operation.DateOfIssue.Date >= fromDate.Date && operation.DateOfIssue.Date <= toDate.Date)
+                {
+                    if (operation is Income)
+                    {
+                        selectedWallet.OperationsCapacitor.RawIncome += operation.Sum;
+                        continue;
+                    }
+                    selectedWallet.OperationsCapacitor.AddExpense(operation.Sum, ((Expense)operation).Category);
+                }
             }
         }
     }
