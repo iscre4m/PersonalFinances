@@ -4,7 +4,7 @@ namespace PersonalFinances
 {
     internal class OperationsCapacitor : Notifier
     {
-        CategoriesModel categoriesModel = CategoriesModel.GetInstance();
+        readonly CategoriesModel categoriesModel = CategoriesModel.GetInstance();
 
         public ChartValues<double> Expenses { get; set; } = new ChartValues<double> { 0, 0, 0, 0 };
         double expensesSum = 0;

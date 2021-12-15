@@ -6,11 +6,6 @@ namespace PersonalFinances
 {
     class OperationsViewModel : Notifier
     {
-        public OperationsViewModel()
-        {
-            categoriesModel = CategoriesModel.GetInstance();
-        }
-
         WalletsModel walletsModel;
         public WalletsModel WalletsModel
         {
@@ -83,12 +78,7 @@ namespace PersonalFinances
         #endregion
 
         #region Снятие
-        CategoriesModel categoriesModel;
-        public CategoriesModel CategoriesModel
-        {
-            get => categoriesModel;
-            set => categoriesModel = value;
-        }
+        public CategoriesModel CategoriesModel { get; } = CategoriesModel.GetInstance();
 
         int selectedCategoryIndex = -1;
         public int SelectedCategoryIndex
@@ -161,9 +151,9 @@ namespace PersonalFinances
                                                        selectedWithdrawWallet.Title,
                                                        double.Parse(WithdrawSum),
                                                        selectedWithdrawWallet.Currency,
-                                                       categoriesModel.Categories[selectedCategoryIndex]));
+                                                       CategoriesModel.Categories[selectedCategoryIndex]));
             selectedWithdrawWallet.OperationsCapacitor.AddExpense(double.Parse(WithdrawSum),
-                                                                  categoriesModel.Categories[selectedCategoryIndex]);
+                                                                  CategoriesModel.Categories[selectedCategoryIndex]);
             WithdrawSum = "0";
             SelectedCategoryIndex = -1;
             SelectedWithdrawWallet = null;
