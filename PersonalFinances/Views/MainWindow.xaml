@@ -12,11 +12,8 @@
     <Window.Resources>
         <local:WalletsModel x:Key="walletsModel"/>
         <local:WalletsViewModel x:Key="walletsViewModel"
-                                   WalletsModel="{StaticResource walletsModel}"/>
-        <local:OperationsModel x:Key="operationsModel"/>
-        <local:OperationsViewModel x:Key="operationsViewModel"
-                                   WalletsModel="{StaticResource walletsModel}"
-                                   OperationsModel="{StaticResource operationsModel}"/>
+                                WalletsModel="{StaticResource walletsModel}"/>
+        <local:OperationsList x:Key="operationsList"/>
 
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
         <local:OtherViewModel x:Key="otherViewModel"
@@ -26,6 +23,10 @@
         <local:ChartsViewModel x:Key="chartsViewModel"
                                WalletsModel="{StaticResource walletsModel}"/>
         
+        <local:OperationsViewModel x:Key="operationsViewModel"
+                                   WalletsModel="{StaticResource walletsModel}"
+                                   OperationsList="{StaticResource operationsList}"
+                                   ChartsViewModel="{StaticResource chartsViewModel}"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -37,7 +38,8 @@
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
                         <ListBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
-                                 SelectedItem="{Binding Path=SelectedWallet}" Margin="20,10,19,194"/>
+                                 SelectedItem="{Binding Path=SelectedWallet}"
+                                 Margin="20,10,19,194"/>
                         <TextBlock Text="Кошелёк:" Margin="20,0,0,157"
                                    HorizontalAlignment="Left" Height="32"
                                    VerticalAlignment="Bottom"/>
@@ -100,7 +102,8 @@
                 </TabItem.Content>
             </TabItem>
             <TabItem Width="150"
-                     FontSize="24" Margin="0,-3,0,-1"
+                     FontSize="24"
+                     Margin="0,-3,0,-1"
                      DataContext="{StaticResource operationsViewModel}">
                 <TabItem.Header>
                     <TextBlock Text="Операции"/>
@@ -118,14 +121,16 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      VerticalContentAlignment="Center"
-                                     HorizontalContentAlignment="Left" Grid.ColumnSpan="3"/>
+                                     HorizontalContentAlignment="Left"
+                                     Grid.ColumnSpan="3"/>
                             <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                       SelectedItem="{Binding Path=SelectedReplenishWallet}"
                                       Margin="344,72,19,0"
                                       VerticalAlignment="Top" Height="45"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="79" 
-                                       Margin="21,40,0,0" Text="Сумма" Grid.ColumnSpan="3"/>
+                                       Margin="21,40,0,0" Text="Сумма"
+                                       Grid.ColumnSpan="3"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="105" 
                                        Margin="344,35,0,0" Text="Кошелёк:"/>
@@ -134,7 +139,8 @@
                                     VerticalAlignment="Top"
                                     Margin="20,123,0,0"
                                     VerticalContentAlignment="Center" 
-                                    HorizontalAlignment="Left" Width="180" Grid.ColumnSpan="3"/>
+                                    HorizontalAlignment="Left"
+                                    Width="180" Grid.ColumnSpan="3"/>
                             <TextBlock Text="Баланс:"
                                        Height="32" Margin="344,130,0,0"
                                        HorizontalAlignment="Left"
@@ -148,7 +154,6 @@
                         </Grid>
 
                         <Grid>
-
                             <GroupBox Header="Снятие" Height="180"
                                       VerticalAlignment="Top" 
                                       HorizontalAlignment="Center"
@@ -199,7 +204,7 @@
                         </Grid>
                         <TextBlock HorizontalAlignment="Left" Margin="10,373,0,0" 
                                    VerticalAlignment="Top" Text="Учёт"/>
-                        <ListBox ItemsSource="{Binding Path=OperationsModel.Operations}"
+                        <ListBox ItemsSource="{Binding Path=OperationsList.Operations}"
                                  Margin="10,410,10,10"/>
                     </Grid>
                 </TabItem.Content>
@@ -333,7 +338,8 @@
                                           Labels="{Binding CategoriesModel.Categories}"/>
                             </lvc:CartesianChart.AxisX>
                             <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Сумма"/>
+                                <lvc:Axis Title="Сумма"
+                                          MinValue="0"/>
                             </lvc:CartesianChart.AxisY>
                         </lvc:CartesianChart>
                     </Grid>

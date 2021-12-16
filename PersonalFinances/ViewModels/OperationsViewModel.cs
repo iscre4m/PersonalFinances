@@ -6,6 +6,11 @@ namespace PersonalFinances
 {
     class OperationsViewModel : Notifier
     {
+        public OperationsViewModel()
+        {
+            CategoriesModel = CategoriesModel.GetInstance();
+        }
+
         WalletsModel walletsModel;
         public WalletsModel WalletsModel
         {
@@ -13,11 +18,18 @@ namespace PersonalFinances
             set => walletsModel = value;
         }
 
-        OperationsModel operationsModel;
-        public OperationsModel OperationsModel
+        OperationsList operationsList;
+        public OperationsList OperationsList
         {
-            get => operationsModel;
-            set => operationsModel = value;
+            get => operationsList;
+            set => operationsList = value;
+        }
+
+        ChartsViewModel chartsViewModel;
+        public ChartsViewModel ChartsViewModel
+        {
+            get => chartsViewModel;
+            set => chartsViewModel = value;
         }
 
         #region Пополнение
@@ -49,7 +61,7 @@ namespace PersonalFinances
             }
         }
 
-        Regex sumRegEx = new Regex(@"^[1-9][0-9]*(\.(0[1-9]|[1-9][0-9]?))?$");
+        readonly Regex sumRegEx = new(@"^[1-9][0-9]*(\.(0[1-9]|[1-9][0-9]?))?$");
         ICommand replenishCommand;
         public ICommand ReplenishCommand
         {
@@ -67,27 +79,25 @@ namespace PersonalFinances
         void Replenish()
         {
             selectedReplenishWallet.Replenish(double.Parse(ReplenishSum));
-            Income income = new Income(DateTime.Now,
-                                       selectedReplenishWallet.Title,
-                                       double.Parse(ReplenishSum),
-                                       selectedReplenishWallet.Currency);
-            operationsModel.Operations.Add(income);
+            Income income = new(DateTime.Now,
+                                selectedReplenishWallet.Title,
+                                double.Parse(ReplenishSum),
+                                selectedReplenishWallet.Currency);
+            operationsList.Operations.Add(income);
             selectedReplenishWallet.WalletOperationsModel.Operations.Add(income);
+            chartsViewModel.UpdateChart();
             ReplenishSum = "0";
             SelectedReplenishWallet = null;
         }
         #endregion
 
         #region Снятие
-        public CategoriesModel CategoriesModel { get; } = CategoriesModel.GetInstance();
+        public CategoriesModel CategoriesModel { get; }
 
         int selectedCategoryIndex = -1;
         public int SelectedCategoryIndex
         {
-            get
-            {
-                return selectedCategoryIndex;
-            }
+            get => selectedCategoryIndex;
             set
             {
                 if (value != selectedCategoryIndex)
@@ -101,10 +111,7 @@ namespace PersonalFinances
         string withdrawSum = "0";
         public string WithdrawSum
         {
-            get
-            {
-                return withdrawSum;
-            }
+            get => withdrawSum;
             set
             {
                 if (value != withdrawSum)
@@ -153,8 +160,9 @@ namespace PersonalFinances
                                   double.Parse(WithdrawSum),
                                   selectedWithdrawWallet.Currency,
                                   CategoriesModel.Categories[selectedCategoryIndex]);
-            operationsModel.Operations.Add(expense);
+            operationsList.Operations.Add(expense);
             selectedWithdrawWallet.WalletOperationsModel.Operations.Add(expense);
+            chartsViewModel.UpdateChart();
             WithdrawSum = "0";
             SelectedCategoryIndex = -1;
             SelectedWithdrawWallet = null;

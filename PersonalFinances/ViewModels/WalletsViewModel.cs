@@ -26,10 +26,11 @@ namespace PersonalFinances
                 }
             }
         }
+
         public string[] Currencies { get; } = { "UAH", "USD", "EUR" };
 
-        Regex titleRegEx = new Regex(@"^[a-zA-Z]\w*$");
-        Regex balanceRegEx = new Regex(@"(^0|^[1-9][0-9]*)(\.(0[1-9]|[1-9][0-9]?))?$");
+        readonly Regex titleRegEx = new Regex(@"^[a-zA-Z]\w*$");
+        readonly Regex balanceRegEx = new Regex(@"(^0|^[1-9][0-9]*)(\.(0[1-9]|[1-9][0-9]?))?$");
         ICommand addCommand;
         public ICommand AddCommand
         {
@@ -67,6 +68,7 @@ namespace PersonalFinances
                 }
             }
         }
+
         ICommand removeCommand;
         public ICommand RemoveCommand
         {
