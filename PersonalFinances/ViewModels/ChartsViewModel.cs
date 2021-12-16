@@ -68,7 +68,7 @@ namespace PersonalFinances
             }
         }
 
-        void UpdateChart()
+        public void UpdateChart()
         {
             if (SelectedWallet == null)
             {

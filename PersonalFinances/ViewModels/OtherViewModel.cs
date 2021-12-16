@@ -4,6 +4,11 @@ namespace PersonalFinances
 {
     internal class OtherViewModel : Notifier
     {
+        public OtherViewModel()
+        {
+            CategoriesModel = CategoriesModel.GetInstance();
+        }
+
         #region Источники дохода
         WalletsModel walletsModel;
         public WalletsModel WalletsModel
@@ -86,7 +91,7 @@ namespace PersonalFinances
         #endregion
 
         #region Категории
-        public  CategoriesModel CategoriesModel { get; } = CategoriesModel.GetInstance();
+        public  CategoriesModel CategoriesModel { get; }
 
         string categoryTitle = "";
         public string CategoryTitle

@@ -12,11 +12,8 @@
     <Window.Resources>
         <local:WalletsModel x:Key="walletsModel"/>
         <local:WalletsViewModel x:Key="walletsViewModel"
-                                   WalletsModel="{StaticResource walletsModel}"/>
-        <local:OperationsModel x:Key="operationsModel"/>
-        <local:OperationsViewModel x:Key="operationsViewModel"
-                                   WalletsModel="{StaticResource walletsModel}"
-                                   OperationsModel="{StaticResource operationsModel}"/>
+                                WalletsModel="{StaticResource walletsModel}"/>
+        <local:OperationsList x:Key="operationsList"/>
 
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
         <local:OtherViewModel x:Key="otherViewModel"
@@ -25,6 +22,11 @@
 
         <local:ChartsViewModel x:Key="chartsViewModel"
                                WalletsModel="{StaticResource walletsModel}"/>
+        
+        <local:OperationsViewModel x:Key="operationsViewModel"
+                                   WalletsModel="{StaticResource walletsModel}"
+                                   OperationsList="{StaticResource operationsList}"
+                                   ChartsViewModel="{StaticResource chartsViewModel}"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -43,9 +45,9 @@
                                    VerticalAlignment="Bottom"/>
                         <TextBlock Text="{Binding SelectedWallet.Title,
                                           UpdateSourceTrigger=PropertyChanged}"
-                                   Margin="128,0,0,157"
+                                   Margin="128,0,0,157" Height="32"
                                    HorizontalAlignment="Left"
-                                   Height="32" VerticalAlignment="Bottom"/>
+                                   VerticalAlignment="Bottom"/>
                         <TextBlock Text="Валюта:"
                                    Height="32" Margin="299,0,0,120"
                                    HorizontalAlignment="Left"
@@ -55,11 +57,10 @@
                                    Height="32" Margin="389,0,0,120"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Bottom"/>
-                        <TextBlock Text="Баланс:"
-                                   Height="32" Margin="20,0,0,120"
+                        <TextBlock Text="Баланс:" Height="32"
+                                   Margin="20,0,0,120"
                                    HorizontalAlignment="Left"
-                                   VerticalAlignment="Bottom"
-                                   RenderTransformOrigin="0.733,0.602"/>
+                                   VerticalAlignment="Bottom"/>
                         <TextBlock Text="{Binding SelectedWallet.Balance,
                                           UpdateSourceTrigger=PropertyChanged}"
                                    Height="32" Margin="109,0,0,120"
@@ -78,13 +79,13 @@
                                 FontSize="24" VerticalAlignment="Bottom" 
                                 HorizontalAlignment="Right"/>
                         <TextBox Text="{Binding Path=NewWallet.Title,
-                                 UpdateSourceTrigger=PropertyChanged}"
+                                        UpdateSourceTrigger=PropertyChanged}"
                                  Margin="20,0,159,60" 
                                  TextAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
                         <TextBox Text="{Binding Path=NewWallet.Balance,
-                                 UpdateSourceTrigger=PropertyChanged}"
+                                        UpdateSourceTrigger=PropertyChanged}"
                                  Margin="20,0,274,10" 
                                  TextAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
@@ -116,7 +117,7 @@
                                       Height="180" VerticalAlignment="Top" 
                                       HorizontalAlignment="Left" Width="694" Grid.Column="2"/>
                             <TextBox Text="{Binding Path=ReplenishSum,
-                                     UpdateSourceTrigger=PropertyChanged}"
+                                            UpdateSourceTrigger=PropertyChanged}"
                                      Width="317" Height="46"
                                      Margin="20,72,0,0" 
                                      VerticalAlignment="Top"
@@ -203,7 +204,7 @@
                         </Grid>
                         <TextBlock HorizontalAlignment="Left" Margin="10,373,0,0" 
                                    VerticalAlignment="Top" Text="Учёт"/>
-                        <ListBox ItemsSource="{Binding Path=OperationsModel.Operations}"
+                        <ListBox ItemsSource="{Binding Path=OperationsList.Operations}"
                                  Margin="10,410,10,10"/>
                     </Grid>
                 </TabItem.Content>
@@ -337,7 +338,8 @@
                                           Labels="{Binding CategoriesModel.Categories}"/>
                             </lvc:CartesianChart.AxisX>
                             <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Сумма"/>
+                                <lvc:Axis Title="Сумма"
+                                          MinValue="0"/>
                             </lvc:CartesianChart.AxisY>
                         </lvc:CartesianChart>
                     </Grid>

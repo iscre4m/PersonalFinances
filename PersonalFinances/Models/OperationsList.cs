@@ -2,7 +2,7 @@
 
 namespace PersonalFinances
 {
-    internal class OperationsModel
+    internal class OperationsList
     {
         public ObservableCollection<Operation> Operations { get; } = new();
     }

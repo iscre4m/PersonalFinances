@@ -7,6 +7,7 @@ namespace PersonalFinances
         readonly CategoriesModel categoriesModel = CategoriesModel.GetInstance();
 
         public ChartValues<double> Expenses { get; set; } = new ChartValues<double> { 0, 0, 0, 0 };
+
         public double ExpensesSum { get ; set; } = 0;
 
         double rawIncome = 0;
