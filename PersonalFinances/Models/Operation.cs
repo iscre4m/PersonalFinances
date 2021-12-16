@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace PersonalFinances
 {
@@ -19,6 +20,14 @@ namespace PersonalFinances
             WalletCurrency = walletCurrency;
             Sum = sum;
         }
+        public Operation()
+        {
+
+        }
+
+        abstract public void Save(BinaryWriter write);
+
+        abstract public void Download(BinaryReader read);
 
         public override string ToString() => DateOfIssue.ToShortDateString() + ' '
                                            + DateOfIssue.ToLongTimeString() + " - "

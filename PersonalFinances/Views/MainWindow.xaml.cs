@@ -16,14 +16,14 @@ namespace PersonalFinances
 
         void SetTheme()
         {
-            Uri ur;
-            ur = new Uri("Stylies/Light.xaml", UriKind.Relative);
+            //Uri ur;
+            //ur = new Uri("Stylies/Light.xaml", UriKind.Relative);
 
-            ResourceDictionary resourceDict = Application.LoadComponent(ur) as ResourceDictionary;
+            //ResourceDictionary resourceDict = Application.LoadComponent(ur) as ResourceDictionary;
 
-            Application.Current.Resources.Clear();
+            //Application.Current.Resources.Clear();
 
-            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+            //Application.Current.Resources.MergedDictionaries.Add(resourceDict);
         }
     }
 }
