@@ -107,9 +107,14 @@
                 <TabItem.Content>
                     <Grid Background="#FFE5E5E5">
                         <Grid>
-                            <GroupBox Header="Пополнение" Margin="0,5,0,0" 
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="26*"/>
+                                <ColumnDefinition Width="943*"/>
+                            </Grid.ColumnDefinitions>
+                            <GroupBox Header="Пополнение" Margin="99,5,0,0" 
                                       Height="180" VerticalAlignment="Top" 
-                                      HorizontalAlignment="Center" Width="694"/>
+                                      HorizontalAlignment="Left" Width="694" Grid.Column="2"/>
                             <TextBox Text="{Binding Path=ReplenishSum,
                                      UpdateSourceTrigger=PropertyChanged}"
                                      Width="317" Height="46"
@@ -117,33 +122,33 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      VerticalContentAlignment="Center"
-                                     HorizontalContentAlignment="Left"/>
+                                     HorizontalContentAlignment="Left" Grid.ColumnSpan="3"/>
                             <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                       SelectedItem="{Binding Path=SelectedReplenishWallet}"
-                                      Margin="342,72,19,0"
-                                      VerticalAlignment="Top" Height="45"/>
+                                      Margin="291,72,19,0"
+                                      VerticalAlignment="Top" Height="45" Grid.Column="2"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="79" 
-                                       Margin="21,40,0,0" Text="Сумма"/>
+                                       Margin="21,40,0,0" Text="Сумма" Grid.ColumnSpan="3"/>
                             <TextBlock Height="32" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="105" 
-                                       Margin="342,35,0,0" Text="Кошелёк:"/>
+                                       Margin="291,35,0,0" Text="Кошелёк:" Grid.Column="2"/>
                             <Button Command="{Binding Path=ReplenishCommand}"
                                     Height="45" Content="Подтвердить"
                                     VerticalAlignment="Top"
                                     Margin="20,123,0,0"
                                     VerticalContentAlignment="Center" 
-                                    HorizontalAlignment="Left" Width="180"/>
+                                    HorizontalAlignment="Left" Width="180" Grid.ColumnSpan="3"/>
                             <TextBlock Text="Баланс:"
-                                       Height="32" Margin="349,130,0,0"
+                                       Height="32" Margin="298,130,0,0"
                                        HorizontalAlignment="Left"
-                                       Width="91" VerticalAlignment="Top" />
+                                       Width="91" VerticalAlignment="Top" Grid.Column="2" />
                             <TextBlock Text="{Binding SelectedReplenishWallet.Balance,
                                               UpdateSourceTrigger=PropertyChanged}"
-                                       Margin="445,130,0,0"
+                                       Margin="394,130,0,0"
                                        HorizontalAlignment="Left"
                                        Width="257" Height="32"
-                                       VerticalAlignment="Top"/>
+                                       VerticalAlignment="Top" Grid.Column="2"/>
                         </Grid>
 
                         <Grid>
@@ -153,7 +158,7 @@
                                       HorizontalAlignment="Center"
                                       Width="694" Margin="0,188,0,0"/>
                             <TextBox Text="{Binding Path=WithdrawSum,
-                                     UpdateSourceTrigger=PropertyChanged}"
+                                            UpdateSourceTrigger=PropertyChanged}"
                                      Width="194" Height="45"
                                      Margin="20,256,0,0" 
                                      VerticalAlignment="Top"

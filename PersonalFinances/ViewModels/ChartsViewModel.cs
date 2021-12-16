@@ -33,11 +33,12 @@ namespace PersonalFinances
                 {
                     selectedWallet = value;
                     OnPropertyChanged("SelectedWallet");
+                    UpdateChart();
                 }
             }
         }
 
-        DateTime fromDate;
+        DateTime fromDate = DateTime.Now;
         public DateTime FromDate
         {
             get => fromDate;

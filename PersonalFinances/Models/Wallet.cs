@@ -1,10 +1,23 @@
 ﻿namespace PersonalFinances
 {
-    class Wallet
+    class Wallet : Notifier
     {
         public string Title { get; set; }
         public string Currency { get; set; }
-        public string Balance { get; set; }
+
+        string balance = "";
+        public string Balance
+        {
+            get => balance;
+            set
+            {
+                if (value != balance)
+                {
+                    balance = value;
+                    OnPropertyChanged("Balance");
+                }
+            }
+        }
 
         public OperationsCapacitor OperationsCapacitor { get; } = new();
         public WalletOperationsModel WalletOperationsModel { get; } = new();

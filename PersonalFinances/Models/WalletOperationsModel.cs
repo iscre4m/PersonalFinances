@@ -4,6 +4,6 @@ namespace PersonalFinances
 {
     internal class WalletOperationsModel
     {
-        public List<Operation> Operations { get; } = new List<Operation>();
+        public List<Operation> Operations { get; } = new();
     }
 }
