@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System;
 
 namespace PersonalFinances
 {
@@ -10,6 +11,19 @@ namespace PersonalFinances
         public MainWindow()
         {
             InitializeComponent();
+            SetTheme();
+        }
+
+        void SetTheme()
+        {
+            Uri ur;
+            ur = new Uri("Stylies/Light.xaml", UriKind.Relative);
+
+            ResourceDictionary resourceDict = Application.LoadComponent(ur) as ResourceDictionary;
+
+            Application.Current.Resources.Clear();
+
+            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
         }
     }
 }
