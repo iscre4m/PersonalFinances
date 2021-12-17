@@ -22,7 +22,7 @@
 
         <local:ChartsViewModel x:Key="chartsViewModel"
                                WalletsModel="{StaticResource walletsModel}"/>
-        
+
         <local:OperationsViewModel x:Key="operationsViewModel"
                                    WalletsModel="{StaticResource walletsModel}"
                                    OperationsList="{StaticResource operationsList}"
@@ -76,8 +76,7 @@
                                 Width="190" Height="45"
                                 Margin="0,0,19,60" FontSize="24"
                                 VerticalAlignment="Bottom"
-                                HorizontalAlignment="Right"
-                                Style="{DynamicResource ButtonStyle}"/>
+                                HorizontalAlignment="Right"/>
                         <Button Command="{Binding Path=RemoveCommand}"
                                 Content="Удалить" Width="190" 
                                 Height="45" Margin="0,0,19,10" 
@@ -101,13 +100,18 @@
                                   Height="45" VerticalAlignment="Bottom" 
                                   VerticalContentAlignment="Center"
                                   HorizontalAlignment="Right" Width="156"/>
-                        <Button Content="Save"
+                        <Button Content="Сохранить"
                                 DataContext="{StaticResource dataSaver}"
                                 Command="{Binding Path=SaveCommand}"
- 
-                                HorizontalAlignment="Left" Height="25" Margin="846,358,0,0" VerticalAlignment="Top" Width="129"/>
-                        <Button Content="Download" DataContext="{StaticResource dataSaver}"
-                                Command="{Binding Path=DownloadCommand}" HorizontalAlignment="Left" Height="34" Margin="452,370,0,0" VerticalAlignment="Top" Width="172"/>
+                                HorizontalAlignment="Left"
+                                Margin="502,355,0,0"
+                                VerticalAlignment="Top"/>
+                        <Button Content="Загрузить"
+                                DataContext="{StaticResource dataSaver}"
+                                Command="{Binding Path=DownloadCommand}"
+                                HorizontalAlignment="Left"
+                                Margin="386,355,0,0"
+                                VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
