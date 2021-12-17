@@ -52,7 +52,7 @@
                                    HorizontalAlignment="Left"
                                    Height="32" VerticalAlignment="Bottom"/>
                         <TextBlock Text="Валюта:"
-                                   Height="32" Margin="695,0,0,114"
+                                   Height="32" Margin="695,0,0,120"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Bottom"/>
                         <TextBlock Text="{Binding SelectedWallet.Currency,
@@ -83,13 +83,13 @@
                                 FontSize="24" VerticalAlignment="Bottom" 
                                 HorizontalAlignment="Right"/>
                         <TextBox Text="{Binding Path=NewWallet.Title,
-                                 UpdateSourceTrigger=PropertyChanged}"
+                                        UpdateSourceTrigger=PropertyChanged}"
                                  Margin="20,0,214,60" 
                                  TextAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
                                  VerticalContentAlignment="Center"/>
                         <TextBox Text="{Binding Path=NewWallet.Balance,
-                                 UpdateSourceTrigger=PropertyChanged}"
+                                        UpdateSourceTrigger=PropertyChanged}"
                                  Margin="20,0,375,10" 
                                  TextAlignment="Left" 
                                  Height="45" VerticalAlignment="Bottom" 
@@ -129,7 +129,7 @@
                                       Height="180" VerticalAlignment="Top" 
                                       HorizontalAlignment="Center" Width="974"/>
                             <TextBox Text="{Binding Path=ReplenishSum,
-                                     UpdateSourceTrigger=PropertyChanged}"
+                                            UpdateSourceTrigger=PropertyChanged}"
                                      Width="317" Height="46"
                                      Margin="20,72,0,0" 
                                      VerticalAlignment="Top"
@@ -250,7 +250,7 @@
                                 VerticalAlignment="Bottom"/>
                         <TextBox Margin="30,0,278,285" Height="45"
                                  Text="{Binding Path=IncomeSourceTitle,
-                                 UpdateSourceTrigger=PropertyChanged}"
+                                        UpdateSourceTrigger=PropertyChanged}"
                                  VerticalAlignment="Bottom"
                                  VerticalContentAlignment="Center"/>
 
