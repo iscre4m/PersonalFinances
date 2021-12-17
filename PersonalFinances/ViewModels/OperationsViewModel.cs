@@ -6,10 +6,6 @@ namespace PersonalFinances
 {
     class OperationsViewModel : Notifier
     {
-        public OperationsViewModel()
-        {
-            CategoriesModel = CategoriesModel.GetInstance();
-        }
 
         WalletsModel walletsModel;
         public WalletsModel WalletsModel
@@ -92,7 +88,7 @@ namespace PersonalFinances
         #endregion
 
         #region Снятие
-        public CategoriesModel CategoriesModel { get; }
+        public CategoriesModel CategoriesModel { get; } = CategoriesModel.GetInstance();
 
         int selectedCategoryIndex = -1;
         public int SelectedCategoryIndex
