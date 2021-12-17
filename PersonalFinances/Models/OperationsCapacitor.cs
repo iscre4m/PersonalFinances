@@ -29,7 +29,7 @@ namespace PersonalFinances
         public double RealIncome
         {
             get => realIncome;
-            set
+            private set
             {
                 if (value != realIncome)
                 {

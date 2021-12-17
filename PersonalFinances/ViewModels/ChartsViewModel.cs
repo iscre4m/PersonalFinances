@@ -80,6 +80,7 @@ namespace PersonalFinances
                 selectedWallet.OperationsCapacitor.Expenses[i] = 0;
             }
             selectedWallet.OperationsCapacitor.ExpensesSum = 0;
+            selectedWallet.OperationsCapacitor.RawIncome = 0;
             foreach (Operation operation in selectedWallet.WalletOperationsModel.Operations)
             {
                 if (operation.DateOfIssue.Date >= fromDate.Date && operation.DateOfIssue.Date <= toDate.Date)
