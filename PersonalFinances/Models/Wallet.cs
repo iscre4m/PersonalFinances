@@ -6,7 +6,7 @@ namespace PersonalFinances
         public string Title { get; set; }
         public string Currency { get; set; }
 
-        string balance = "";
+        string balance = "0";
         public string Balance
         {
             get => balance;
@@ -44,6 +44,7 @@ namespace PersonalFinances
             writer.Write(Currency);
             writer.Write(Balance);
         }
+
         public void Download(BinaryReader reader)
         {
             Title = reader.ReadString();
