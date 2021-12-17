@@ -38,17 +38,17 @@ namespace PersonalFinances
 
         public override string ToString() => Title + ' ' + Currency;
 
-        public void Save(BinaryWriter write)
+        public void Save(BinaryWriter writer)
         {
-            write.Write(Title);
-            write.Write(Currency);
-            write.Write(Balance);
+            writer.Write(Title);
+            writer.Write(Currency);
+            writer.Write(Balance);
         }
-        public void Download(BinaryReader read)
+        public void Download(BinaryReader reader)
         {
-            Title = read.ReadString();
-            Currency = read.ReadString();
-            Balance = read.ReadString();
+            Title = reader.ReadString();
+            Currency = reader.ReadString();
+            Balance = reader.ReadString();
         }
     }
 }
