@@ -6,6 +6,7 @@ namespace PersonalFinances
     internal class CategoriesModel
     {
         static CategoriesModel instance;
+        const string PATH = "../../../Data/categories.wal";
 
         public static CategoriesModel GetInstance()
         {
@@ -16,49 +17,35 @@ namespace PersonalFinances
             return instance;
         }
 
-        readonly ObservableCollection<string> categories = new();
-        public ObservableCollection<string> Categories
-        {
-            get => categories;
-        }
-
-        private CategoriesModel()
-        {
-            //categories.Add("Кино");
-            //categories.Add("Продукты");
-            //categories.Add("Развлечения");
-            //categories.Add("Прочее");
-        }
+        public ObservableCollection<string> Categories { get; } = new();
 
         public void Save()
         {
-            FileStream saveCategory = new FileStream("Data/category.wal", FileMode.OpenOrCreate);
-            BinaryWriter write = new(saveCategory);
-            write.Write(categories.Count);
-            foreach(string str in categories)
+            FileStream saveStream = new(PATH, FileMode.OpenOrCreate);
+            BinaryWriter writer = new(saveStream);
+            writer.Write(Categories.Count);
+            foreach (string category in Categories)
             {
-                write.Write(str);
+                writer.Write(category);
             }
-            saveCategory.Close();
+            writer.Close();
+            saveStream.Close();
         }
+
         public void Download()
         {
-            if(File.Exists("Data/category.wal"))
+            if (File.Exists(PATH))
             {
-                FileStream downloadCategory = new FileStream("Data/category.wal", FileMode.Open);
-                BinaryReader read = new(downloadCategory);
-                downloadCategory.Position = 0;
-                int count = read.ReadInt32();
-                for(int i=0;i<count;i++)
+                FileStream downloadStream = new(PATH, FileMode.Open);
+                BinaryReader reader = new(downloadStream);
+                downloadStream.Position = 0;
+                int count = reader.ReadInt32();
+                for (int i = 0; i < count; i++)
                 {
-                  
-                    Categories.Add(read.ReadString());
+                    Categories.Add(reader.ReadString());
                 }
-                downloadCategory.Close();
-            }
-            else
-            {
-                return;
+                reader.Close();
+                downloadStream.Close();
             }
         }
     }
