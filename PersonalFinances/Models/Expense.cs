@@ -19,11 +19,6 @@ namespace PersonalFinances
             Category = category;
         }
 
-        public Expense()
-        {
-
-        }
-
         public override void Save(BinaryWriter write)
         {
             write.Write(base.DateOfIssue.ToString());

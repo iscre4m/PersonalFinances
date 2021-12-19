@@ -14,10 +14,6 @@ namespace PersonalFinances
                                                     walletCurrency)
         {
         }
-        public Income()
-        {
-
-        }
 
         public override void Save(BinaryWriter write)
         {

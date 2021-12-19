@@ -5,6 +5,19 @@ namespace PersonalFinances
 {
     internal class OperationsList
     {
+        static OperationsList instance;
+
+        public static OperationsList GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new();
+            }
+            return instance;
+        }
+
+        private OperationsList() { }
+
         public ObservableCollection<Operation> Operations { get; } = new();
 
         public void Save()
@@ -17,7 +30,8 @@ namespace PersonalFinances
                 Operations[i].Save(write);
             }
         }
-        //public void Download()
+
+        //public void Load()
         //{
         //    if(File.Exists("Data/operations.wal"))
         //    {

@@ -28,7 +28,7 @@ namespace PersonalFinances
 
         public bool CanExecute(object parameters)
         {
-            return canExecute == null ? true : canExecute(parameters);
+            return canExecute == null || canExecute(parameters);
         }
 
         public void Execute(object parameters)

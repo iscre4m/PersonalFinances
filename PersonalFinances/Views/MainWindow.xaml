@@ -9,27 +9,22 @@
         Title="Personal Finances"
         Height="600" Width="1000"
         ResizeMode="NoResize">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding SaveCommand}"
+                    Key="S" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding LoadCommand}"
+                    Key="L" Modifiers="Ctrl"/>
+    </Window.InputBindings>
     <Window.Resources>
-        <local:WalletsModel x:Key="walletsModel"/>
-        <local:WalletsViewModel x:Key="walletsViewModel"
-                                WalletsModel="{StaticResource walletsModel}"/>
-        <local:OperationsList x:Key="operationsList"/>
+        <local:WalletsViewModel x:Key="walletsViewModel"/>
 
         <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
         <local:OtherViewModel x:Key="otherViewModel"
-                              IncomeSourcesModel="{StaticResource incomeSourcesModel}"
-                              WalletsModel="{StaticResource walletsModel}"/>
-
-        <local:ChartsViewModel x:Key="chartsViewModel"
-                               WalletsModel="{StaticResource walletsModel}"/>
-
+                              IncomeSourcesModel="{StaticResource incomeSourcesModel}"/>
+        <local:ChartsViewModel x:Key="chartsViewModel"/>
         <local:OperationsViewModel x:Key="operationsViewModel"
-                                   WalletsModel="{StaticResource walletsModel}"
-                                   OperationsList="{StaticResource operationsList}"
                                    ChartsViewModel="{StaticResource chartsViewModel}"/>
-        <local:DataSaver x:Key="dataSaver"
-                         WalletsModel="{StaticResource walletsModel}"
-                         OperationsModel="{StaticResource operationsList}"/>
+        <local:DataSaveLoader x:Key="dataSaveLoader"/>
     </Window.Resources>
     <Grid>
         <TabControl>
@@ -101,14 +96,12 @@
                                   VerticalContentAlignment="Center"
                                   HorizontalAlignment="Right" Width="156"/>
                         <Button Content="Сохранить"
-                                DataContext="{StaticResource dataSaver}"
                                 Command="{Binding Path=SaveCommand}"
                                 HorizontalAlignment="Left"
                                 Margin="502,355,0,0"
                                 VerticalAlignment="Top"/>
                         <Button Content="Загрузить"
-                                DataContext="{StaticResource dataSaver}"
-                                Command="{Binding Path=DownloadCommand}"
+                                Command="{Binding Path=LoadCommand}"
                                 HorizontalAlignment="Left"
                                 Margin="386,355,0,0"
                                 VerticalAlignment="Top"/>

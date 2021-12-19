@@ -5,12 +5,7 @@ namespace PersonalFinances
 {
     internal class WalletsViewModel : Notifier
     {
-        WalletsModel walletsModel;
-        public WalletsModel WalletsModel
-        {
-            set => walletsModel = value;
-            get => walletsModel;
-        }
+        public WalletsModel WalletsModel { get; } = WalletsModel.GetInstance();
 
         #region Добавление кошелька
         Wallet newWallet = new();
@@ -48,7 +43,7 @@ namespace PersonalFinances
         }
         void AddWallet()
         {
-            walletsModel.Wallets.Add(newWallet);
+            WalletsModel.Wallets.Add(newWallet);
             newWallet = new();
             OnPropertyChanged("NewWallet");
         }
@@ -84,7 +79,7 @@ namespace PersonalFinances
         }
         void RemoveWallet()
         {
-            walletsModel.Wallets.Remove(selectedWallet);
+            WalletsModel.Wallets.Remove(selectedWallet);
         }
         #endregion
     }

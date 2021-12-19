@@ -12,10 +12,12 @@ namespace PersonalFinances
         {
             if (instance == null)
             {
-                instance = new CategoriesModel();
+                instance = new();
             }
             return instance;
         }
+
+        private CategoriesModel() {}
 
         public ObservableCollection<string> Categories { get; } = new();
 
@@ -32,7 +34,7 @@ namespace PersonalFinances
             saveStream.Close();
         }
 
-        public void Download()
+        public void Load()
         {
             if (File.Exists(PATH))
             {

@@ -45,7 +45,7 @@ namespace PersonalFinances
             writer.Write(Balance);
         }
 
-        public void Download(BinaryReader reader)
+        public void Load(BinaryReader reader)
         {
             Title = reader.ReadString();
             Currency = reader.ReadString();

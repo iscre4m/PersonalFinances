@@ -4,24 +4,9 @@ namespace PersonalFinances
 {
     internal class ChartsViewModel : Notifier
     {
-        public ChartsViewModel()
-        {
-            categoriesModel = CategoriesModel.GetInstance();
-        }
+        public WalletsModel WalletsModel { get; } = WalletsModel.GetInstance();
 
-        WalletsModel walletsModel;
-        public WalletsModel WalletsModel
-        {
-            get => walletsModel;
-            set => walletsModel = value;
-        }
-
-        CategoriesModel categoriesModel;
-        public CategoriesModel CategoriesModel
-        {
-            get => categoriesModel;
-            set => categoriesModel = value;
-        }
+        public CategoriesModel CategoriesModel { get; } = CategoriesModel.GetInstance();
 
         Wallet selectedWallet;
         public Wallet SelectedWallet

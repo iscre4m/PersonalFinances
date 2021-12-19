@@ -6,20 +6,9 @@ namespace PersonalFinances
 {
     class OperationsViewModel : Notifier
     {
+        public WalletsModel WalletsModel { get; } = WalletsModel.GetInstance();
 
-        WalletsModel walletsModel;
-        public WalletsModel WalletsModel
-        {
-            get => walletsModel;
-            set => walletsModel = value;
-        }
-
-        OperationsList operationsList;
-        public OperationsList OperationsList
-        {
-            get => operationsList;
-            set => operationsList = value;
-        }
+        public OperationsList OperationsList { get; } = OperationsList.GetInstance();
 
         ChartsViewModel chartsViewModel;
         public ChartsViewModel ChartsViewModel
@@ -79,7 +68,7 @@ namespace PersonalFinances
                                 selectedReplenishWallet.Title,
                                 double.Parse(ReplenishSum),
                                 selectedReplenishWallet.Currency);
-            operationsList.Operations.Add(income);
+            OperationsList.Operations.Add(income);
             selectedReplenishWallet.WalletOperationsModel.Operations.Add(income);
             chartsViewModel.UpdateChart();
             ReplenishSum = "0";
@@ -156,7 +145,7 @@ namespace PersonalFinances
                                   double.Parse(WithdrawSum),
                                   selectedWithdrawWallet.Currency,
                                   CategoriesModel.Categories[selectedCategoryIndex]);
-            operationsList.Operations.Add(expense);
+            OperationsList.Operations.Add(expense);
             selectedWithdrawWallet.WalletOperationsModel.Operations.Add(expense);
             chartsViewModel.UpdateChart();
             WithdrawSum = "0";

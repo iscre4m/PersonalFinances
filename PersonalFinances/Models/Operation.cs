@@ -20,10 +20,6 @@ namespace PersonalFinances
             WalletCurrency = walletCurrency;
             Sum = sum;
         }
-        public Operation()
-        {
-
-        }
 
         abstract public void Save(BinaryWriter write);
 

@@ -4,18 +4,8 @@ namespace PersonalFinances
 {
     internal class OtherViewModel : Notifier
     {
-        public OtherViewModel()
-        {
-            CategoriesModel = CategoriesModel.GetInstance();
-        }
-
         #region Источники дохода
-        WalletsModel walletsModel;
-        public WalletsModel WalletsModel
-        {
-            get => walletsModel;
-            set => walletsModel = value;
-        }
+        public WalletsModel WalletsModel { get; } = WalletsModel.GetInstance();
 
         IncomeSourcesModel incomeSourcesModel;
         public IncomeSourcesModel IncomeSourcesModel
@@ -91,7 +81,7 @@ namespace PersonalFinances
         #endregion
 
         #region Категории
-        public  CategoriesModel CategoriesModel { get; }
+        public CategoriesModel CategoriesModel { get; } = CategoriesModel.GetInstance();
 
         string categoryTitle = "";
         public string CategoryTitle
@@ -123,7 +113,7 @@ namespace PersonalFinances
         void AddCategory()
         {
             CategoriesModel.Categories.Add(CategoryTitle);
-            foreach (Wallet wallet in walletsModel.Wallets)
+            foreach (Wallet wallet in WalletsModel.Wallets)
             {
                 wallet.OperationsCapacitor.Expenses.Add(0);
             }
@@ -159,7 +149,7 @@ namespace PersonalFinances
         }
         void RemoveCategory()
         {
-            foreach (Wallet wallet in walletsModel.Wallets)
+            foreach (Wallet wallet in WalletsModel.Wallets)
             {
                 wallet.OperationsCapacitor.Expenses.RemoveAt(selectedCategoryIndex);
             }

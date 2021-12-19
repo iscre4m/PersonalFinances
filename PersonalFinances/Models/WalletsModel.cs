@@ -5,6 +5,19 @@ namespace PersonalFinances
 {
     internal class WalletsModel
     {
+        static WalletsModel instance;
+
+        public static WalletsModel GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new(); 
+            }
+            return instance;
+        }
+
+        private WalletsModel() { }
+
         const string PATH = "../../../Data/wallets.wal";
 
         public ObservableCollection<Wallet> Wallets { get; set; } = new();
@@ -22,7 +35,7 @@ namespace PersonalFinances
             saveStream.Close();
         }
 
-        public void Download()
+        public void Load()
         {
             if (File.Exists(PATH))
             {
@@ -32,7 +45,7 @@ namespace PersonalFinances
                 for (int i = 0; i < count; i++)
                 {
                     Wallets.Add(new());
-                    Wallets[i].Download(reader);
+                    Wallets[i].Load(reader);
                 }
                 reader.Close();
                 downloadStream.Close();
