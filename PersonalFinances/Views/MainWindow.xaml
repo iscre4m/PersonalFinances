@@ -11,14 +11,9 @@
         ResizeMode="NoResize"
         Style="{DynamicResource WindowStyle}">
     <Window.Resources>
-
-        
-
         <local:WalletsViewModel x:Key="walletsViewModel"/>
 
-        <local:IncomeSourcesModel x:Key="incomeSourcesModel"/>
-        <local:OtherViewModel x:Key="otherViewModel"
-                              IncomeSourcesModel="{StaticResource incomeSourcesModel}"/>
+        <local:OtherViewModel x:Key="otherViewModel"/>
 
         <local:ChartsViewModel x:Key="chartsViewModel"/>
 
@@ -95,14 +90,14 @@
                                   Height="40" VerticalAlignment="Bottom" 
                                   VerticalContentAlignment="Center"
                                   HorizontalAlignment="Right"/>
-                        <Button Content="Сохранить"
+                        <Button Content="Сохранить" Name="saveButton"
                                 DataContext="{StaticResource dataSaveLoader}"
                                 Command="{Binding Path=SaveCommand}"
                                 HorizontalAlignment="Right"
                                 Margin="0,0,19,100"
                                 VerticalAlignment="Bottom"
                                 Width="190" Height="40"/>
-                        <Button Content="Загрузить"
+                        <Button Content="Загрузить" Name="loadButton"
                                 DataContext="{StaticResource dataSaveLoader}"
                                 Command="{Binding Path=LoadCommand}"
                                 HorizontalAlignment="Right"
@@ -121,9 +116,13 @@
                 </TabItem.Header>
                 <TabItem.Content>
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="33*"/>
+                            <ColumnDefinition Width="961*"/>
+                        </Grid.ColumnDefinitions>
                         <GroupBox Header="Пополнение" 
                                   Height="190" VerticalAlignment="Top"
-                                  Margin="10,0,10,0"/>
+                                  Margin="10,0,10,0" Grid.ColumnSpan="2"/>
                         <TextBox Text="{Binding Path=ReplenishSum,
                                             UpdateSourceTrigger=PropertyChanged}"
                                      Width="317" Height="46"
@@ -132,39 +131,39 @@
                                      HorizontalAlignment="Left"
                                      VerticalContentAlignment="Center"
                                      HorizontalContentAlignment="Left"
-                                     Grid.ColumnSpan="3"/>
+                                     Grid.ColumnSpan="2"/>
                         <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                       SelectedItem="{Binding Path=SelectedReplenishWallet}"
-                                      Margin="344,72,19,0"
-                                      VerticalAlignment="Top" Height="45"/>
+                                      Margin="311,72,19,0"
+                                      VerticalAlignment="Top" Height="45" Grid.Column="1"/>
                         <TextBlock Height="32" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="79" 
                                        Margin="21,40,0,0" Text="Сумма"
-                                       Grid.ColumnSpan="3"/>
+                                       Grid.ColumnSpan="2"/>
                         <TextBlock Height="32" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="105" 
-                                       Margin="344,35,0,0" Text="Кошелёк:"/>
+                                       Margin="311,35,0,0" Text="Кошелёк:" Grid.Column="1"/>
                         <Button Command="{Binding Path=ReplenishCommand}"
                                     Height="45" Content="Подтвердить"
                                     VerticalAlignment="Top"
                                     Margin="20,123,0,0"
                                     VerticalContentAlignment="Center" 
                                     HorizontalAlignment="Left"
-                                    Width="180" Grid.ColumnSpan="3"/>
+                                    Width="180" Grid.ColumnSpan="2"/>
                         <TextBlock Text="Баланс:"
-                                       Height="32" Margin="344,130,0,0"
+                                       Height="32" Margin="311,130,0,0"
                                        HorizontalAlignment="Left"
-                                       Width="91" VerticalAlignment="Top" />
+                                       Width="91" VerticalAlignment="Top" Grid.Column="1" />
                         <TextBlock Text="{Binding SelectedReplenishWallet.Balance,
                                               UpdateSourceTrigger=PropertyChanged}"
-                                       Margin="440,130,0,0"
+                                       Margin="407,130,0,0"
                                        HorizontalAlignment="Left"
                                        Width="257" Height="32"
-                                       VerticalAlignment="Top"/>
+                                       VerticalAlignment="Top" Grid.Column="1"/>
 
                         <GroupBox Header="Снятие" Height="180"
                                   Margin="10,188,10,0"
-                                  VerticalAlignment="Top"/>
+                                  VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                         <TextBox Text="{Binding Path=WithdrawSum,
                                             UpdateSourceTrigger=PropertyChanged}"
                                      Width="194" Height="45"
@@ -172,46 +171,46 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      VerticalContentAlignment="Center"
-                                     HorizontalContentAlignment="Left"/>
+                                     HorizontalContentAlignment="Left" Grid.ColumnSpan="2"/>
                         <Button Command="{Binding Path=WithdrawCommand}"
                                     Height="45" Content="Подтвердить"
                                     VerticalAlignment="Top"
                                     Margin="21,306,0,0"
                                     VerticalContentAlignment="Center" 
-                                    HorizontalAlignment="Left" Width="180"/>
+                                    HorizontalAlignment="Left" Width="180" Grid.ColumnSpan="2"/>
                         <TextBlock Text="Баланс:"
-                                       Height="32" Margin="219,312,0,0"
+                                       Height="32" Margin="186,312,0,0"
                                        HorizontalAlignment="Left" Width="91"
-                                       VerticalAlignment="Top" />
+                                       VerticalAlignment="Top" Grid.Column="1" />
                         <TextBlock Text="{Binding SelectedWithdrawWallet.Balance,
                                               UpdateSourceTrigger=PropertyChanged}"
-                                       Margin="315,312,0,0"
+                                       Margin="282,312,0,0"
                                        HorizontalAlignment="Left"
                                        Width="385" Height="32"
-                                       VerticalAlignment="Top"/>
+                                       VerticalAlignment="Top" Grid.Column="1"/>
 
                         <ComboBox ItemsSource="{Binding Path=WalletsModel.Wallets}"
                                       SelectedItem="{Binding Path=SelectedWithdrawWallet}"
-                                      Margin="219,256,0,0" Height="45" 
+                                      Margin="186,256,0,0" Height="45" 
                                       VerticalAlignment="Top"
-                                      HorizontalAlignment="Left" Width="344"/>
+                                      HorizontalAlignment="Left" Width="344" Grid.Column="1"/>
                         <TextBlock Height="33" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="79" 
-                                       Margin="21,223,0,0" Text="Сумма:"/>
+                                       Margin="21,223,0,0" Text="Сумма:" Grid.ColumnSpan="2"/>
                         <TextBlock Height="33" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="105" 
-                                       Margin="219,223,0,0" Text="Кошелёк:"/>
+                                       Margin="186,223,0,0" Text="Кошелёк:" Grid.Column="1"/>
                         <TextBlock Height="33" VerticalAlignment="Top" 
                                        HorizontalAlignment="Left" Width="121" 
-                                       Margin="568,223,0,0" Text="Категория:"/>
+                                       Margin="535,223,0,0" Text="Категория:" Grid.Column="1"/>
                         <ComboBox ItemsSource="{Binding Path=CategoriesModel.Categories}"
                                       SelectedIndex="{Binding Path=SelectedCategoryIndex}"
-                                      Margin="568,256,19,0"
-                                      VerticalAlignment="Top" Height="45"/>
+                                      Margin="535,256,19,0"
+                                      VerticalAlignment="Top" Height="45" Grid.Column="1"/>
                         <TextBlock HorizontalAlignment="Left" Margin="10,373,0,0" 
-                                   VerticalAlignment="Top" Text="Учёт"/>
+                                   VerticalAlignment="Top" Text="Учёт" Grid.ColumnSpan="2"/>
                         <ListBox ItemsSource="{Binding Path=OperationsList.Operations}"
-                                 Margin="10,410,10,10"/>
+                                 Margin="10,410,10,10" Grid.ColumnSpan="2"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>

@@ -7,6 +7,8 @@ namespace PersonalFinances
     {
         public WalletsModel WalletsModel { get; } = WalletsModel.GetInstance();
 
+        DataSaveLoader dataSaveLoader = DataSaveLoader.GetInstance();
+
         #region Добавление кошелька
         Wallet newWallet = new();
         public Wallet NewWallet
@@ -44,8 +46,14 @@ namespace PersonalFinances
         void AddWallet()
         {
             WalletsModel.Wallets.Add(newWallet);
+            SelectedWallet = newWallet;
+            OnPropertyChanged("SelectedWallet");
             newWallet = new();
             OnPropertyChanged("NewWallet");
+            if (dataSaveLoader.IsNotLoaded)
+            {
+                dataSaveLoader.IsNotLoaded = false;
+            }
         }
         #endregion
 

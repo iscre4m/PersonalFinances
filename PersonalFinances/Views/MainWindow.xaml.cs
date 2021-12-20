@@ -22,6 +22,8 @@ namespace PersonalFinances
             Application.Current.Resources.Clear();
             Application.Current.Resources.MergedDictionaries.Add(lightTheme);
             DataContext = this;
+            saveButton.DataContext = DataSaveLoader.GetInstance();
+            loadButton.DataContext = DataSaveLoader.GetInstance();
         }   
 
         ICommand changeThemeCommand;

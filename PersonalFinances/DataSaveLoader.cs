@@ -15,7 +15,11 @@ namespace PersonalFinances
             return instance;
         }
 
+        private DataSaveLoader() { }
+
         public CategoriesModel CategoriesModel { get; } = CategoriesModel.GetInstance();
+
+        public IncomeSourcesModel IncomeSourcesModel { get; } = IncomeSourcesModel.GetInstance();
 
         public WalletsModel WalletsModel { get; } = WalletsModel.GetInstance();
 
@@ -37,10 +41,11 @@ namespace PersonalFinances
         public void Save()
         {
             CategoriesModel.Save();
+            IncomeSourcesModel.Save();
             WalletsModel.Save();
         }
 
-        public bool IsNotLoaded { get; private set; } = true;
+        public bool IsNotLoaded { get; set; } = true;
 
         ICommand loadCommand;
         public ICommand LoadCommand
@@ -60,6 +65,7 @@ namespace PersonalFinances
             IsNotLoaded = false;
             OnPropertyChanged("IsNotLoaded");
             CategoriesModel.Load();
+            IncomeSourcesModel.Load();
             WalletsModel.Load();
         }
     }

@@ -7,12 +7,7 @@ namespace PersonalFinances
         #region Источники дохода
         public WalletsModel WalletsModel { get; } = WalletsModel.GetInstance();
 
-        IncomeSourcesModel incomeSourcesModel;
-        public IncomeSourcesModel IncomeSourcesModel
-        {
-            get => incomeSourcesModel;
-            set => incomeSourcesModel = value;
-        }
+        public IncomeSourcesModel IncomeSourcesModel { get; } = IncomeSourcesModel.GetInstance();
 
         string incomeSourceTitle = "";
         public string IncomeSourceTitle
