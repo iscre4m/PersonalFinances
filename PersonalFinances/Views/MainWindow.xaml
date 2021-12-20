@@ -12,16 +12,7 @@
         Style="{DynamicResource WindowStyle}">
     <Window.Resources>
 
-        <Style TargetType="lvc:Axis">
-            <Setter Property="FontSize" Value="14"></Setter>
-            <Setter Property="ShowLabels" Value="True"></Setter>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Separator">
-                <Setter.Value>
-                    <lvc:Separator IsEnabled="True"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
 
         <local:WalletsViewModel x:Key="walletsViewModel"/>
 
@@ -368,9 +359,12 @@
                 </TabItem.Content>
             </TabItem>
         </TabControl>
-        <Button Content="Тема" Height="30"
+        <Button Height="30" Width="30"
                 Margin="0,4,10,0" VerticalAlignment="Top"
-                HorizontalAlignment="Right" Width="50"
-                Command="{Binding ChangeThemeCommand}"/>
+                HorizontalAlignment="Right" 
+                Command="{Binding ChangeThemeCommand}">
+            <Border x:Name="Theme" Height="15" Width="15" 
+                    Background="Black"/>
+        </Button>
     </Grid>
 </Window>

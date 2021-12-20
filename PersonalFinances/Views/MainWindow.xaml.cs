@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PersonalFinances
 {
@@ -21,7 +22,7 @@ namespace PersonalFinances
             Application.Current.Resources.Clear();
             Application.Current.Resources.MergedDictionaries.Add(lightTheme);
             DataContext = this;
-        }
+        }   
 
         ICommand changeThemeCommand;
         public ICommand ChangeThemeCommand
@@ -41,10 +42,12 @@ namespace PersonalFinances
             Application.Current.Resources.Clear();
             if (isDarkTheme)
             {
+                Theme.Background = Brushes.Black;
                 Application.Current.Resources.MergedDictionaries.Add(lightTheme);
                 isDarkTheme = false;
                 return;
             }
+            Theme.Background = Brushes.White;
             Application.Current.Resources.MergedDictionaries.Add(darkTheme);
             isDarkTheme = true;
         }
